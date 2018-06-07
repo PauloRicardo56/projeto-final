@@ -140,14 +140,18 @@ Navegação
 • Para a alteração ou exclusão de uma informação existente, o usuário poderá
   fornecer parte da mesma, sendo então apresentadas as informações que
   satisfaçam a esta seleção;
+  
 • Todas as pesquisas realizadas não devem ser sensitivas a maiúsculas e
   minúsculas, no entanto, os dados digitados pelo usuário devem ser mantidos
   na sua forma original, ou seja, não podem ser alterados;
+  
 • O programa principal deverá conter apenas a apresentação de um menu de
   opções para a escolha do usuário e a chamada das funções
   correspondentes para manipulação;
+  
 • Todos os dados para as funções deverão ser passados como parâmetros,
   não sendo permitido o uso de variáveis globais;
+  
 • Os dados deverão ser armazenados em arquivos sequenciais para
   possibilitar a reutilização posterior dos mesmos. As manipulações dos dados
   necessários em memória deverão ser realizadas usando-se alocação
@@ -156,11 +160,13 @@ Navegação
   (consulta), esclarecida anteriormente, deverá acontecer somente
   através da alocação dinâmica, caso contrário não será considerada
   como implementada;
+  
 • Os dados deverão ser armazenados em arquivos binários, devendo existir
   pelo menos 3 arquivos: uma para guardar os dados cadastrais dos Pilotos,
   outro para guardar os dados cadastrais dos Circuitos e outro para o registro
   das Voltas dos pilotos em circuitos específicos e existentes (já cadastrados).
   A manipulação dos dados nestes arquivos de dados só acontecerá por
   registros (blocos de dados).
+  
 • Validações, completude na implementação dos formulários e qualidade
   visual (entradas e saídas, tabelas) serão seguramente consideradas.
