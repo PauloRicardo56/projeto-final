@@ -39,21 +39,27 @@ int main() {
     
     do {
         showMenu();
-        resposta = leValidaInt(1, 5, "Digite uma das opcoes do menu");
+        resposta = leValidaInt(1, 7, "Digite uma das opcoes do menu");
         switch(resposta) {
-            case '1':
+            case 1:
                 menuDadosPiloto();
                 break;
-            case '2':
+            case 2:
                 menuDadosEquipe();
                 break;
-            case '3':
+            case 3:
                 menuDadosCircuito();
                 break;
-            case '4':
+            case 4:
                 menuDadosVolta();
                 break;
-            case '5':
+            case 5:
+                menuRelatorios();
+                break;
+            case 6:
+                menuPesquisas();
+                break;
+            case 7:
         }
     } while(resposta != 5);
     
@@ -66,6 +72,9 @@ void showMenu() {
     printf("2-Menu das equipes\n");
     printf("3-Menu dos circuitos\n");
     printf("4-Menu das voltas\n");
+    printf("5-Relatorios\n");
+    printf("6-Pesquisas\n");
+    printf("7-Sair\n");
 }
 
 /*
@@ -176,7 +185,7 @@ void menuDadosVolta() {
     int resposta;
     
     showMenuVolta();
-    leValidaInt(1, 3, "Digite uma das pcoes do menu");
+    leValidaInt(1, 3, "Digite uma das opcoes do menu");
     switch(resposta) {
         case 1:
             cadastrarVolta();
@@ -204,3 +213,68 @@ void alterarVolta() {}
 
 
 void excluirVolta() {}
+
+
+/**************
+ * RELATORIOS *
+ **************/
+void menuRelatorios() {
+    int resposta;
+    
+    showMenuRelatorios();
+    resposta = leValidaInt(1, 7, "Digite uma das opcoes do menu");
+    switch(resposta) {
+        case 1:
+            consultarDados();
+            break;
+        case 2:
+            pesquisarPiloto();
+            break
+        case 3:
+            relacaoPilotoCircuito();
+            break;
+        case 4:
+            pesquisarCircuito();
+            break();
+        case 5:
+            pesquisaPilotoData();
+            break;
+        case 6:
+            pesquisarDadosVoltasMenores();
+            break;
+        case 7:
+            exibirDadosSemMelhorVolta();
+    }
+}
+
+
+void showMenuRelatorios() {
+    printf("1-Consultar dados\n");
+    printf("2-Pesquisar piloto\n");
+    printf("3-Relacionar pilotos de um circuito ou data\n");
+    printf("4-Pesquisar circuito\n");
+    printf("5-Pesquisar pilotos pela data\n");
+    printf("6-Pesquisar pilotos, equipes e circuitos que realizaram voltas menores que um dado tempo\n");
+    printf("7-Exibir pilotos, equipes ou circuitos que nao fizeram uma melhor volta\n");
+}
+
+
+void consultarDados() {}
+
+
+void pesquisarPiloto() {}
+
+
+void relacaoPilotoCircuito() {}
+
+
+void pesquisarCircuito() {}
+
+
+void pesquisaPilotoData() {}
+
+
+void pesquisarDadosVoltasMenores() {}
+
+
+void exibirDadosSemMelhorVolta() {}
