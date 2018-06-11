@@ -1,3 +1,6 @@
+//Todo "leValida" vai estar em validacoes.h
+
+
 #include <stdio.h>
 
 
@@ -20,7 +23,11 @@ struct Circuito {
 };
 
 
-struct MelhorVolta {};    
+struct MelhorVolta {
+    int pilotoId;
+    char equipePiloto[40], voltaData[11];
+    long int tempoVolta;
+};    
 
 
 int main() {
@@ -58,13 +65,13 @@ void showMenu() {
     printf("4-Menu das voltas\n");
 }
 
-
-int leValidaInt() {} //Vai estar em validacoes.h
-
 /*
 PODEMOS COLOCAR CADA PARTE (PILOTO, EQUIPE, CIRCUITO E VOLTAS) EM ARQUIVOS SEPARADOS.
 */
 
+/**********
+ * PILOTO *
+ **********/
 void menuDadosPiloto() {
     int resposta;
     
@@ -90,6 +97,9 @@ void showMenuPiloto() {
 }
 
 
+/**********
+ * EQUIPE *
+ **********/
 void menuDadosEquipe() {
     int resposta;
     
@@ -111,6 +121,9 @@ void showMenuEquipe() {
 }
 
 
+/************
+ * CIRCUITO *
+ ************/
 void menuDadosCircuito() {
     int resposta;
     
@@ -132,4 +145,29 @@ void showMenuCircuito() {
 }
 
 
-void menuDadosVolta() {}
+/*********
+ * VOLTA *
+ *********/
+void menuDadosVolta() {
+    int resposta;
+    
+    showMenuVolta();
+    leValidaInt(1, 3, "Digite uma das pcoes do menu");
+    switch(resposta) {
+        case 1:
+            cadastrarVolta();
+            break;
+        case 2:
+            alterarVolta();
+            break;
+        case 3:
+            excluirVolta();
+    }
+}
+
+
+void showMenuVolta() {
+    printf("1-Cadastrar melhor volta\n");
+    printf("2-Alterar melhor volta\n");
+    printf("3-Excluir melhor volta\n");
+}
