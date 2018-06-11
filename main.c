@@ -31,12 +31,15 @@ struct MelhorVolta {
 
 
 int main() {
-    int resposta;
+    struct Piloto pilotos[100];
+    struct Equipe equipes[100];
+    struct Circuito circuitos[100];
+    struct MelhorVolta melhoresVoltas[100];
+    int resposta, qtdPilotos, qtdEquipes, qtdCircuitos, qtdMelhoresVoltas;
     
     do {
         showMenu();
-        resposta = leValidaInt(1, 5, "Informe uma das opcoes do menu");
-        
+        resposta = leValidaInt(1, 5, "Digite uma das opcoes do menu");
         switch(resposta) {
             case '1':
                 menuDadosPiloto();
