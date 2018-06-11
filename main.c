@@ -97,6 +97,15 @@ void showMenuPiloto() {
 }
 
 
+void cadastrarPiloto() {}
+
+
+void alterarPiloto();
+
+
+void removerPiloto();
+
+
 /**********
  * EQUIPE *
  **********/
@@ -121,6 +130,12 @@ void showMenuEquipe() {
 }
 
 
+void cadastrarEquipe() {}
+
+
+void excluirEquipe() {}
+
+
 /************
  * CIRCUITO *
  ************/
@@ -143,6 +158,12 @@ void showMenuCircuito() {
     printf("1-Cadastrar novo circuito\n");
     printf("2-Alterar circuito\n");
 }
+
+
+void cadastrarCircuito() {}
+
+
+void alterarCircuito() {}
 
 
 /*********
@@ -171,3 +192,12 @@ void showMenuVolta() {
     printf("2-Alterar melhor volta\n");
     printf("3-Excluir melhor volta\n");
 }
+
+
+void cadastrarVolta() {}
+
+
+void alterarVolta() {}
+
+
+void excluirVolta() {}
