@@ -52,7 +52,9 @@ cadastramento/alteração de um piloto ou Circuito só poderão ser utilizados o
 previamente cadastrados neste arquivo.
 
 2.Implementação das Funcionalidades
+
 2.1 Gerenciamento e controle dos dados cadastrais
+
 Dados Cadastrais dos Pilotos
 - Inclusão de um novo piloto, tomando-se o devido cuidado de não permitir o
   recadastramento de um piloto(código) já existente;
@@ -61,6 +63,7 @@ Dados Cadastrais dos Pilotos
   piloto já existente;
 - Exclusão de um piloto do cadastro: só será permitida se o piloto não tiver
   realizado nenhuma volta. O usuário deverá confirmar a exclusão.
+
 Dados Cadastrais das Equipes
 - Inclusão de uma nova equipe, tomando-se o devido cuidado de não permitir
   o recadastramento de uma equipe já existente (mesma sigla);
@@ -72,6 +75,7 @@ Dados Cadastrais das Equipes
 - Alteração dos dados cadastrais dos circuitos existentes, tomando-se o
   devido cuidado de não permitir o recadastramento de um circuito já
   existente;
+
 Dados Cadastrais das Voltas
 - Inclusão da melhor volta em um circuito de um piloto fornecido pelo usuário;
 - Alteração dos dados cadastrais da volta rápida de um piloto em um circuito e
@@ -79,6 +83,7 @@ Dados Cadastrais das Voltas
   correção ou mudança;
 - Exclusão da volta rápida de um piloto em um circuito após confirmação do
   usuário;
+
 2.2 Relatórios
 - (R1). Consulta simples sobre todos os arquivos existentes através da sua
   chave única ou apresentar todos os dados cadastrados;
