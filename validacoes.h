@@ -1,0 +1,338 @@
+#ifndef _validacoes_h
+#define _validacoes_h
+
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include "utilidades.h"
+
+
+void leValidaNome(char nome[], char msg[]);
+void leValidaNomeTamanho(char nome[], int tamanho, char msg[]);
+void leValidaNomeArquivoWindows(char nome[], char msg[]);
+char leValidaChar2(char opc1, char opc2, char msg[]);
+char leValidaChar3(char opc1, char opc2, char opc3, char msg[]);
+float leValidaFloat(float min, float max, char msg[]);
+int leValidaInt(int min, int max, char msg[]);
+void leValidaIntPont(int *valor, int min, int max, char msg[]);
+// void leValidaCodigo(int *codigo, int codigos[], int qtdCodigos);
+void leValidaStringInt(char string[], int tamanho, char msg[]);
+void clean_stdin();
+
+
+/* 
+ * Objetivo: Ler e validar nome
+ * Parametros: Variável que irá armazenar o nome e mensagem a ser exibida
+ * Retorna: Nada
+ */
+void leValidaNome(char nome[], char msg[]) {
+	char c;
+	int flag=1, i, espacos=0;
+	while (flag > 0) {
+		flag = 0;
+		espacos = 0;
+		printf("%s (Nao pode ser vazio, conter numeros ou apenas espacos) >> ", msg);
+		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
+			nome[i] = c;
+			if(!isalpha(c) && c != ' ') { flag++; }
+			if(c == ' ') { espacos++; }
+		}
+		nome[i] = '\0';
+		if(strlen(nome) == 0 || strlen(nome) == espacos) { flag++; }
+	}
+	formataNomeMaiusculo(nome);
+}
+
+
+/* 
+ * Objetivo: Ler e validar nome com limite de tamanho
+ * Parametros: Variável que irá armazenar o nome e mensagem a ser exibida
+ * Retorna: Nada
+ */
+void leValidaNomeTamanho(char nome[], int tamanho, char msg[]) {
+	char c;
+	int flag=1, i, espacos=0;
+	while (flag > 0) {
+		flag = 0;
+		espacos = 0;
+		printf("%s (Maximo de %d caracteres, nao pode ser vazio, conter numeros ou apenas espacos) >> ", msg, tamanho);
+		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
+			nome[i] = c;
+			if(!isalpha(c) && c != ' ') { flag++; }
+			if(c == ' ') { espacos++; }
+		}
+		nome[i] = '\0';
+		if(strlen(nome) == 0 || strlen(nome) == espacos || strlen(nome) > tamanho) { flag++; }
+	}
+	formataNomeMaiusculo(nome);
+}
+
+
+/* 
+ * Objetivo: Ler e validar nome para criação de arquivos no windows
+ * Parametros: Variável que irá armazenar o nome e mensagem a ser exibida
+ * Retorna: Nada
+ */
+void leValidaNomeArquivoWindows(char nome[], char msg[]) {
+	char c;
+	int flag=1, i, espacos=0;
+	while (flag > 0) {
+		flag = 0;
+		espacos = 0;
+		printf("%s (Nao pode ser vazio ou conter / \\ : * ? \" < > |) >> ", msg);
+		for(c=getchar(), i=0; c != '\n'; c = getchar(), i++) {
+			nome[i] = c;
+			if(c == '/' || c == '\\' || c == ':' || c == '*' || c == '?' || c == '\"' || c == '<' || c == '>' || c == '|') { flag++; }
+			if(c == ' ') { espacos++; }
+		}
+		nome[i] = '\0';
+		if(strlen(nome) == 0 || strlen(nome) == espacos) { flag++; }
+	}
+	formataNomeMaiusculo(nome);
+}
+
+
+/* 
+ * Objetivo: Ler e validar char (duas opções)
+ * Parametros: opcao 1 e 2 para a validacao e mensagem a ser exibida
+ * Retorna: char validado
+ */
+char leValidaChar2(char opc1, char opc2, char msg[]) {
+	char entrada[10], c;
+	int flag=1, i;
+	while (flag > 0) {
+		flag=0;
+		printf("%s (%c ou %c) >> ", msg, opc1, opc2);
+		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
+			entrada[i] = c;
+		}
+		entrada[i] = '\0';
+		if(strlen(entrada) == 0) { flag++; }
+		if(entrada[0] != opc1 && entrada[0] != opc2) { flag++; }
+	}
+	return entrada[0];
+}
+
+
+/* 
+ * Objetivo: Ler e validar char (duas opções) com ponteiro
+ * Parametros: opcao 1 e 2 para a validacao e mensagem a ser exibida
+ * Retorna: Nada
+ */
+char leValidaChar2Pont(char *valor, char opc1, char opc2, char msg[]) {
+	char entrada[10], c;
+	int flag=1, i;
+	while (flag > 0) {
+		flag=0;
+		printf("%s (%c ou %c) >> ", msg, opc1, opc2);
+		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
+			entrada[i] = c;
+		}
+		entrada[i] = '\0';
+		if(strlen(entrada) == 0) { flag++; }
+		if(entrada[0] != opc1 && entrada[0] != opc2) { flag++; }
+	}
+	*valor = entrada[0];
+}
+
+
+/* 
+ * Objetivo: Ler e validar char (três opções)
+ * Parametros: opcao 1 e 2 para a validacao e mensagem a ser exibida
+ * Retorna: char validado
+ */
+char leValidaChar3(char opc1, char opc2, char opc3, char msg[]) {
+	char entrada[30], c;
+	int flag=1, i;
+	while (flag > 0) {
+		flag=0;
+		printf("%s (%c, %c ou %c) >> ", msg, opc1, opc2, opc3);
+		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
+			entrada[i] = c;
+		}
+		entrada[i] = '\0';
+		if(strlen(entrada) == 0) { flag++; }
+		if(entrada[0] != opc1 && entrada[0] != opc2 && entrada[0] != opc3) { flag++; }
+	}
+	return entrada[0];
+}
+
+
+/* 
+ * Objetivo: Ler e validar float
+ * Parametros: valor minimo e maximo para a vaidacao e mensagem a ser exibida
+ * Retorna: float validado
+ */
+float leValidaFloat(float min, float max, char msg[]) {
+	float entrada;
+	int valorScanf;
+	printf("%s (entre %.1f e %.1f) >> ", msg, min, max);
+	valorScanf = scanf("%f", &entrada); clean_stdin();
+	// printf("@@ %d - %d - %d\n", entrada < min, entrada > max, valorScanf == 0);
+	while(entrada < min || entrada > max || valorScanf == 0) {
+		printf(" Digite um valor valido entre %.1f e %.1f >> ", min, max);
+		valorScanf = scanf("%f", &entrada); clean_stdin();
+		// printf("@@ %d - %d - %d\n", entrada < min, entrada > max, valorScanf == 0);
+		system("cls");
+	}
+	return entrada;
+}
+
+
+/* 
+ * Objetivo: Ler e valida int
+ * Parametros: valor minimo e maximo para a vaidacao e mensagem a ser exibida
+ * Retorna: int validado
+ */
+int leValidaInt(int min, int max, char msg[]) {
+	int entrada, valorScanf;
+	printf("%s (entre %d e %d) >> ", msg, min, max);
+	valorScanf = scanf("%d", &entrada); clean_stdin();
+	while(entrada < min || entrada > max || valorScanf == 0) {
+		printf(" Digite um valor valido entre %d e %d >> ", min, max);
+		valorScanf = scanf("%d", &entrada); clean_stdin();
+		system("cls");
+	}
+	return entrada;
+}
+
+
+/* 
+ * Objetivo: Ler e valida int usando ponteiro
+ * Parametros: valor minimo e maximo para a vaidacao e mensagem a ser exibida
+ * Retorna: Nada
+ */
+void leValidaIntPont(int *valor, int min, int max, char msg[]) {
+	int valorScanf;
+	printf("%s (entre %d e %d) >> ", msg, min, max);
+	valorScanf = scanf("%d", valor); clean_stdin();
+	while(*valor < min || *valor > max || valorScanf == 0) {
+		printf(" Digite um valor valido entre %d e %d >> ", min, max);
+		valorScanf = scanf("%d", valor); clean_stdin();
+		system("cls");
+	}
+}
+
+
+// /* 
+//  * Objetivo: Validar codigo para que não seja repetido
+//  * Parametros: Código informado, lista com códigos existentes e mensagem a ser exibida
+//  * Retorna: Nada
+//  */
+// void leValidaCodigo(int *codigo, int codigos[], int qtdCodigos) {
+// 	int flag = 1, i;
+
+// 	*codigo = leValidaInt(1, 99, "Codigo do locatario");
+// 	while(flag > 0 && qtdCodigos > 1) {
+// 		flag = 0;
+// 		for(i = 0; i < qtdCodigos; i++) {
+// 			if (codigos[qtdCodigos].codigo == *codigo) {
+// 				flag++;
+// 				*codigo = leValidaInt(1, 99, "Codigo do ja existente\nInforme outro");
+// 				break;
+// 			}
+// 		}
+// 	}
+// }
+
+
+/* 
+ * Objetivo: Ler e validar uma sequencia com quantidade definida de digitos
+ * Parametros: String que sera armazenada a sequencia de digitos, quantidade
+ *			   de digitos e mensagem a ser exibida.
+ * Retorna: Nada
+ */
+void leValidaStringInt(char string[], int tamanho, char msg[]) {
+	char c;
+	int flag=1, i;
+	while (flag > 0) {
+		flag=0;
+		printf("%s (%d digitos) >> ", msg, tamanho);
+		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
+			string[i] = c;
+			if(!isdigit(c)) { flag++; }
+		}
+		string[i] = '\0';
+		if(strlen(string) != tamanho) { flag++; }
+	}
+}
+
+
+/* 
+ * Objetivo: Limpar buffer do teclado
+ * Parametros: Nenhum
+ * Retorna: Nada
+ */
+void clean_stdin() {
+    int c;
+    do {
+        c = getchar();
+    } while (c != '\n' && c != EOF);
+}
+
+
+/* 
+ * Objetivo: Validar dia, mes e ano no formato dd/mm/aaaa
+ * Parametros: Variável contendo a string e vetor de inteiros que irá conter o dia, mes e ano validados
+ * Retorna: Nada
+ */
+void leValidaDataInt(char data[], int diaMesAno[]) {
+	char c, temp[5];
+	int flag=1, i,j,k, espacos=0;
+	while(flag > 0) {
+		flag = 0;
+		leValidaDataChar(data);
+		for(i=0, j=0, k=0; i<strlen(data); i++, j++) {
+			if(data[i] == '/') { 
+				temp[j] = '\0';
+				diaMesAno[k] = atoi(temp);
+				k++; j=-1;
+			} else {
+				temp[j] = data[i];
+			}
+		}
+		temp[j] = '\0';
+		diaMesAno[k] = atoi(temp);
+
+		if(diaMesAno[0] < 1 || diaMesAno[0] > 31) { printf("Dia invalido"); flag++; }
+		else if(diaMesAno[1] < 1 || diaMesAno[1] > 12) { printf("Mes invalido"); flag++; }
+		else if(diaMesAno[2] < 1) { printf("Ano invalido"); flag++; }
+		else if(diaMesAno[1] == 2 && diaMesAno[0] > 28) { 
+			printf("Mes %d nao contem dia %d", diaMesAno[1], diaMesAno[0]);
+			flag++;
+		}
+		else if((diaMesAno[1] < 7 && diaMesAno[1] % 2 == 0) || diaMesAno[1] == 9 || diaMesAno[1] == 11) {
+			if(diaMesAno[0] > 30) {
+				printf("Mes %d nao contem dia %d", diaMesAno[1], diaMesAno[0]);
+				flag++;
+			}
+		}
+	}
+}
+
+
+/* 
+ * Objetivo: Ler data no formato dd/mm/aaaa
+ * Parametros: Variável que irá conter a string
+ * Retorna: Nada
+ */
+void leValidaDataChar(char data[]) {
+	char c;
+	int flag=1, i, espacos=0;
+	while (flag > 0) {
+		flag=0;
+		espacos=0;
+		printf("Data (dd/mm/aaaa) >> ");
+		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
+			data[i] = c;
+			if(!isdigit(c) && c != '/') { flag++; }
+			if(c == ' ') { espacos++; }
+		}
+		data[i] = '\0';
+		if(strlen(data) == 0 || strlen(data) == espacos || strlen(data) > 10) { flag++; }
+	}
+}
+
+
+#endif
