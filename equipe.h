@@ -1,9 +1,9 @@
 #ifndef _equipe_h
 #define _equipe_h
 
-/**********
- * EQUIPE *
- **********/
+/*******************************
+ * Cadastrar e excluir equipes *
+ *******************************/
 void menuDadosEquipe() {
     int resposta;
     
@@ -14,7 +14,7 @@ void menuDadosEquipe() {
             cadastrarEquipe();
             break;
         case 2:
-            excluitEquipe();
+            excluirEquipe();
     }
 }
 

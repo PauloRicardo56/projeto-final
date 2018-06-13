@@ -2,9 +2,9 @@
 #define _circuito_h
 
 
-/************
- * CIRCUITO *
- ************/
+/*********************************
+ * Cadastrar e excluir circuitos *
+ *********************************/
 void menuDadosCircuito() {
     int resposta;
     

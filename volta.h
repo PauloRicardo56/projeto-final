@@ -1,9 +1,9 @@
 #ifndef _volta_h
 #define _volta_h
 
-/*********
- * VOLTA *
- *********/
+/***************************************
+ * Cadastrar, alterar e excluir voltas *
+ ***************************************/
 void menuDadosVolta() {
     int resposta;
     

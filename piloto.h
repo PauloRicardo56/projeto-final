@@ -1,9 +1,9 @@
 #ifndef _piloto_h
 #define _piloto_h
 
-/**********
- * PILOTO *
- **********/
+/****************************************
+ * Cadastrar, alterar e remover pilotos *
+ ****************************************/
 void menuDadosPiloto() {
     int resposta;
     
