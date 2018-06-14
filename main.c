@@ -10,7 +10,7 @@
 
 
 struct Piloto {
-    int id;
+    int codigo;
     char nome[30], siglaEquipe[4], dataNasc[11], sexo, paisOrigem[20];
 };
 
@@ -47,7 +47,7 @@ int main() {
         resposta = leValidaInt(1, 7, "Digite uma das opcoes do menu");
         switch(resposta) {
             case 1:
-                menuDadosPiloto();
+                menuDadosPiloto(pilotos, &qtdPilotos);
                 break;
             case 2:
                 menuDadosEquipe();

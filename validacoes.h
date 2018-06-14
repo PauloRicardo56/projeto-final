@@ -17,7 +17,9 @@ float leValidaFloat(float min, float max, char msg[]);
 int leValidaInt(int min, int max, char msg[]);
 void leValidaIntPont(int *valor, int min, int max, char msg[]);
 // void leValidaCodigo(int *codigo, int codigos[], int qtdCodigos);
+int* gerarCodigosRandomicos(int codigos[], int qtdCodigos, int maxCodigos, char msg[]);
 void leValidaStringInt(char string[], int tamanho, char msg[]);
+void leValidaDataChar(char data[]);
 void clean_stdin();
 
 
@@ -215,26 +217,48 @@ void leValidaIntPont(int *valor, int min, int max, char msg[]) {
 }
 
 
-// /* 
-//  * Objetivo: Validar codigo para que não seja repetido
-//  * Parametros: Código informado, lista com códigos existentes e mensagem a ser exibida
-//  * Retorna: Nada
-//  */
-// void leValidaCodigo(int *codigo, int codigos[], int qtdCodigos) {
-// 	int flag = 1, i;
+/* 
+ * Objetivo: Gerar tres numeros randomicos nao existentes
+ * Parametros: Lista com códigos existentes, quantidade de codigos, maximo de codigos permitidos e mensagem a ser exibida
+ * Retorna: Endereco de memoria para o vetor contendo os numeros.
+ */
+int* gerarCodigosRandomicos(int codigos[], int qtdCodigos, int maxCodigos, char msg[]) {
+	int flag = 1, i, ii,  qtdNumeros;
+	int diferenca = maxCodigos - qtdCodigos;
+	static int numeros[3] = {0, 0, 0};
 
-// 	*codigo = leValidaInt(1, 99, "Codigo do locatario");
-// 	while(flag > 0 && qtdCodigos > 1) {
-// 		flag = 0;
-// 		for(i = 0; i < qtdCodigos; i++) {
-// 			if (codigos[qtdCodigos].codigo == *codigo) {
-// 				flag++;
-// 				*codigo = leValidaInt(1, 99, "Codigo do ja existente\nInforme outro");
-// 				break;
-// 			}
-// 		}
-// 	}
-// }
+	if(diferenca < 3) {
+		qtdNumeros = diferenca;
+	} else {
+		qtdNumeros = 3;
+	}
+
+	for(i=0; i<qtdNumeros; i++) {
+		flag = 1;
+		while(flag > 0) {
+			flag = 0;
+			numeros[i] = rand() % 10 + 1;
+			if (qtdCodigos > 1) {
+				for(ii = 0; ii < qtdCodigos; ii++) {
+					if (codigos[ii] == numeros[i]) {
+						flag++;
+						break;
+					}
+				}
+			}
+			if(i > 0) {
+				for(ii = 0; ii < i; ii++) {
+					if(numeros[ii] == numeros[i]) {
+						flag++;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	return numeros;
+}
 
 
 /* 

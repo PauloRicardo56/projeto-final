@@ -4,20 +4,20 @@
 /****************************************
  * Cadastrar, alterar e remover pilotos *
  ****************************************/
-void menuDadosPiloto() {
+void menuDadosPiloto(struct Piloto pilotos[], int *qtdPilotos) {
     int resposta;
     
     showMenuPiloto();
     resposta = leValidaInt(1, 3, "Digite uma das opcoes do menu");
     switch(resposta) {
         case 1:
-            cadastrarPiloto();
+            cadastrarPiloto(pilotos, qtdPilotos);
             break;
         case 2:
             alterarPiloto();
             break;
         case 3:
-            removerPiloto();
+            removerPiloto(pilotos, qtdPilotos);
     }
 }
 
@@ -29,13 +29,16 @@ void showMenuPiloto() {
 }
 
 
-void cadastrarPiloto() {}
+void cadastrarPiloto(struct Piloto pilotos[], int *qtdPilotos) {
+    leValidaCodigo(&pilotos[*qtdPilotos].codigo, pilotos, *qtdPilotos, "Codigo do piloto");
+    leValidaNome(pilotos[*qtdPilotos].nome, "Nome do piloto");
+}
 
 
-void alterarPiloto();
+void alterarPiloto() {}
 
 
-void removerPiloto();
+void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {}
 
 
 
