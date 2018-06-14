@@ -62,13 +62,11 @@ void cadastrarPiloto(struct Piloto pilotos[], int *qtdPilotos) {
     for(i=0; i<qtdCodigos; i++) {
         printf("%d) %d\t", i+1, codigos[i]);
     }
-
     resposta = leValidaInt(1, i, "\n\nSelecione um dos codigos acima");
     printf("@@ %d - %d\n", *qtdPilotos, resposta);
     pilotos[*qtdPilotos].codigo = codigos[resposta-1];
 
-    
-    // leValidaNome(pilotos[*qtdPilotos].nome, "Nome do piloto");
+    leValidaNome(pilotos[*qtdPilotos].nome, "Nome do piloto");
     (*qtdPilotos)++;
 }
 
