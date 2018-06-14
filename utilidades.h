@@ -36,7 +36,6 @@ void formataNomeMaiusculo(char string[]) {
 //  * Objetivo: Gerar numeros randomicos de 1 à n
 //  * Parametros: Número qualquer
 //  * Retorna: Quantidade de dígitos desse número
- 
 // int gerarNumeroRandomico(int n) {
 // 	int numero = rand() % n + 1;
 // 	return numero;
