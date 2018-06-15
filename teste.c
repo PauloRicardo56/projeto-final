@@ -1,16 +1,20 @@
 #include <stdio.h>
 #include "utilidades.h"
 #include "validacoes.h"
+#include "piloto.h"
+// #define MAX_PILOTOS 10
 
 
 int main() {
-	// srand(time(NULL));
-	// int *numeros, i, ii, codigos[9] = {6,2,3,4,5,0,0,0,0}, flag = 0;
+	int qtdPilotos = 0, i;
+	srand(time(NULL));
+	struct Piloto pilotos[MAX_PILOTOS]
 
-	for(i=0; i<10; i++) {
-		numeros = gerarCodigosRandomicos(codigos, 5, 9, "Teste");
-		printf("%d %d %d\n", numeros[0], numeros[1], numeros[2]);
+	while (1) {
+		menuDadosPiloto(pilotos, &qtdPilotos);
+		for(i = 0; i<qtdPilotos; i++) {
+			printf("%d - ", pilotos[i].codigo);
+		}
+		printf("\n");
 	}
-	printf("\nFlag = %d\n", flag);
-
 }
