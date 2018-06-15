@@ -9,10 +9,10 @@
 #include "relatorios.h"
 
 
-struct Piloto {
-    int codigo;
-    char nome[30], siglaEquipe[4], dataNasc[11], sexo, paisOrigem[20];
-};
+// struct Piloto {
+//     int codigo;
+//     char nome[30], siglaEquipe[4], dataNasc[11], sexo, paisOrigem[20];
+// };
 
 
 // struct Equipe {
@@ -36,11 +36,12 @@ struct MelhorVolta {
 
 
 int main() {
+    srand(time(NULL));
     struct Piloto pilotos[100];
     struct Equipe equipes[100];
     struct Circuito circuitos[100];
     struct MelhorVolta melhoresVoltas[100];
-    int resposta, qtdPilotos, qtdEquipes = 0, qtdCircuitos, qtdMelhoresVoltas;
+    int resposta, qtdPilotos = 0, qtdEquipes = 0, qtdCircuitos, qtdMelhoresVoltas;
     
     do {
         showMenu();

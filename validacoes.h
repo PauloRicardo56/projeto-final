@@ -18,7 +18,7 @@ float leValidaFloat(float min, float max, char msg[]);
 int leValidaInt(int min, int max, char msg[]);
 void leValidaIntPont(int *valor, int min, int max, char msg[]);
 // void leValidaCodigo(int *codigo, int codigos[], int qtdCodigos);
-int* gerarCodigosRandomicos(int codigos[], int qtdCodigos, int maxCodigos, char msg[]);
+// int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos);
 void leValidaStringInt(char string[], int tamanho, char msg[]);
 void leValidaDataChar(char data[]);
 void clean_stdin();
@@ -247,43 +247,43 @@ void leValidaIntPont(int *valor, int min, int max, char msg[]) {
  * Parametros: Lista com códigos existentes, quantidade de codigos, maximo de codigos permitidos e mensagem a ser exibida
  * Retorna: Endereco de memoria para o vetor contendo os numeros.
  */
-int* gerarCodigosRandomicos(int codigos[], int qtdCodigos, int maxCodigos, char msg[]) {
-	int flag = 1, i, ii,  qtdNumeros;
-	int diferenca = maxCodigos - qtdCodigos;
-	static int numeros[3] = {0, 0, 0};
+// int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos) {
+// 	int flag = 1, i, ii,  qtdNumeros;
+// 	int diferenca = maxCodigos - qtdCodigos;
+// 	static int numeros[3] = {0, 0, 0};
 
-	if(diferenca < 3) {
-		qtdNumeros = diferenca;
-	} else {
-		qtdNumeros = 3;
-	}
+// 	if(diferenca < 3) {
+// 		qtdNumeros = diferenca;
+// 	} else {
+// 		qtdNumeros = 3;
+// 	}
 
-	for(i=0; i<qtdNumeros; i++) {
-		flag = 1;
-		while(flag > 0) {
-			flag = 0;
-			numeros[i] = rand() % 10 + 1;
-			if (qtdCodigos > 1) {
-				for(ii = 0; ii < qtdCodigos; ii++) {
-					if (codigos[ii] == numeros[i]) {
-						flag++;
-						break;
-					}
-				}
-			}
-			if(i > 0) {
-				for(ii = 0; ii < i; ii++) {
-					if(numeros[ii] == numeros[i]) {
-						flag++;
-						break;
-					}
-				}
-			}
-		}
-	}
+// 	for(i=0; i<qtdNumeros; i++) {
+// 		flag = 1;
+// 		while(flag > 0) {
+// 			flag = 0;
+// 			numeros[i] = rand() % 10 + 1;
+// 			if (qtdCodigos > 1) {
+// 				for(ii = 0; ii < qtdCodigos; ii++) {
+// 					if (pilotos[ii].codigo == numeros[i]) {
+// 						flag++;
+// 						break;
+// 					}
+// 				}
+// 			}
+// 			if(i > 0) {
+// 				for(ii = 0; ii < i; ii++) {
+// 					if(numeros[ii] == numeros[i]) {
+// 						flag++;
+// 						break;
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
 
-	return numeros;
-}
+// 	return numeros;
+// }
 
 
 /* 
