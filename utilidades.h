@@ -26,7 +26,7 @@ void formataNomeMaiusculo(char string[], int toLower) {
 			string[i+1] = toupper(string[i+1]);
 			i++;
 		} else {
-			if(lower == 1) {
+			if(toLower == 1) {
 				string[i] = tolower(string[i]);
 			}
 		}

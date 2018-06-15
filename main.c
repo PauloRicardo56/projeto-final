@@ -15,9 +15,9 @@ struct Piloto {
 };
 
 
-struct Equipe {
-    char nome[40], sigla[4], paisOrigem[20];
-};
+// struct Equipe {
+//     char nome[40], sigla[4], paisOrigem[20];
+// };
 
 
 struct Circuito {
@@ -40,7 +40,7 @@ int main() {
     struct Equipe equipes[100];
     struct Circuito circuitos[100];
     struct MelhorVolta melhoresVoltas[100];
-    int resposta, qtdPilotos, qtdEquipes, qtdCircuitos, qtdMelhoresVoltas;
+    int resposta, qtdPilotos, qtdEquipes = 0, qtdCircuitos, qtdMelhoresVoltas;
     
     do {
         showMenu();
@@ -50,7 +50,7 @@ int main() {
                 menuDadosPiloto(pilotos, &qtdPilotos);
                 break;
             case 2:
-                menuDadosEquipe();
+                menuDadosEquipe(equipes, &qtdEquipes);
                 break;
             case 3:
                 menuDadosCircuito();
