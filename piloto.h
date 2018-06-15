@@ -1,5 +1,6 @@
 #ifndef _piloto_h
 #define _piloto_h
+#include "equipe.h"
 #define MAX_PILOTOS 10
 
 /****************************************
@@ -12,22 +13,23 @@ struct Piloto {
 
 
 
-void menuDadosPiloto(struct Piloto pilotos[], int *qtdPilotos);
+void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes);
 void showMenuPiloto();
-void cadastrarPiloto(struct Piloto pilotos[], int *qtdPilotos);
+void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes);
+int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes);
 int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos);
 // void alterarPiloto();
 // void removerPiloto(struct Piloto pilotos[], int *qtdPilotos);
 
 
-void menuDadosPiloto(struct Piloto pilotos[], int *qtdPilotos) {
+void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) {
     int resposta;
     
     showMenuPiloto();
     resposta = leValidaInt(1, 3, "Digite uma das opcoes do menu");
     switch(resposta) {
         case 1:
-            cadastrarPiloto(pilotos, qtdPilotos);
+            cadastrarPiloto(pilotos, equipes, qtdPilotos, qtdEquipes);
             break;
         case 2:
             //alterarPiloto();
@@ -46,7 +48,7 @@ void showMenuPiloto() {
 }
 
 
-void cadastrarPiloto(struct Piloto pilotos[], int *qtdPilotos) {
+void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) {
     int *codigos, qtdCodigos, resposta, i;
 
     if(*qtdPilotos == MAX_PILOTOS) {
@@ -63,11 +65,41 @@ void cadastrarPiloto(struct Piloto pilotos[], int *qtdPilotos) {
         printf("%d) %d\t", i+1, codigos[i]);
     }
     resposta = leValidaInt(1, i, "\n\nSelecione um dos codigos acima");
-    printf("@@ %d - %d\n", *qtdPilotos, resposta);
     pilotos[*qtdPilotos].codigo = codigos[resposta-1];
 
     leValidaNome(pilotos[*qtdPilotos].nome, "Nome do piloto");
-    (*qtdPilotos)++;
+
+    if(procuraSiglaExistente(pilotos, equipes, *qtdPilotos, qtdEquipes)) {
+        // (*qtdPilotos)++;
+    }
+    
+}
+
+
+int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes) {
+    int i, flag = 0;
+    char resposta;
+
+    leValidaSigla(pilotos[qtdPilotos].siglaEquipe, 3, "Sigla da equipe do piloto");
+    if(qtdPilotos > 0) {
+        for(i=0; i<*qtdEquipes; i++) {
+            if(strcmp(equipes[i].sigla, pilotos[qtdPilotos].siglaEquipe) == 0) {
+                flag++;
+            }
+        }
+        if(flag == 0) {
+            resposta = leValidaChar('s','n', "Sigla nao cadastrada em equipes. Deseja cadastra-la?");
+            switch(resposta) {
+                case 's':
+                    cadastrarEquipe(equipes, qtdEquipes);
+                    break;
+                case 'n':
+                    return 0;
+            }
+        }
+    } else {
+        return 1;
+    }
 }
 
 
