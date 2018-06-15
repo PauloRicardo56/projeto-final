@@ -9,7 +9,7 @@
 
 
 int calcDigitosNum(int num);
-void formataNomeMaiusculo(char string[]);
+void formataNomeMaiusculo(char string[], int toLower);
 
 
 /* 
@@ -17,7 +17,7 @@ void formataNomeMaiusculo(char string[]);
  * Parametros: Variável do nome
  * Retorna: Nada
  */
-void formataNomeMaiusculo(char string[]) {
+void formataNomeMaiusculo(char string[], int toLower) {
 	int i;
 	for(i = 0; i < strlen(string); i++) {
 		if(i == 0) {
@@ -26,7 +26,9 @@ void formataNomeMaiusculo(char string[]) {
 			string[i+1] = toupper(string[i+1]);
 			i++;
 		} else {
-			string[i] = tolower(string[i]);
+			if(lower == 1) {
+				string[i] = tolower(string[i]);
+			}
 		}
 	}
 }
