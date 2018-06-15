@@ -4,8 +4,8 @@
 
 
 int main() {
-	srand(time(NULL));
-	int *numeros, i, ii, codigos[9] = {6,2,3,4,5,0,0,0,0}, flag = 0;
+	// srand(time(NULL));
+	// int *numeros, i, ii, codigos[9] = {6,2,3,4,5,0,0,0,0}, flag = 0;
 
 	for(i=0; i<10; i++) {
 		numeros = gerarCodigosRandomicos(codigos, 5, 9, "Teste");
