@@ -13,6 +13,7 @@ struct Equipe {
 void menuDadosEquipe(struct Equipe equipes[], int *qtdEquipes);
 void showMenuEquipe();
 void cadastrarEquipe(struct Equipe equipes[], int *qtdEquipes);
+void leValidaSiglaNaoRepetida(struct Equipe equipes[], int qtdEquipes);
 // void excluirEquipe();
 
 
@@ -27,6 +28,7 @@ void menuDadosEquipe(struct Equipe equipes[], int *qtdEquipes) {
             break;
         case 2:
             // excluirEquipe();
+            break;
     }
 }
 
@@ -38,7 +40,7 @@ void showMenuEquipe() {
 
 
 void cadastrarEquipe(struct Equipe equipes[], int *qtdEquipes) {
-    validaSiglaNaoRepetida(equipes, *qtdEquipes);
+    leValidaSiglaNaoRepetida(equipes, *qtdEquipes);
     leValidaNome(equipes[*qtdEquipes].nome, 0, "Nome da equipe");
     leValidaNome(equipes[*qtdEquipes].paisOrigem, 1, "Pais de origem");
     (*qtdEquipes)++;

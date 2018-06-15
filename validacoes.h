@@ -8,7 +8,7 @@
 #include "utilidades.h"
 
 
-void leValidaNome(char nome[], char msg[]);
+void leValidaNome(char nome[], int toLower, char msg[]);
 void leValidaSigla(char nome[], int maxLetras, char msg[]);
 void leValidaNomeTamanho(char nome[], int tamanho, char msg[]);
 void leValidaNomeArquivoWindows(char nome[], char msg[]);
@@ -55,10 +55,12 @@ void leValidaNome(char nome[], int toLower, char msg[]) {
  */
 void leValidaSigla(char sigla[], int maxLetras, char msg[]) {
 	char c;
-	int flag=1, i
+	int flag=1, i;
+
 	while (flag > 0) {
 		flag = 0;
-		printf("%s max. %d letra(s) (Nao pode ser vazio, conter numeros ou espacos) >> ", maxLetras, msg);
+		printf("%s max. %d letra(s) (Nao pode ser vazio, conter numeros ou espacos) >> ", msg, maxLetras);
+
 		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
 			sigla[i] = toupper(c);
 			if(!isalpha(c)) { flag++; }
@@ -66,6 +68,7 @@ void leValidaSigla(char sigla[], int maxLetras, char msg[]) {
 		sigla[i] = '\0';
 		if(strlen(sigla) == 0 || strlen(sigla) > maxLetras) { flag++; }
 	}
+
 }
 
 
@@ -89,7 +92,7 @@ void leValidaNomeTamanho(char nome[], int tamanho, char msg[]) {
 		nome[i] = '\0';
 		if(strlen(nome) == 0 || strlen(nome) == espacos || strlen(nome) > tamanho) { flag++; }
 	}
-	formataNomeMaiusculo(nome);
+	formataNomeMaiusculo(nome, 1);
 }
 
 
@@ -113,7 +116,7 @@ void leValidaNomeArquivoWindows(char nome[], char msg[]) {
 		nome[i] = '\0';
 		if(strlen(nome) == 0 || strlen(nome) == espacos) { flag++; }
 	}
-	formataNomeMaiusculo(nome);
+	formataNomeMaiusculo(nome, 1);
 }
 
 
