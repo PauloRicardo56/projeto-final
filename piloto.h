@@ -67,10 +67,10 @@ void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
     resposta = leValidaInt(1, i, "\n\nSelecione um dos codigos acima");
     pilotos[*qtdPilotos].codigo = codigos[resposta-1];
 
-    leValidaNome(pilotos[*qtdPilotos].nome, "Nome do piloto");
+    leValidaNome(pilotos[*qtdPilotos].nome, 1, "Nome do piloto");
 
     if(procuraSiglaExistente(pilotos, equipes, *qtdPilotos, qtdEquipes)) {
-        // (*qtdPilotos)++;
+        (*qtdPilotos)++;
     }
     
 }
@@ -81,24 +81,19 @@ int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int 
     char resposta;
 
     leValidaSigla(pilotos[qtdPilotos].siglaEquipe, 3, "Sigla da equipe do piloto");
-    if(qtdPilotos > 0) {
-        for(i=0; i<*qtdEquipes; i++) {
-            if(strcmp(equipes[i].sigla, pilotos[qtdPilotos].siglaEquipe) == 0) {
-                flag++;
-            }
+    for(i=0; i<*qtdEquipes; i++) {
+        if(strcmp(equipes[i].sigla, pilotos[qtdPilotos].siglaEquipe) == 0) {
+            flag++;
         }
-        if(flag == 0) {
-            resposta = leValidaChar('s','n', "Sigla nao cadastrada em equipes. Deseja cadastra-la?");
-            switch(resposta) {
-                case 's':
-                    cadastrarEquipe(equipes, qtdEquipes);
-                    break;
-                case 'n':
-                    return 0;
-            }
+    }
+    if(flag == 0) {
+        resposta = leValidaChar2('s','n', "Sigla nao cadastrada em equipes. Deseja cadastra-la?");
+        switch(resposta) {
+            case 's':
+                cadastrarEquipe(equipes, qtdEquipes);
+            case 'n':
+                return 0;
         }
-    } else {
-        return 1;
     }
 }
 
