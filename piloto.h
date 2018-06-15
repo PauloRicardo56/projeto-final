@@ -7,8 +7,8 @@
  * Cadastrar, alterar e remover pilotos *
  ****************************************/
 struct Piloto {
-    int codigo;
-    char nome[30], siglaEquipe[4], dataNasc[11], sexo, paisOrigem[20];
+    int codigo, dataNascimento[3]; //Dia, mes e ano
+    char nome[30], siglaEquipe[4], sexo, paisOrigem[20];
 };
 
 
@@ -42,17 +42,18 @@ void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
 
 
 void showMenuPiloto() {
-    printf("1-Cadastrar piloto\n");
-    printf("2-Alterar piloto\n");
-    printf("3-Remover piloto\n");
+    printf("1-Cadastrar piloto(a)\n");
+    printf("2-Alterar piloto(a)\n");
+    printf("3-Remover piloto(a)\n");
 }
 
 
 void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) {
     int *codigos, qtdCodigos, resposta, i;
+    char data[11];
 
     if(*qtdPilotos == MAX_PILOTOS) {
-        printf("Nao é mais possivel adicionar pilotos.\n");
+        printf("Nao é mais possivel adicionar pilotos(as).\n");
         return;
     }
     if(MAX_PILOTOS - *qtdPilotos >= 3) {
@@ -67,9 +68,12 @@ void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
     resposta = leValidaInt(1, i, "\n\nSelecione um dos codigos acima");
     pilotos[*qtdPilotos].codigo = codigos[resposta-1];
 
-    leValidaNome(pilotos[*qtdPilotos].nome, 1, "Nome do piloto");
+    leValidaNome(pilotos[*qtdPilotos].nome, 1, "Nome do(a) piloto(a)");
 
     if(procuraSiglaExistente(pilotos, equipes, *qtdPilotos, qtdEquipes)) {
+        leValidaDataInt(data, pilotos[*qtdPilotos].dataNascimento, "Data de nascimento do(a) piloto(a)");
+        pilotos[*qtdPilotos].sexo = leValidaChar2('f', 'm', "Sexo do(a) piloto(a)");
+        leValidaNome(pilotos[*qtdPilotos].paisOrigem, 1, "País do(a) piloto(a)");
         (*qtdPilotos)++;
     }
     
@@ -136,7 +140,12 @@ int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodi
 }
 
 
-// void alterarPiloto() {}
+// void alterarPiloto() {
+//     int pesquisa;
+
+//     leValidaInt(1, 99, "Codigo do piloto");
+//     while
+// }
 
 
 // void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {}

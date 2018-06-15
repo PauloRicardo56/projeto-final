@@ -20,7 +20,7 @@ void leValidaIntPont(int *valor, int min, int max, char msg[]);
 // void leValidaCodigo(int *codigo, int codigos[], int qtdCodigos);
 // int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos);
 void leValidaStringInt(char string[], int tamanho, char msg[]);
-void leValidaDataChar(char data[]);
+void leValidaDataChar(char data[], char msg[]);
 void clean_stdin();
 
 
@@ -326,12 +326,12 @@ void clean_stdin() {
  * Parametros: Variável contendo a string e vetor de inteiros que irá conter o dia, mes e ano validados
  * Retorna: Nada
  */
-void leValidaDataInt(char data[], int diaMesAno[]) {
+void leValidaDataInt(char data[], int diaMesAno[], char msg[]) {
 	char c, temp[5];
 	int flag=1, i,j,k, espacos=0;
 	while(flag > 0) {
 		flag = 0;
-		leValidaDataChar(data);
+		leValidaDataChar(data, msg);
 		for(i=0, j=0, k=0; i<strlen(data); i++, j++) {
 			if(data[i] == '/') { 
 				temp[j] = '\0';
@@ -344,9 +344,15 @@ void leValidaDataInt(char data[], int diaMesAno[]) {
 		temp[j] = '\0';
 		diaMesAno[k] = atoi(temp);
 
+
+		if(diaMesAno[2] == 0) { diaMesAno[2] = 2000; }
+		else if(diaMesAno[2] < 1) { printf("Ano invalido"); flag++; }
+		else if(diaMesAno[2] <= 18) { diaMesAno[2] += 2000; }
+		else if(diaMesAno[2] <= 99) { diaMesAno[2] += 1900; }
+		else if(diaMesAno[2] <= 1900) { printf("Informe um ano ate 1900"); flag++; }
+
 		if(diaMesAno[0] < 1 || diaMesAno[0] > 31) { printf("Dia invalido"); flag++; }
 		else if(diaMesAno[1] < 1 || diaMesAno[1] > 12) { printf("Mes invalido"); flag++; }
-		else if(diaMesAno[2] < 1) { printf("Ano invalido"); flag++; }
 		else if(diaMesAno[1] == 2 && diaMesAno[0] > 28) { 
 			printf("Mes %d nao contem dia %d", diaMesAno[1], diaMesAno[0]);
 			flag++;
@@ -366,13 +372,14 @@ void leValidaDataInt(char data[], int diaMesAno[]) {
  * Parametros: Variável que irá conter a string
  * Retorna: Nada
  */
-void leValidaDataChar(char data[]) {
+void leValidaDataChar(char data[], char msg[]) {
 	char c;
 	int flag=1, i, espacos=0;
+
 	while (flag > 0) {
 		flag=0;
 		espacos=0;
-		printf("Data (dd/mm/aaaa) >> ");
+		printf("%s (dd/mm/aaaa) >> ", msg);
 		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
 			data[i] = c;
 			if(!isdigit(c) && c != '/') { flag++; }
@@ -381,6 +388,7 @@ void leValidaDataChar(char data[]) {
 		data[i] = '\0';
 		if(strlen(data) == 0 || strlen(data) == espacos || strlen(data) > 10) { flag++; }
 	}
+	printf("@@ _\n");
 }
 
 
