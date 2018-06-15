@@ -48,7 +48,7 @@ int main() {
         resposta = leValidaInt(1, 7, "Digite uma das opcoes do menu");
         switch(resposta) {
             case 1:
-                menuDadosPiloto(pilotos, &qtdPilotos);
+                menuDadosPiloto(pilotos, equipes, &qtdPilotos);
                 break;
             case 2:
                 menuDadosEquipe(equipes, &qtdEquipes);
