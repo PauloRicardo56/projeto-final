@@ -19,7 +19,7 @@ void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
 int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes);
 int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos);
 void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes);
-// void removerPiloto(struct Piloto pilotos[], int *qtdPilotos);
+void removerPiloto(struct Piloto pilotos[], int *qtdPilotos);
 
 
 void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) {
@@ -35,7 +35,7 @@ void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
             alterarPiloto(pilotos, equipes, *qtdPilotos, qtdEquipes);
             break;
         case 3:
-            //removerPiloto(pilotos, qtdPilotos);
+            removerPiloto(pilotos, qtdPilotos);
             break;
     }
 }
@@ -229,7 +229,45 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
 }
 
 
-// void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {}
+void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {
+    int pesquisa, flag = 0, i;
+    char resposta;
+
+    pesquisa = leValidaInt(1, 99, "Codigo do piloto");
+    for(i=0; i<*qtdPilotos; i++) {
+        if(pilotos[i].codigo == pesquisa) {
+            flag++;
+            break;
+        }
+    }
+    if(flag == 0) {
+        printf("Codigo de piloto(a) nao encontrado.\n");
+        return;
+    }
+    printf("Codigo: %d\nNome: %s\nSigla da equipe: %s\nData nasc.: %02d/%02d/%d\nSexo: %s\nPaís de origem: %s\n\n", pilotos[i].codigo, 
+        pilotos[i].nome, pilotos[i].siglaEquipe, pilotos[i].dataNascimento[0], pilotos[i].dataNascimento[1], pilotos[i].dataNascimento[2], 
+        pilotos[i].sexo == 'm' ? "Masculino" : "Feminino", pilotos[i].paisOrigem);
+    resposta = leValidaChar2('s', 'n', "Deseja realmente excluir esse piloto?");
+    if(resposta == 's') {
+        pilotos[i].codigo = pilotos[*qtdPilotos-1].codigo;
+
+        strcpy(pilotos[i].nome, pilotos[*qtdPilotos-1].nome);
+        strcpy(pilotos[i].siglaEquipe, pilotos[*qtdPilotos-1].siglaEquipe);
+        pilotos[i].dataNascimento[0] = pilotos[*qtdPilotos-1].dataNascimento[0];
+        pilotos[i].dataNascimento[1] = pilotos[*qtdPilotos-1].dataNascimento[1];
+
+        pilotos[i].dataNascimento[2] = pilotos[*qtdPilotos-1].dataNascimento[2];
+
+        pilotos[i].sexo = pilotos[*qtdPilotos-1].sexo;
+        // printf("@@ OI\n");
+        strcpy(pilotos[i].paisOrigem, pilotos[*qtdPilotos-1].paisOrigem);
+
+        (*qtdPilotos)--;
+        printf("Piloto excluido com sucesso.\n");
+        return;
+    }
+    printf("Exclusao cancelada.\n");
+}
 
 
 #endif

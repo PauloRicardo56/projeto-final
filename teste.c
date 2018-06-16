@@ -18,7 +18,7 @@ int main() {
 	pilotos[0].dataNascimento[0] = 17;
 	pilotos[0].dataNascimento[1] = 6;
 	pilotos[0].dataNascimento[2] = 1997;
-	strcpy(pilotos[0].nome, "Paulo");
+	strcpy(pilotos[0].nome, "Ricardo");
 	strcpy(pilotos[0].siglaEquipe, "FRR");
 	pilotos[0].sexo = 'm';
 	strcpy(pilotos[0].paisOrigem, "Brasil");
@@ -41,7 +41,8 @@ int main() {
 	// 	}
 	// 	printf("\n");
 	// }
-	alterarPiloto(pilotos, equipes, qtdPilotos, qtdEquipes);
+	// alterarPiloto(pilotos, equipes, qtdPilotos, qtdEquipes);
+	removerPiloto(pilotos, &qtdPilotos);
 	for(i = 0; i<qtdPilotos; i++) {
 			printf("%d - %s - %s - %d/%02d/%d - %s - %s\n", pilotos[i].codigo, pilotos[i].nome, pilotos[i].siglaEquipe,
 				pilotos[i].dataNascimento[0], pilotos[i].dataNascimento[1], pilotos[i].dataNascimento[2], pilotos[i].sexo == 'm' ? "Masculino" 
