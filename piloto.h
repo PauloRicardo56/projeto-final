@@ -18,7 +18,7 @@ void showMenuPiloto();
 void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes);
 int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes);
 int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos);
-// void alterarPiloto();
+void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes);
 // void removerPiloto(struct Piloto pilotos[], int *qtdPilotos);
 
 
@@ -32,7 +32,7 @@ void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
             cadastrarPiloto(pilotos, equipes, qtdPilotos, qtdEquipes);
             break;
         case 2:
-            //alterarPiloto();
+            alterarPiloto(pilotos, equipes, *qtdPilotos, qtdEquipes);
             break;
         case 3:
             //removerPiloto(pilotos, qtdPilotos);
@@ -95,10 +95,12 @@ int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int 
         switch(resposta) {
             case 's':
                 cadastrarEquipe(equipes, qtdEquipes);
+                break;
             case 'n':
                 return 0;
         }
     }
+    return 1;
 }
 
 
@@ -140,12 +142,91 @@ int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodi
 }
 
 
-// void alterarPiloto() {
-//     int pesquisa;
+void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes) {
+    int pesquisa, flag = 0, i, ii;
+    char nomeTemp[40], sexoTemp, paisOrigemTemp[30], siglaEquipeTemp[4], resposta, dataChar[11];
+    int dataTemp[3], codigoTemp;
 
-//     leValidaInt(1, 99, "Codigo do piloto");
-//     while
-// }
+    pesquisa = leValidaInt(1, 99, "Codigo do piloto");
+    for(i=0; i<qtdPilotos; i++) {
+        if(pilotos[i].codigo == pesquisa) {
+            flag++;
+            break;
+        }
+    }
+    if(flag == 0) {
+        printf("Codigo de piloto(a) nao encontrado.\n");
+        return;
+    }
+
+    codigoTemp = pilotos[i].codigo;
+    strcpy(nomeTemp, pilotos[i].nome);
+    strcpy(siglaEquipeTemp, pilotos[i].siglaEquipe);
+    dataTemp[0] = pilotos[i].dataNascimento[0];
+    dataTemp[1] = pilotos[i].dataNascimento[1];
+    dataTemp[2] = pilotos[i].dataNascimento[2];
+    sexoTemp = pilotos[i].sexo;
+    strcpy(paisOrigemTemp, pilotos[i].paisOrigem);
+
+    printf("Codigo: %d\nNome: %s\nSigla da equipe: %s\nData nasc.: %02d/%02d/%d\nSexo: %s\nPaís de origem: %s\n\n", codigoTemp, nomeTemp, 
+        pilotos[i].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp == 'm' ? "Masculino" : "Feminino", paisOrigemTemp);
+    resposta = leValidaChar2('s', 'n', "Deseja alterar o nome?");
+    if(resposta == 's') {
+        leValidaNome(nomeTemp, 1, "Novo nome");
+    }
+    printf("Codigo: %d\nNome: %s\nSigla da equipe: %s\nData nasc.: %02d/%02d/%d\nSexo: %s\nPaís de origem: %s\n\n", codigoTemp, nomeTemp, 
+        pilotos[i].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp == 'm' ? "Masculino" : "Feminino", paisOrigemTemp);
+    resposta = leValidaChar2('s', 'n', "Deseja alterar a sigla da equipe?");
+    if(resposta == 's') {
+        if(!procuraSiglaExistente(pilotos, equipes, i, &qtdEquipes)) {
+            strcpy(pilotos[i].siglaEquipe, siglaEquipeTemp);
+        }
+    }
+    printf("Codigo: %d\nNome: %s\nSigla da equipe: %s\nData nasc.: %02d/%02d/%d\nSexo: %s\nPaís de origem: %s\n\n", codigoTemp, nomeTemp, 
+        pilotos[i].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp == 'm' ? "Masculino" : "Feminino", paisOrigemTemp);
+    resposta = leValidaChar2('s', 'n', "Deseja alterar a data de nascimento?");
+    if(resposta == 's') {
+        leValidaDataInt(dataChar, dataTemp, "Nova data");
+    }
+    printf("Codigo: %d\nNome: %s\nSigla da equipe: %s\nData nasc.: %02d/%02d/%d\nSexo: %s\nPaís de origem: %s\n\n", codigoTemp, nomeTemp, 
+        pilotos[i].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp == 'm' ? "Masculino" : "Feminino", paisOrigemTemp);
+    resposta = leValidaChar2('s', 'n', "Deseja alterar o sexo?");
+    if(resposta == 's') {
+        sexoTemp = leValidaChar2('m', 'f', "Novo sexo");
+    }
+    printf("Codigo: %d\nNome: %s\nSigla da equipe: %s\nData nasc.: %02d/%02d/%d\nSexo: %s\nPaís de origem: %s\n\n", codigoTemp, nomeTemp, 
+        pilotos[i].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp == 'm' ? "Masculino" : "Feminino", paisOrigemTemp);
+    resposta = leValidaChar2('s', 'n', "Deseja alterar o país de origem?");
+    if(resposta == 's') {
+        leValidaNome(paisOrigemTemp, 1, "Novo país de origem");
+    }
+
+    resposta = leValidaChar2('s', 'n', "Deseja fazer as alteracoes?");
+    if(resposta == 's') {
+        for(ii=0; ii<qtdPilotos; ii++) {
+            if(i != ii) {
+                if(strcmp(nomeTemp, pilotos[ii].nome) == 0 && strcmp(pilotos[i].siglaEquipe, pilotos[ii].siglaEquipe) == 0 
+                && (dataTemp[0] == pilotos[ii].dataNascimento[0] && dataTemp[1] == pilotos[ii].dataNascimento[1] && 
+                dataTemp[2] == pilotos[ii].dataNascimento[2]) && sexoTemp == pilotos[ii].sexo &&
+                strcmp(paisOrigemTemp, pilotos[ii].paisOrigem) == 0) {
+                    printf("Dados de pilotos ja encotrados em piloto %d (codigo).\nCancelando operacao.\n\n", pilotos[ii].codigo);
+                    return;
+                }
+            }
+        }
+        pilotos[i].codigo = codigoTemp;
+        strcpy(pilotos[i].nome, nomeTemp);
+        //strcpy(pilotos[i].siglaEquipe, siglaEquipeTemp);
+        pilotos[i].dataNascimento[0] = dataTemp[0];
+        pilotos[i].dataNascimento[1] = dataTemp[1];
+        pilotos[i].dataNascimento[2] = dataTemp[2];
+        pilotos[i].sexo = sexoTemp;
+        strcpy(pilotos[i].paisOrigem, paisOrigemTemp);
+        printf("Dados alterados!\n");
+    } else {
+        strcpy(pilotos[i].siglaEquipe, siglaEquipeTemp);
+    }
+}
 
 
 // void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {}
