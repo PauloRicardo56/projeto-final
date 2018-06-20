@@ -32,15 +32,18 @@ int main() {
 	pilotos[1].sexo = 'm';
 	strcpy(pilotos[1].paisOrigem, "Brasil");
 
-	
-	// removerPiloto(pilotos, &qtdPilotos);
-	alterarPiloto(pilotos, equipes, qtdPilotos, &qtdEquipes);
-	for(i = 0; i<qtdPilotos; i++) {
+	while(1) {
+		menuDadosPiloto(pilotos, equipes, &qtdPilotos, &qtdEquipes);
+		for(i = 0; i<qtdPilotos; i++) {
 			printarDados(pilotos[i].codigo, pilotos[i].nome, pilotos[i].siglaEquipe, pilotos[i].dataNascimento[0], pilotos[i].dataNascimento[1],
-                     pilotos[i].dataNascimento[2], pilotos[i].sexo, pilotos[i].paisOrigem);
+                         pilotos[i].dataNascimento[2], pilotos[i].sexo, pilotos[i].paisOrigem);
+		}
 	}
-	// char data[11];
-	// int dat[3];
-	// leValidaDataInt(data, dat, "Teste");
-	// printf("%d/%d/%d", dat[0], dat[1], dat[2]);
+
+	// removerPiloto(pilotos, &qtdPilotos);
+	// alterarPiloto(pilotos, equipes, qtdPilotos, &qtdEquipes);
+	// for(i = 0; i<qtdPilotos; i++) {
+	// 		printarDados(pilotos[i].codigo, pilotos[i].nome, pilotos[i].siglaEquipe, pilotos[i].dataNascimento[0], pilotos[i].dataNascimento[1],
+ //                     pilotos[i].dataNascimento[2], pilotos[i].sexo, pilotos[i].paisOrigem);
+	// }
 }

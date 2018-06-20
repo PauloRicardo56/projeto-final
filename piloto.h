@@ -180,7 +180,7 @@ int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodi
 void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes) {
     int flag = 0, i, ii, respostaInt;
     char nomeTemp[40], sexoTemp, paisOrigemTemp[30], siglaEquipeTemp[4], resposta, dataChar[11];
-    int dataTemp[3], codigoTemp, indice, indices[qtdPilotos];
+    int dataTemp[3], codigoTemp, indice = 0, indices[qtdPilotos];
 
     if(pesquisaDadosPiloto(pilotos, qtdPilotos, &indice, indices)) {
         for(i=0; i<indice; i++) {
@@ -338,6 +338,7 @@ int pesquisaDadosPiloto(struct Piloto pilotos[], int qtdPilotos, int *indice, in
     char pesquisa[80];
     int i;
 
+    printf("Pesquisa piloto(a) >> ");
     scanf("%[^\n]s", &pesquisa); clean_stdin();
     strcpy(pesquisa, toLowerString(pesquisa));
     for(i=0; i<qtdPilotos; i++) {
@@ -360,7 +361,7 @@ int pesquisaDadosPiloto(struct Piloto pilotos[], int qtdPilotos, int *indice, in
             (*indice)++;
         }
     }
-    if(indice == 0) {
+    if(*indice == 0) {
         printf("Nenhum dado encontrado.\n");
         return 0;
     }
