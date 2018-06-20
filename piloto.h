@@ -1,15 +1,13 @@
 #ifndef _piloto_h
 #define _piloto_h
+#include "structs.h"
 #include "equipe.h"
 #define MAX_PILOTOS 10
+
 
 /* * * * * * * * * * * * * * * * * * * * *
  * Cadastrar, alterar e remover pilotos  *
  * * * * * * * * * * * * * * * * * * * * */
-struct Piloto {
-    int codigo, dataNascimento[3]; //Dia, mes e ano
-    char nome[50], siglaEquipe[4], sexo, paisOrigem[20];
-};
 
 
 void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes);
@@ -20,8 +18,8 @@ int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodi
 void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes);
 void removerPiloto(struct Piloto pilotos[], int *qtdPilotos);
 int pesquisaDadosPiloto(struct Piloto pilotos[], int qtdPilotos, int *indice, int indices[]);
-void printarDados(int codigo, char nome[], char sigla[], int dia, int mes, int ano, char sexo, char pais[]);
-void inserirPontos(char string[], int tamanho);
+void printarDadosPiloto(int codigo, char nome[], char sigla[], int dia, int mes, int ano, char sexo, char pais[]);
+// void inserirPontos(char string[], int tamanho);
 
 
 /* 
@@ -184,7 +182,7 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
 
     if(pesquisaDadosPiloto(pilotos, qtdPilotos, &indice, indices)) {
         for(i=0; i<indice; i++) {
-            printarDados(pilotos[indices[i]].codigo, pilotos[indices[i]].nome, pilotos[indices[i]].siglaEquipe, pilotos[indices[i]].dataNascimento[0], pilotos[indices[i]].dataNascimento[1],
+            printarDadosPiloto(pilotos[indices[i]].codigo, pilotos[indices[i]].nome, pilotos[indices[i]].siglaEquipe, pilotos[indices[i]].dataNascimento[0], pilotos[indices[i]].dataNascimento[1],
                          pilotos[indices[i]].dataNascimento[2], pilotos[indices[i]].sexo, pilotos[indices[i]].paisOrigem);
         }
         if(indice > 1) {
@@ -194,7 +192,7 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
                 flag = 0;
                 for(i=0; i<indice; i++) {
                     if(pilotos[indices[i]].codigo == respostaInt) {
-                        printarDados(pilotos[indices[i]].codigo, pilotos[indices[i]].nome, pilotos[indices[i]].siglaEquipe, pilotos[indices[i]].dataNascimento[0], pilotos[indices[i]].dataNascimento[1],
+                        printarDadosPiloto(pilotos[indices[i]].codigo, pilotos[indices[i]].nome, pilotos[indices[i]].siglaEquipe, pilotos[indices[i]].dataNascimento[0], pilotos[indices[i]].dataNascimento[1],
                              pilotos[indices[i]].dataNascimento[2], pilotos[indices[i]].sexo, pilotos[indices[i]].paisOrigem);
                         flag++;
                         break;
@@ -214,35 +212,35 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
         sexoTemp = pilotos[indices[i]].sexo;
         strcpy(paisOrigemTemp, pilotos[indices[i]].paisOrigem);
 
-        printarDados(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
+        printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
         resposta = leValidaChar2('s', 'n', "Deseja alterar o nome?");
         if(resposta == 's') {
             leValidaNome(nomeTemp, 1, "Novo nome");
         }
-        printarDados(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
+        printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
         resposta = leValidaChar2('s', 'n', "Deseja alterar a sigla da equipe?");
         if(resposta == 's') {
             if(!procuraSiglaExistente(pilotos, equipes, indices[i], qtdEquipes)) {
                 strcpy(pilotos[indices[i]].siglaEquipe, siglaEquipeTemp);
             }
         }
-        printarDados(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
+        printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
         resposta = leValidaChar2('s', 'n', "Deseja alterar a data de nascimento?");
         if(resposta == 's') {
             leValidaDataInt(dataChar, dataTemp, "Nova data");
         }
-        printarDados(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
+        printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
         resposta = leValidaChar2('s', 'n', "Deseja alterar o sexo?");
         if(resposta == 's') {
             sexoTemp = leValidaChar2('m', 'f', "Novo sexo");
         }
-        printarDados(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
+        printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
         resposta = leValidaChar2('s', 'n', "Deseja alterar o país de origem?");
         if(resposta == 's') {
             leValidaNome(paisOrigemTemp, 1, "Novo país de origem");
         }
 
-        printarDados(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
+        printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
         resposta = leValidaChar2('s', 'n', "Deseja fazer as alteracoes?");
         if(resposta == 's') {
             for(ii=0; ii<qtdPilotos; ii++) {
@@ -283,7 +281,7 @@ void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {
 
     if(pesquisaDadosPiloto(pilotos, *qtdPilotos, &indice, indices)) {
         for(i=0; i<indice; i++) {
-            printarDados(pilotos[indices[i]].codigo, pilotos[indices[i]].nome, pilotos[indices[i]].siglaEquipe, pilotos[indices[i]].dataNascimento[0], pilotos[indices[i]].dataNascimento[1],
+            printarDadosPiloto(pilotos[indices[i]].codigo, pilotos[indices[i]].nome, pilotos[indices[i]].siglaEquipe, pilotos[indices[i]].dataNascimento[0], pilotos[indices[i]].dataNascimento[1],
                          pilotos[indices[i]].dataNascimento[2], pilotos[indices[i]].sexo, pilotos[indices[i]].paisOrigem);
         }
         if(indice > 1) {
@@ -293,7 +291,7 @@ void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {
                 flag = 0;
                 for(i=0; i<indice; i++) {
                     if(pilotos[indices[i]].codigo == respostaInt) {
-                        printarDados(pilotos[indices[i]].codigo, pilotos[indices[i]].nome, pilotos[indices[i]].siglaEquipe, pilotos[indices[i]].dataNascimento[0], pilotos[indices[i]].dataNascimento[1],
+                        printarDadosPiloto(pilotos[indices[i]].codigo, pilotos[indices[i]].nome, pilotos[indices[i]].siglaEquipe, pilotos[indices[i]].dataNascimento[0], pilotos[indices[i]].dataNascimento[1],
                              pilotos[indices[i]].dataNascimento[2], pilotos[indices[i]].sexo, pilotos[indices[i]].paisOrigem);
                         flag++;
                         break;
@@ -374,7 +372,7 @@ int pesquisaDadosPiloto(struct Piloto pilotos[], int qtdPilotos, int *indice, in
  * Parametros: Código, nome, sigla da equipe, dia, mês e ano de nascimento, sexo e país de origem do piloto.
  * Retorna: Nada.
  */
-void printarDados(int codigo, char nome[], char sigla[], int dia, int mes, int ano, char sexo, char pais[]) {
+void printarDadosPiloto(int codigo, char nome[], char sigla[], int dia, int mes, int ano, char sexo, char pais[]) {
     char temp[50];
 
     inserirPontos("Codigo", 17);
@@ -394,31 +392,6 @@ void printarDados(int codigo, char nome[], char sigla[], int dia, int mes, int a
 
     inserirPontos("País origem", 17);
     inserirPontos(pais, -36); printf("\n\n");
-        // printf("| %-17s | %-30d |\n| %-17s | %-30s |\n| %-17s | %-30s |\n| %-17s | %02d/%02d/%d%20s |\n| %-17s | %-30s |\n| %-18s | %-30s |\n",
-        //        "Codigo", codigo, "Nome", nome, "Sigla da equipe", sigla, "Data nasc.", dia, mes, ano, " ", "Sexo",
-        //        sexo == 'm' ? "Masculino" : "Feminino", "País de origem", pais);
-}
-
-
-/* 
- * Objetivo: Insere pontos como padding de uma string.
- * Parametros: string e tamanho total do padding.
- * Retorna: Nada.
- */
-void inserirPontos(char string[], int tamanho) {
-    int i, padding = abs(strlen(string) - abs(tamanho));
-
-    if(tamanho < 0) {
-        for(i=0; i<padding; i++) {
-            printf(".");
-        }
-        printf("%s", string);
-    } else {
-        printf("%s", string);
-        for(i=0; i<padding; i++) {
-            printf(".");
-        }
-    }
 }
 
 
