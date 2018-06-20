@@ -3,9 +3,9 @@
 #include "equipe.h"
 #define MAX_PILOTOS 10
 
-/* * * * * * * * * * * * * * * * * * *  *
- * Cadastrar, alterar e remover pilotos *
- * * * * * * * * * * * * * * * * * * * **/
+/* * * * * * * * * * * * * * * * * * * * *
+ * Cadastrar, alterar e remover pilotos  *
+ * * * * * * * * * * * * * * * * * * * * */
 struct Piloto {
     int codigo, dataNascimento[3]; //Dia, mes e ano
     char nome[50], siglaEquipe[4], sexo, paisOrigem[20];
