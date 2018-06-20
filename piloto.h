@@ -4,7 +4,7 @@
 #define MAX_PILOTOS 10
 
 /* * * * * * * * * * * * * * * * * * *  *
- * Cadastrar, alterar e remover pilotos *
+ * Cadastrar,  e remover pilotos *
  * * * * * * * * * * * * * * * * * * * **/
 struct Piloto {
     int codigo, dataNascimento[3]; //Dia, mes e ano
