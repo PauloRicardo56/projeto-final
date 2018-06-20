@@ -44,7 +44,7 @@ void leValidaNome(char nome[], int toLower, char msg[]) {
 		nome[i] = '\0';
 		if(strlen(nome) == 0 || strlen(nome) == espacos) { flag++; }
 	}
-	formataNomeMaiusculo(nome, toLower);
+	// formataNomeMaiusculo(nome, toLower);
 }
 
 
