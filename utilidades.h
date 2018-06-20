@@ -8,10 +8,33 @@
 #include <time.h>
 
 
+void inserirPontos(char string[], int tamanho);
 const char *toLowerString(char string[]);
 char *itoa(int value, char *result, int base);
 int calcDigitosNum(int num);
 void formataNomeMaiusculo(char string[], int toLower);
+
+
+/* 
+ * Objetivo: Insere pontos como padding de uma string.
+ * Parametros: string e tamanho total do padding.
+ * Retorna: Nada.
+ */
+void inserirPontos(char string[], int tamanho) {
+    int i, padding = abs(strlen(string) - abs(tamanho));
+
+    if(tamanho < 0) {
+        for(i=0; i<padding; i++) {
+            printf(".");
+        }
+        printf("%s", string);
+    } else {
+        printf("%s", string);
+        for(i=0; i<padding; i++) {
+            printf(".");
+        }
+    }
+}
 
 
 const char *toLowerString(char string[]) {
