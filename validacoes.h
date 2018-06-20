@@ -2,6 +2,13 @@
 #define _validacoes_h
 
 
+/* 
+ * Objetivo:
+ * Parametros:
+ * Retorna: 
+ */
+
+
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>

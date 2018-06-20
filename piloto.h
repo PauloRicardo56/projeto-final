@@ -24,6 +24,12 @@ void printarDados(int codigo, char nome[], char sigla[], int dia, int mes, int a
 void inserirPontos(char string[], int tamanho);
 
 
+/* 
+ * Objetivo: Menu principal para as funções dos pilotos.
+ * Parametros: Lista com os pilotos existentes, lista com as equipes existentes, quantidade de pilotos
+ *   cadastrados e quantidade de equipes cadastradas.
+ * Retorna: Nada.
+ */
 void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) {
     int resposta;
     
@@ -43,6 +49,11 @@ void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
 }
 
 
+/* 
+ * Objetivo: Apresentar o menu dos pilotos.
+ * Parametros: Nada.
+ * Retorna: Nada.
+ */
 void showMenuPiloto() {
     printf("1-Cadastrar piloto(a)\n");
     printf("2-Alterar piloto(a)\n");
@@ -50,6 +61,12 @@ void showMenuPiloto() {
 }
 
 
+/* 
+ * Objetivo: Cadastrar um piloto.
+ * Parametros: Lista com os pilotos existentes, lista com as equipes existentes, quantidade de pilotos
+ *   cadastrados e quantidade de equipes cadastradas.
+ * Retorna: Nada.
+ */
 void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) {
     int *codigos, qtdCodigos, resposta, i;
     char data[11];
@@ -81,6 +98,12 @@ void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
 }
 
 
+/* 
+ * Objetivo: Procurar sigla de equipe existente em equipes ja cadastradas para o cadastramento do piloto.
+ * Parametros: Lista com pilotos ja cadastrados, lista com equipes ja cadastradas, quantidade de pilotos
+ *   cadastrados e quantidade de equipes cadastradas.
+ * Retorna: 1 se encontrar sigla ou 0 se não.
+ */
 int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes) {
     int i, flag = 0;
     char resposta;
@@ -105,6 +128,11 @@ int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int 
 }
 
 
+/* 
+ * Objetivo: Gerar códigos randomicos para o usuário selecionar na hora do cadastramento de um novo piloto.
+ * Parametros: Lista com pilotos já cadastrados, quantidade de códigos ja cadastrados e maximo de codigos permitidos.
+ * Retorna: Lista com os códigos randomicos.
+ */
 int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos) {
     int flag = 1, i, ii,  qtdNumeros;
     int diferenca = maxCodigos - qtdCodigos;
@@ -143,6 +171,12 @@ int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodi
 }
 
 
+/* 
+ * Objetivo: Alterar os dados de um piloto.
+ * Parametros: Lista com pilotos ja cadastrados, lista com equipes ja cadastradas, quantidade de pilotos
+ *   cadastrados e quantidade de equipes cadastradas.
+ * Retorna: Nada
+ */
 void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes) {
     int flag = 0, i, ii, respostaInt;
     char nomeTemp[40], sexoTemp, paisOrigemTemp[30], siglaEquipeTemp[4], resposta, dataChar[11];
@@ -238,6 +272,11 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
 }
 
 
+/* 
+ * Objetivo: Remover um piloto ja cadastrado.
+ * Parametros: Lista com pilotos ja cadastrados e quantidade de pilotos.
+ * Retorna: Nada
+ */
 void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {
     int indice = 0, flag = 0, i, indices[*qtdPilotos], respostaInt;
     char resposta, pesquisa[50];
@@ -289,6 +328,12 @@ void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {
 }
 
 
+/* 
+ * Objetivo: Pesquisar um piloto
+ * Parametros: Lista com pilotos ja cadastrados, quantidade de pilotos, indice correspondente dos pilotos encontrados
+ *   na pesquisa, lista com os índices encontrados que correspondem com a pesquisa.
+ * Retorna: 1 se encontrou pilotos 0 se não.
+ */
 int pesquisaDadosPiloto(struct Piloto pilotos[], int qtdPilotos, int *indice, int indices[]) {
     char pesquisa[80];
     int i;
@@ -323,6 +368,11 @@ int pesquisaDadosPiloto(struct Piloto pilotos[], int qtdPilotos, int *indice, in
 }
 
 
+/* 
+ * Objetivo: Printa na tela os dados de um piloto.
+ * Parametros: Código, nome, sigla da equipe, dia, mês e ano de nascimento, sexo e país de origem do piloto.
+ * Retorna: Nada.
+ */
 void printarDados(int codigo, char nome[], char sigla[], int dia, int mes, int ano, char sexo, char pais[]) {
     char temp[50];
 
@@ -349,6 +399,11 @@ void printarDados(int codigo, char nome[], char sigla[], int dia, int mes, int a
 }
 
 
+/* 
+ * Objetivo: Insere pontos como padding de uma string.
+ * Parametros: string e tamanho total do padding.
+ * Retorna: Nada.
+ */
 void inserirPontos(char string[], int tamanho) {
     int i, padding = abs(strlen(string) - abs(tamanho));
 
