@@ -8,6 +8,8 @@
 #include <time.h>
 
 
+const char *toLowerString(char string[]);
+char *itoa(int value, char *result, int base);
 int calcDigitosNum(int num);
 void formataNomeMaiusculo(char string[], int toLower);
 
