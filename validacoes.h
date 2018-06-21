@@ -28,6 +28,8 @@ void leValidaIntPont(int *valor, int min, int max, char msg[]);
 // int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos);
 void leValidaStringInt(char string[], int tamanho, char msg[]);
 void leValidaDataChar(char data[], char msg[]);
+void leValidaMinSegMillInt(char tempo[], int minSegMilli[], char msg[]);
+void leValidaMinSegMillChar(char tempo[], char msg[]);
 void clean_stdin();
 
 
@@ -203,11 +205,9 @@ float leValidaFloat(float min, float max, char msg[]) {
 	int valorScanf;
 	printf("%s (entre %.1f e %.1f) >> ", msg, min, max);
 	valorScanf = scanf("%f", &entrada); clean_stdin();
-	// printf("@@ %d - %d - %d\n", entrada < min, entrada > max, valorScanf == 0);
 	while(entrada < min || entrada > max || valorScanf == 0) {
 		printf(" Digite um valor valido entre %.1f e %.1f >> ", min, max);
 		valorScanf = scanf("%f", &entrada); clean_stdin();
-		// printf("@@ %d - %d - %d\n", entrada < min, entrada > max, valorScanf == 0);
 		system("cls");
 	}
 	return entrada;
@@ -335,7 +335,8 @@ void clean_stdin() {
  */
 void leValidaDataInt(char data[], int diaMesAno[], char msg[]) {
 	char c, temp[5];
-	int flag=1, i,j,k, espacos=0;
+	int flag = 1, i, j, k, espacos = 0;
+
 	while(flag > 0) {
 		flag = 0;
 		leValidaDataChar(data, msg);
@@ -343,7 +344,7 @@ void leValidaDataInt(char data[], int diaMesAno[], char msg[]) {
 			if(data[i] == '/') { 
 				temp[j] = '\0';
 				diaMesAno[k] = atoi(temp);
-				k++; j=-1;
+				k++; j = -1;
 			} else {
 				temp[j] = data[i];
 			}
@@ -381,11 +382,10 @@ void leValidaDataInt(char data[], int diaMesAno[], char msg[]) {
  */
 void leValidaDataChar(char data[], char msg[]) {
 	char c;
-	int flag=1, i, espacos=0;
+	int flag = 1, i, espacos = 0;
 
 	while (flag > 0) {
-		flag=0;
-		espacos=0;
+		flag = 0; espacos = 0;
 		printf("%s (dd/mm/aaaa) >> ", msg);
 		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
 			data[i] = c;
@@ -395,7 +395,54 @@ void leValidaDataChar(char data[], char msg[]) {
 		data[i] = '\0';
 		if(strlen(data) == 0 || strlen(data) == espacos || strlen(data) > 10) { flag++; }
 	}
-	printf("@@ _\n");
+}
+
+
+void leValidaMinSegMillInt(char tempo[], int minSegMilli[], char msg[]) {
+	char c, temp[10];
+	int flag = 1, i, j, k, espacos = 0;
+
+	while(flag > 0) {
+		flag = 0;
+		leValidaMinSegMillChar(tempo, msg);
+		for(i=0, j=0, k=0; i<strlen(tempo); i++, j++) {
+			if(tempo[i] == ':' || tempo[i] == '.') { 
+				temp[j] = '\0';
+				minSegMilli[k] = atoi(temp);
+				k++; j = -1;
+			} else {
+				temp[j] = tempo[i];
+			}
+		}
+		temp[j] = '\0';
+		minSegMilli[k] = atoi(temp);
+
+		if(minSegMilli[0] < 0 || minSegMilli[1] < 0 || minSegMilli[2] < 0) { printf("Valor negativo inválido.\n"); flag++; }
+		if(minSegMilli[0] > 999 || minSegMilli[1] > 999 || minSegMilli[2] > 999) { printf("Limite máximo de 3 digitos.\n"); flag++; }
+	}
+}
+
+
+void leValidaMinSegMillChar(char tempo[], char msg[]) {
+	int doisPontos = 0, ponto = 0, flag = 1, espacos = 0, i;
+	char c;
+
+	while(flag > 0) {
+		flag = 0; espacos = 0; doisPontos = 0; ponto = 0;
+		printf("%s (mm:ss.sss) >> ", msg);
+		for(c=getchar(), i=0; c!='\n'; c=getchar(), i++) {
+			tempo[i] = c;
+			if(!isdigit(c) && c != ':' && c != '.') { flag++; }
+			if(c == ' ') { espacos++; }
+			if(c == ':') { doisPontos++; }
+			if(c == '.') { ponto++; }
+			if(c == '.' && doisPontos == 0) { flag++; }
+		}
+		tempo[i] = '\0';
+		if(strlen(tempo) == 0 || strlen(tempo) == espacos || strlen(tempo) < 5) { flag++; }
+		if(doisPontos != 1 || ponto != 1) { flag++; printf("@@ %d\n", flag); }
+	}
+	
 }
 
 

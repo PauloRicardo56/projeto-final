@@ -13,4 +13,19 @@ struct Equipe {
 };
 
 
+struct Circuito {
+    int codigo, idPilotoMenorTempo;
+    char nome[30], pais[20];
+    float tamanho;
+    int menorTempoMinSegMilli[3];
+};
+
+
+struct MelhorVolta {
+    int pilotoId;
+    char equipePiloto[40], voltaData[11];
+    long int tempoVolta;
+};
+
+
 #endif

@@ -9,25 +9,6 @@
 #include "relatorios.h"
 
 
-// struct Piloto {
-//     int codigo;
-//     char nome[30], siglaEquipe[4], dataNasc[11], sexo, paisOrigem[20];
-// };
-
-
-// struct Equipe {
-//     char nome[40], sigla[4], paisOrigem[20];
-// };
-
-
-struct Circuito {
-    int codigo, idPilotoMenorTempo;
-    char nome[30], pais[20];
-    float tamanho;
-    long int menorTempo; //Podemos fazer em milisegundos e na hora de apresentar converter para minutos e segundos.
-};
-
-
 struct MelhorVolta {
     int pilotoId;
     char equipePiloto[40], voltaData[11];
