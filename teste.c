@@ -3,14 +3,17 @@
 #include "validacoes.h"
 #include "piloto.h"
 #include "equipe.h"
+#include "circuito.h"
 
 
 int main() {
-	int qtdPilotos = 3, qtdEquipes = 3, i;
+	int qtdPilotos = 3, qtdEquipes = 3, qtdCircuitos = 1, i;
 	srand(time(NULL));
 
 	struct Piloto pilotos[MAX_PILOTOS];
 	struct Equipe equipes[MAX_PILOTOS];
+	struct Circuito circuitos[MAX_PILOTOS];
+
 
 	strcpy(equipes[0].nome, "Ferrari");
 	strcpy(equipes[0].sigla, "FRR");
@@ -51,6 +54,16 @@ int main() {
 	pilotos[2].sexo = 'f';
 	strcpy(pilotos[2].paisOrigem, "Inglaterra");
 
+	circuitos[0].codigo = 1;
+	circuitos[0].idPilotoMenorTempo = 1;
+	strcpy(circuitos[0].nome, "senna");
+	strcpy(circuitos[0].pais, "Brazil");
+	circuitos[0].tamanho = 12.78;
+	circuitos[0].menorTempoMinSegMilli[0] = 12;
+	circuitos[0].menorTempoMinSegMilli[1] = 12;
+	circuitos[0].menorTempoMinSegMilli[2] = 12;
+
+
 	// while(1) {
 	// 	menuDadosPiloto(pilotos, equipes, &qtdPilotos, &qtdEquipes);
 	// 	for(i = 0; i<qtdPilotos; i++) {
@@ -59,10 +72,14 @@ int main() {
 	// 	}
 	// }
 	while(1) {
-		menuDadosEquipe(equipes, pilotos, &qtdEquipes, qtdPilotos);
-		for(i = 0; i<qtdEquipes; i++) {
-			printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
-							   procurarSiglaPiloto(pilotos, qtdPilotos, equipes[i].sigla));
+		cadastrarCircuito(circuitos, pilotos, equipes, &qtdCircuitos, &qtdPilotos, &qtdEquipes);
+		// for(i = 0; i<qtdEquipes; i++) {
+		// 	printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
+		// 					   procurarSiglaPiloto(pilotos, qtdPilotos, equipes[i].sigla));
+		// }
+		for(i = 0; i<qtdCircuitos; i++) {
+			printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho,
+								 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
 		}
 	}
 }
