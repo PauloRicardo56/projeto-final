@@ -6,6 +6,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <math.h>
 
 
 void inserirPontos(char string[], int tamanho);
@@ -79,7 +80,7 @@ char *itoa(int value, char *result, int base) {
 
 /* 
  * Objetivo: Fromatar nome para iniciais maiusculas e resto minusculas
- * Parametros: Variável do nome
+ * Parametros: VariÃ¡vel do nome
  * Retorna: Nada
  */
 void formataNomeMaiusculo(char string[], int toLower) {
@@ -100,9 +101,9 @@ void formataNomeMaiusculo(char string[], int toLower) {
 
 
  
-//  * Objetivo: Gerar numeros randomicos de 1 à n
-//  * Parametros: Número qualquer
-//  * Retorna: Quantidade de dígitos desse número
+//  * Objetivo: Gerar numeros randomicos de 1 Ã  n
+//  * Parametros: NÃºmero qualquer
+//  * Retorna: Quantidade de dÃ­gitos desse nÃºmero
 // int gerarNumeroRandomico(int n) {
 // 	int numero = rand() % n + 1;
 // 	return numero;
@@ -110,9 +111,9 @@ void formataNomeMaiusculo(char string[], int toLower) {
 
 
 /* 
- * Objetivo: Descobrir quantos difitos possui um número
- * Parametros: Número qualquer
- * Retorna: Quantidade de dígitos desse número
+ * Objetivo: Descobrir quantos difitos possui um nÃºmero
+ * Parametros: NÃºmero qualquer
+ * Retorna: Quantidade de dÃ­gitos desse nÃºmero
  */
 int calcDigitosNum(int num) {
 	int digitos=0;
