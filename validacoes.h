@@ -55,6 +55,7 @@ void leValidaNome(char nome[], int toLower, char msg[]) {
 		if(strlen(nome) == 0 || strlen(nome) == espacos) { flag++; }
 	}
 	// formataNomeMaiusculo(nome, toLower);
+	system("cls");
 }
 
 
@@ -79,7 +80,7 @@ void leValidaSigla(char sigla[], int maxLetras, char msg[]) {
 		if(strlen(sigla) == 0 || strlen(sigla) > maxLetras) { flag++; }
 		
 	}
-
+	system("cls");
 }
 
 
@@ -104,6 +105,7 @@ void leValidaNomeTamanho(char nome[], int tamanho, char msg[]) {
 		if(strlen(nome) == 0 || strlen(nome) == espacos || strlen(nome) > tamanho) { flag++; }
 	}
 	formataNomeMaiusculo(nome, 1);
+	system("cls");
 }
 
 
@@ -128,6 +130,7 @@ void leValidaNomeArquivoWindows(char nome[], char msg[]) {
 		if(strlen(nome) == 0 || strlen(nome) == espacos) { flag++; }
 	}
 	formataNomeMaiusculo(nome, 1);
+	system("cls");
 }
 
 
@@ -149,6 +152,7 @@ char leValidaChar2(char opc1, char opc2, char msg[]) {
 		if(strlen(entrada) == 0) { flag++; }
 		if(entrada[0] != opc1 && entrada[0] != opc2) { flag++; }
 	}
+	system("cls");
 	return entrada[0];
 }
 
@@ -194,6 +198,7 @@ char leValidaChar3(char opc1, char opc2, char opc3, char msg[]) {
 		if(strlen(entrada) == 0) { flag++; }
 		if(entrada[0] != opc1 && entrada[0] != opc2 && entrada[0] != opc3) { flag++; }
 	}
+	system("cls");
 	return entrada[0];
 }
 
@@ -212,6 +217,7 @@ float leValidaFloat(float min, float max, char msg[]) {
 		printf(" Digite um valor valido entre %.1f e %.1f >> ", min, max);
 		valorScanf = scanf("%f", &entrada); clean_stdin(); system("cls");
 	}
+	system("cls");
 	return entrada;
 }
 
@@ -230,6 +236,7 @@ int leValidaInt(int min, int max, char msg[]) {
 		valorScanf = scanf("%d", &entrada); clean_stdin();
 //		system("cls");
 	}
+	system("cls");
 	return entrada;
 }
 
@@ -246,8 +253,9 @@ void leValidaIntPont(int *valor, int min, int max, char msg[]) {
 	while(*valor < min || *valor > max || valorScanf == 0) {
 		printf(" Digite um valor valido entre %d e %d >> ", min, max);
 		valorScanf = scanf("%d", valor); clean_stdin();
-		system("cls");
+		// system("cls");
 	}
+	system("cls");
 }
 
 
@@ -314,6 +322,7 @@ void leValidaStringInt(char string[], int tamanho, char msg[]) {
 		string[i] = '\0';
 		if(strlen(string) != tamanho) { flag++; }
 	}
+	system("cls");
 }
 
 
@@ -374,6 +383,7 @@ void leValidaDataInt(char data[], int diaMesAno[], char msg[]) {
 			}
 		}
 	}
+	system("cls");
 }
 
 
@@ -422,6 +432,7 @@ void leValidaMinSegMillInt(char tempo[], int minSegMilli[], char msg[]) {
 		if(minSegMilli[0] < 0 || minSegMilli[1] < 0 || minSegMilli[2] < 0) { printf("Valor negativo invÃ¡lido.\n"); flag++; }
 		if(minSegMilli[0] > 999 || minSegMilli[1] > 999 || minSegMilli[2] > 999) { printf("Limite mÃ¡ximo de 3 digitos.\n"); flag++; }
 	}
+	system("cls");
 }
 
 
@@ -444,7 +455,6 @@ void leValidaMinSegMillChar(char tempo[], char msg[]) {
 		if(strlen(tempo) == 0 || strlen(tempo) == espacos || strlen(tempo) < 5) { flag++; }
 		if(doisPontos != 1 || ponto != 1) { flag++; printf("@@ %d\n", flag); }
 	}
-	
 }
 
 
