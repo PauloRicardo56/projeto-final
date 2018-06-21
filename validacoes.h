@@ -10,6 +10,7 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include "utilidades.h"
@@ -35,7 +36,7 @@ void clean_stdin();
 
 /* 
  * Objetivo: Ler e validar nome
- * Parametros: Variável que irá armazenar o nome e mensagem a ser exibida
+ * Parametros: VariÃ¡vel que irÃ¡ armazenar o nome e mensagem a ser exibida
  * Retorna: Nada
  */
 void leValidaNome(char nome[], int toLower, char msg[]) {
@@ -59,7 +60,7 @@ void leValidaNome(char nome[], int toLower, char msg[]) {
 
 /* 
  * Objetivo: Ler e validar sigla
- * Parametros: Variável que irá armazenar o nome, max de letras e mensagem a ser exibida
+ * Parametros: VariÃ¡vel que irÃ¡ armazenar o nome, max de letras e mensagem a ser exibida
  * Retorna: Nada
  */
 void leValidaSigla(char sigla[], int maxLetras, char msg[]) {
@@ -76,6 +77,7 @@ void leValidaSigla(char sigla[], int maxLetras, char msg[]) {
 		}
 		sigla[i] = '\0';
 		if(strlen(sigla) == 0 || strlen(sigla) > maxLetras) { flag++; }
+		
 	}
 
 }
@@ -83,7 +85,7 @@ void leValidaSigla(char sigla[], int maxLetras, char msg[]) {
 
 /* 
  * Objetivo: Ler e validar nome com limite de tamanho
- * Parametros: Variável que irá armazenar o nome e mensagem a ser exibida
+ * Parametros: VariÃ¡vel que irÃ¡ armazenar o nome e mensagem a ser exibida
  * Retorna: Nada
  */
 void leValidaNomeTamanho(char nome[], int tamanho, char msg[]) {
@@ -106,8 +108,8 @@ void leValidaNomeTamanho(char nome[], int tamanho, char msg[]) {
 
 
 /* 
- * Objetivo: Ler e validar nome para criação de arquivos no windows
- * Parametros: Variável que irá armazenar o nome e mensagem a ser exibida
+ * Objetivo: Ler e validar nome para criaÃ§Ã£o de arquivos no windows
+ * Parametros: VariÃ¡vel que irÃ¡ armazenar o nome e mensagem a ser exibida
  * Retorna: Nada
  */
 void leValidaNomeArquivoWindows(char nome[], char msg[]) {
@@ -130,7 +132,7 @@ void leValidaNomeArquivoWindows(char nome[], char msg[]) {
 
 
 /* 
- * Objetivo: Ler e validar char (duas opções)
+ * Objetivo: Ler e validar char (duas opÃ§Ãµes)
  * Parametros: opcao 1 e 2 para a validacao e mensagem a ser exibida
  * Retorna: char validado
  */
@@ -152,7 +154,7 @@ char leValidaChar2(char opc1, char opc2, char msg[]) {
 
 
 /* 
- * Objetivo: Ler e validar char (duas opções) com ponteiro
+ * Objetivo: Ler e validar char (duas opÃ§Ãµes) com ponteiro
  * Parametros: opcao 1 e 2 para a validacao e mensagem a ser exibida
  * Retorna: Nada
  */
@@ -170,11 +172,12 @@ char leValidaChar2Pont(char *valor, char opc1, char opc2, char msg[]) {
 		if(entrada[0] != opc1 && entrada[0] != opc2) { flag++; }
 	}
 	*valor = entrada[0];
+	system("cls");
 }
 
 
 /* 
- * Objetivo: Ler e validar char (três opções)
+ * Objetivo: Ler e validar char (trÃªs opÃ§Ãµes)
  * Parametros: opcao 1 e 2 para a validacao e mensagem a ser exibida
  * Retorna: char validado
  */
@@ -207,8 +210,7 @@ float leValidaFloat(float min, float max, char msg[]) {
 	valorScanf = scanf("%f", &entrada); clean_stdin();
 	while(entrada < min || entrada > max || valorScanf == 0) {
 		printf(" Digite um valor valido entre %.1f e %.1f >> ", min, max);
-		valorScanf = scanf("%f", &entrada); clean_stdin();
-		system("cls");
+		valorScanf = scanf("%f", &entrada); clean_stdin(); system("cls");
 	}
 	return entrada;
 }
@@ -226,7 +228,7 @@ int leValidaInt(int min, int max, char msg[]) {
 	while(entrada < min || entrada > max || valorScanf == 0) {
 		printf(" Digite um valor valido entre %d e %d >> ", min, max);
 		valorScanf = scanf("%d", &entrada); clean_stdin();
-		system("cls");
+//		system("cls");
 	}
 	return entrada;
 }
@@ -251,7 +253,7 @@ void leValidaIntPont(int *valor, int min, int max, char msg[]) {
 
 /* 
  * Objetivo: Gerar tres numeros randomicos nao existentes
- * Parametros: Lista com códigos existentes, quantidade de codigos, maximo de codigos permitidos e mensagem a ser exibida
+ * Parametros: Lista com cÃ³digos existentes, quantidade de codigos, maximo de codigos permitidos e mensagem a ser exibida
  * Retorna: Endereco de memoria para o vetor contendo os numeros.
  */
 // int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos) {
@@ -330,7 +332,7 @@ void clean_stdin() {
 
 /* 
  * Objetivo: Validar dia, mes e ano no formato dd/mm/aaaa
- * Parametros: Variável contendo a string e vetor de inteiros que irá conter o dia, mes e ano validados
+ * Parametros: VariÃ¡vel contendo a string e vetor de inteiros que irÃ¡ conter o dia, mes e ano validados
  * Retorna: Nada
  */
 void leValidaDataInt(char data[], int diaMesAno[], char msg[]) {
@@ -377,7 +379,7 @@ void leValidaDataInt(char data[], int diaMesAno[], char msg[]) {
 
 /* 
  * Objetivo: Ler data no formato dd/mm/aaaa
- * Parametros: Variável que irá conter a string
+ * Parametros: VariÃ¡vel que irÃ¡ conter a string
  * Retorna: Nada
  */
 void leValidaDataChar(char data[], char msg[]) {
@@ -417,8 +419,8 @@ void leValidaMinSegMillInt(char tempo[], int minSegMilli[], char msg[]) {
 		temp[j] = '\0';
 		minSegMilli[k] = atoi(temp);
 
-		if(minSegMilli[0] < 0 || minSegMilli[1] < 0 || minSegMilli[2] < 0) { printf("Valor negativo inválido.\n"); flag++; }
-		if(minSegMilli[0] > 999 || minSegMilli[1] > 999 || minSegMilli[2] > 999) { printf("Limite máximo de 3 digitos.\n"); flag++; }
+		if(minSegMilli[0] < 0 || minSegMilli[1] < 0 || minSegMilli[2] < 0) { printf("Valor negativo invÃ¡lido.\n"); flag++; }
+		if(minSegMilli[0] > 999 || minSegMilli[1] > 999 || minSegMilli[2] > 999) { printf("Limite mÃ¡ximo de 3 digitos.\n"); flag++; }
 	}
 }
 

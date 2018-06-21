@@ -23,7 +23,7 @@ void printarDadosPiloto(int codigo, char nome[], char sigla[], int dia, int mes,
 
 
 /* 
- * Objetivo: Menu principal para as funções dos pilotos.
+ * Objetivo: Menu principal para as funÃ§Ãµes dos pilotos.
  * Parametros: Lista com os pilotos existentes, lista com as equipes existentes, quantidade de pilotos
  *   cadastrados e quantidade de equipes cadastradas.
  * Retorna: Nada.
@@ -32,7 +32,7 @@ void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
     int resposta;
     
     showMenuPiloto();
-    resposta = leValidaInt(1, 3, "Digite uma das opcoes do menu");
+    resposta = leValidaInt(1, 3, "Digite uma das opcoes do menu"); system("cls");
     switch(resposta) {
         case 1:
             cadastrarPiloto(pilotos, equipes, qtdPilotos, qtdEquipes);
@@ -82,15 +82,15 @@ void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
     for(i=0; i<qtdCodigos; i++) {
         printf("%d) %d\t", i+1, codigos[i]);
     }
-    resposta = leValidaInt(1, i, "\n\nSelecione um dos codigos acima");
+    resposta = leValidaInt(1, i, "\n\nSelecione um dos codigos acima"); system("cls");
     pilotos[*qtdPilotos].codigo = codigos[resposta-1];
 
-    leValidaNome(pilotos[*qtdPilotos].nome, 1, "Nome do(a) piloto(a)");
+    leValidaNome(pilotos[*qtdPilotos].nome, 1, "Nome do(a) piloto(a)"); system("cls");
 
     if(procuraSiglaExistente(pilotos, equipes, *qtdPilotos, qtdEquipes)) {
-        leValidaDataInt(data, pilotos[*qtdPilotos].dataNascimento, "Data de nascimento do(a) piloto(a)");
-        pilotos[*qtdPilotos].sexo = leValidaChar2('f', 'm', "Sexo do(a) piloto(a)");
-        leValidaNome(pilotos[*qtdPilotos].paisOrigem, 1, "País do(a) piloto(a)");
+        leValidaDataInt(data, pilotos[*qtdPilotos].dataNascimento, "Data de nascimento do(a) piloto(a)"); system("cls");
+        pilotos[*qtdPilotos].sexo = leValidaChar2('f', 'm', "Sexo do(a) piloto(a)"); system("cls");
+        leValidaNome(pilotos[*qtdPilotos].paisOrigem, 1, "País do(a) piloto(a)"); system("cls");
         (*qtdPilotos)++;
     }
 }
@@ -100,20 +100,20 @@ void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
  * Objetivo: Procurar sigla de equipe existente em equipes ja cadastradas para o cadastramento do piloto.
  * Parametros: Lista com pilotos ja cadastrados, lista com equipes ja cadastradas, quantidade de pilotos
  *   cadastrados e quantidade de equipes cadastradas.
- * Retorna: 1 se encontrar sigla ou 0 se não.
+ * Retorna: 1 se encontrar sigla ou 0 se nÃ£o.
  */
 int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes) {
     int i, flag = 0;
     char resposta;
 
-    leValidaSigla(pilotos[qtdPilotos].siglaEquipe, 3, "Sigla da equipe do piloto");
+    leValidaSigla(pilotos[qtdPilotos].siglaEquipe, 3, "Sigla da equipe do piloto"); system("cls");
     for(i=0; i<*qtdEquipes; i++) {
         if(strcmp(equipes[i].sigla, pilotos[qtdPilotos].siglaEquipe) == 0) {
             flag++;
         }
     }
     if(flag == 0) {
-        resposta = leValidaChar2('s','n', "Sigla nao cadastrada em equipes. Deseja cadastra-la?");
+        resposta = leValidaChar2('s','n', "Sigla nao cadastrada em equipes. Deseja cadastra-la?"); system("cls");
         switch(resposta) {
             case 's':
                 cadastrarEquipe(equipes, qtdEquipes);
@@ -127,9 +127,9 @@ int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int 
 
 
 /* 
- * Objetivo: Gerar códigos randomicos para o usuário selecionar na hora do cadastramento de um novo piloto.
- * Parametros: Lista com pilotos já cadastrados, quantidade de códigos ja cadastrados e maximo de codigos permitidos.
- * Retorna: Lista com os códigos randomicos.
+ * Objetivo: Gerar cÃ³digos randomicos para o usuÃ¡rio selecionar na hora do cadastramento de um novo piloto.
+ * Parametros: Lista com pilotos jÃ¡ cadastrados, quantidade de cÃ³digos ja cadastrados e maximo de codigos permitidos.
+ * Retorna: Lista com os cÃ³digos randomicos.
  */
 int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos) {
     int flag = 1, i, ii,  qtdNumeros;
@@ -235,9 +235,9 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
             sexoTemp = leValidaChar2('m', 'f', "Novo sexo");
         }
         printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
-        resposta = leValidaChar2('s', 'n', "Deseja alterar o país de origem?");
+        resposta = leValidaChar2('s', 'n', "Deseja alterar o paÃ­s de origem?");
         if(resposta == 's') {
-            leValidaNome(paisOrigemTemp, 1, "Novo país de origem");
+            leValidaNome(paisOrigemTemp, 1, "Novo paÃ­s de origem");
         }
 
         printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
@@ -329,15 +329,15 @@ void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {
 /* 
  * Objetivo: Pesquisar um piloto
  * Parametros: Lista com pilotos ja cadastrados, quantidade de pilotos, indice correspondente dos pilotos encontrados
- *   na pesquisa, lista com os índices encontrados que correspondem com a pesquisa.
- * Retorna: 1 se encontrou pilotos 0 se não.
+ *   na pesquisa, lista com os Ã­ndices encontrados que correspondem com a pesquisa.
+ * Retorna: 1 se encontrou pilotos 0 se nÃ£o.
  */
 int pesquisaDadosPiloto(struct Piloto pilotos[], int qtdPilotos, int *indice, int indices[]) {
     char pesquisa[80];
     int i;
 
     printf("Pesquisa piloto(a) >> ");
-    scanf("%[^\n]s", &pesquisa); clean_stdin();
+    scanf("%[^\n]s", &pesquisa); clean_stdin(); system("cls");
     strcpy(pesquisa, toLowerString(pesquisa));
     for(i=0; i<qtdPilotos; i++) {
         if(strstr(toLowerString(pilotos[i].nome), pesquisa) != NULL || 
@@ -369,7 +369,7 @@ int pesquisaDadosPiloto(struct Piloto pilotos[], int qtdPilotos, int *indice, in
 
 /* 
  * Objetivo: Printa na tela os dados de um piloto.
- * Parametros: Código, nome, sigla da equipe, dia, mês e ano de nascimento, sexo e país de origem do piloto.
+ * Parametros: CÃ³digo, nome, sigla da equipe, dia, mÃªs e ano de nascimento, sexo e paÃ­s de origem do piloto.
  * Retorna: Nada.
  */
 void printarDadosPiloto(int codigo, char nome[], char sigla[], int dia, int mes, int ano, char sexo, char pais[]) {

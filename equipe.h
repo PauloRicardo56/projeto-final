@@ -44,9 +44,9 @@ void showMenuEquipe() {
 
 
 void cadastrarEquipe(struct Equipe equipes[], int *qtdEquipes) {
-    leValidaSiglaNaoRepetida(equipes, *qtdEquipes);
-    leValidaNome(equipes[*qtdEquipes].nome, 0, "Nome da equipe");
-    leValidaNome(equipes[*qtdEquipes].paisOrigem, 1, "Pais de origem");
+    leValidaSiglaNaoRepetida(equipes, *qtdEquipes); system("cls");
+    leValidaNome(equipes[*qtdEquipes].nome, 0, "Nome da equipe"); system("cls");
+    leValidaNome(equipes[*qtdEquipes].paisOrigem, 1, "Pais de origem"); system("cls");
     (*qtdEquipes)++;
 }
 
@@ -61,7 +61,7 @@ void leValidaSiglaNaoRepetida(struct Equipe equipes[], int qtdEquipes) {
             for(i=0; i<qtdEquipes; i++) {
                 if(strcmp(equipes[i].sigla, equipes[qtdEquipes].sigla) == 0) {
                     printf("Sigla ja cadastrada em outra equipe (%s)\n", equipes[i].nome);
-                    leValidaSigla(equipes[qtdEquipes].sigla, MAX_LETRAS_SIGLA, "Informe outra");
+                    leValidaSigla(equipes[qtdEquipes].sigla, MAX_LETRAS_SIGLA, "Informe outra"); system("cls");
                     flag++;
                 }
             }
@@ -108,7 +108,7 @@ void excluirEquipe(struct Equipe equipes[], struct Piloto pilotos[], int *qtdEqu
             printf("Equipe excluida com sucesso.\n");
             return;
         }
-        printf("Não foi possível remover equipe.\n");
+        printf("NÃ£o foi possÃ­vel remover equipe.\n");
     }
 }
 
@@ -141,10 +141,10 @@ void printarDadosEquipe(char nome[], char sigla[], char pais[], int flag) {
     inserirPontos(nome, -35); printf("\n");
 
     inserirPontos("Sigla", 17);
-    inserirPontos(sigla, -35); if(flag == 1) { printf(" (Há pilotos cadastrados nesta equipe)"); }
+    inserirPontos(sigla, -35); if(flag == 1) { printf(" (HÃ¡ pilotos cadastrados nesta equipe)"); }
     printf("\n");
 
-    inserirPontos("País origem", 17);
+    inserirPontos("PaÃ­s origem", 17);
     inserirPontos(pais, -36); printf("\n\n");
 }
 
