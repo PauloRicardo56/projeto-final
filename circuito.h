@@ -1,5 +1,6 @@
 #ifndef _circuito_h
 #define _circuito_h
+#include "structs.h"
 
 
 void menuDadosCircuito(struct Circuito circuitos[], struct Piloto pilotos[], struct Equipe equipes[], int *qtdCircuitos,
@@ -9,7 +10,8 @@ void cadastrarCircuito(struct Circuito circuitos[], struct Piloto pilotos[], str
                        int *qtdPilotos, int *qtdEquipes);
 int procuraIdPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes, int id);
 void printarDadosCircuito(int codigo, char nome[], char pais[], float tamanho, int minSegMilli[], int id);
-// void alterarCircuito();
+void alterarCircuito(struct Circuito circuitos[], struct Piloto pilotos[], struct Equipe equipes[], int qtdCircuitos, int *qtdPilotos,
+                     int *qtdEquipes);
 
 
 /* * * * * * * * * * * * * * * * *
@@ -25,8 +27,9 @@ void menuDadosCircuito(struct Circuito circuitos[], struct Piloto pilotos[], str
         case 1:
             cadastrarCircuito(circuitos, pilotos, equipes, qtdCircuitos, qtdPilotos, qtdEquipes);
             break;
-        // case 2:
-            // alterarCircuito();
+        case 2:
+            alterarCircuito(circuitos, pilotos, equipes, *qtdCircuitos, qtdPilotos, qtdEquipes);
+            break;
     }
 }
 
@@ -101,10 +104,11 @@ void printarDadosCircuito(int codigo, char nome[], char pais[], float tamanho, i
 }
 
 
-void alterarCircuito(struct Circuitos circuitos[], int qtdCircuitos) {
+void alterarCircuito(struct Circuito circuitos[], struct Piloto pilotos[], struct Equipe equipes[], int qtdCircuitos, int *qtdPilotos, int *qtdEquipes) {
     int flag = 0, i, ii, respostaInt;
-    char nomeTemp[40], , paisTemp[30], [4], resposta, dataChar[11];
+    char nomeTemp[40], paisTemp[30], resposta, temp[15];//, tempoChar[11];
     int tempoTemp[3], codigoTemp, indice = 0, indices[qtdCircuitos], idPilotoTemp;
+    float tamanhoTemp;
 
     if(pesquisaDadosCircuito(circuitos, qtdCircuitos, &indice, indices)) {
         for(i=0; i<indice; i++) {
@@ -132,78 +136,72 @@ void alterarCircuito(struct Circuitos circuitos[], int qtdCircuitos) {
         codigoTemp = circuitos[indices[i]].codigo;
         idPilotoTemp = circuitos[indices[i]].idPilotoMenorTempo;
         strcpy(nomeTemp, circuitos[indices[i]].nome);
-        strcpy(, circuitos[indices[i]].siglaEquipe);
         tempoTemp[0] = circuitos[indices[i]].menorTempoMinSegMilli[0];
         tempoTemp[1] = circuitos[indices[i]].menorTempoMinSegMilli[1];
         tempoTemp[2] = circuitos[indices[i]].menorTempoMinSegMilli[2];
-         = circuitos[indices[i]].sexo;
+        tamanhoTemp = circuitos[indices[i]].tamanho;
         strcpy(paisTemp, circuitos[indices[i]].pais);
 
-        printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho,
-                                 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
-        resposta = leValidaChar2('s', 'n', "Deseja alterar o nome?");
+        printarDadosCircuito(circuitos[i].codigo, nomeTemp, paisTemp, tamanhoTemp, tempoTemp, idPilotoTemp);
+        resposta = leValidaChar2('s', 'n', "Deseja alterar o nome do circuito?");
         if(resposta == 's') {
             leValidaNome(nomeTemp, 1, "Novo nome");
         }
-        printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho,
-                                 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
-        resposta = leValidaChar2('s', 'n', "Deseja alterar a sigla da equipe?");
+        printarDadosCircuito(circuitos[i].codigo, nomeTemp, paisTemp, tamanhoTemp, tempoTemp, idPilotoTemp);
+        resposta = leValidaChar2('s', 'n', "Deseja alterar o pais do circuito?");
         if(resposta == 's') {
-            if(!procuraSiglaExistente(circuitos, equipes, indices[i], qtdEquipes)) {
-                strcpy(circuitos[indices[i]].siglaEquipe, );
+            leValidaNome(paisTemp, 1, "Novo país");
+        }
+        printarDadosCircuito(circuitos[i].codigo, nomeTemp, paisTemp, tamanhoTemp, tempoTemp, idPilotoTemp);
+        resposta = leValidaChar2('s', 'n', "Deseja alterar o tamanho do circuito?");
+        if(resposta == 's') {
+            tamanhoTemp = leValidaFloat(3, 20, "Novo tamanho");
+        }
+        printarDadosCircuito(circuitos[i].codigo, nomeTemp, paisTemp, tamanhoTemp, tempoTemp, idPilotoTemp);
+        resposta = leValidaChar2('s', 'n', "Deseja alterar o menor tempo do circuito?");
+        if(resposta == 's') {
+             leValidaMinSegMillInt(temp, tempoTemp, "Menor tempo do circuito");
+        }
+        printarDadosCircuito(circuitos[i].codigo, nomeTemp, paisTemp, tamanhoTemp, tempoTemp, idPilotoTemp);
+        resposta = leValidaChar2('s', 'n', "Deseja alterar o id do piloto com menor tempo?");
+        if(resposta == 's') {
+            idPilotoTemp = leValidaInt(1, 99, "Novo id do piloto");
+            if(!procuraIdPiloto(pilotos, equipes, qtdPilotos, qtdEquipes, idPilotoTemp)) {
+                printf("Alteração de dados cancelada.\n");
+                return;
             }
+            idPilotoTemp = pilotos[*qtdPilotos-1].codigo;
         }
-        printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho,
-                                 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
-        resposta = leValidaChar2('s', 'n', "Deseja alterar a data de nascimento?");
-        if(resposta == 's') {
-            leValidaDataInt(dataChar, tempoTemp, "Nova data");
-        }
-        printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho,
-                                 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
-        resposta = leValidaChar2('s', 'n', "Deseja alterar o sexo?");
-        if(resposta == 's') {
-             = leValidaChar2('m', 'f', "Novo sexo");
-        }
-        printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho,
-                                 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
-        resposta = leValidaChar2('s', 'n', "Deseja alterar o paÃ­s de origem?");
-        if(resposta == 's') {
-            leValidaNome(paisTemp, 1, "Novo paÃ­s de origem");
-        }
-
-        printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho,
-                                 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
+        printarDadosCircuito(circuitos[i].codigo, nomeTemp, paisTemp, tamanhoTemp, tempoTemp, idPilotoTemp);
         resposta = leValidaChar2('s', 'n', "Deseja fazer as alteracoes?");
         if(resposta == 's') {
-            for(ii=0; ii<qtdcircuitos; ii++) {
+            for(ii=0; ii<qtdCircuitos; ii++) {
                 if(indices[i] != ii) {
-                    if(strcmp(nomeTemp, circuitos[ii].nome) == 0 && strcmp(circuitos[indices[i]].siglaEquipe, circuitos[ii].siglaEquipe) == 0 
-                    && (tempoTemp[0] == circuitos[ii].menorTempoMinSegMilli[0] && tempoTemp[1] == circuitos[ii].menorTempoMinSegMilli[1] && 
-                    tempoTemp[2] == circuitos[ii].menorTempoMinSegMilli[2]) &&  == circuitos[ii].sexo &&
-                    strcmp(paisTemp, circuitos[ii].pais) == 0) {
-                        printf("Dados de circuitos ja encotrados em piloto %d (codigo).\nCancelando operacao.\n\n", circuitos[ii].codigo);
+                    if(strcmp(nomeTemp, circuitos[ii].nome) == 0 && tempoTemp[0] == circuitos[ii].menorTempoMinSegMilli[0] && 
+                       tempoTemp[1] == circuitos[ii].menorTempoMinSegMilli[1] && tempoTemp[2] == circuitos[ii].menorTempoMinSegMilli[2]
+                       && strcmp(paisTemp, circuitos[ii].pais) == 0 && idPilotoTemp == circuitos[ii].idPilotoMenorTempo &&
+                       codigoTemp == circuitos[ii].codigo && tamanhoTemp == circuitos[ii].tamanho) {
+                        printf("Dados de circuitos ja encotrados em circuito %d (codigo).\nCancelando operacao.\n\n", circuitos[ii].codigo);
                         return;
                     }
                 }
             }
+
             circuitos[indices[i]].codigo = codigoTemp;
+            circuitos[indices[i]].idPilotoMenorTempo = idPilotoTemp;
             strcpy(circuitos[indices[i]].nome, nomeTemp);
-            //strcpy(circuitos[i].siglaEquipe, );
             circuitos[indices[i]].menorTempoMinSegMilli[0] = tempoTemp[0];
             circuitos[indices[i]].menorTempoMinSegMilli[1] = tempoTemp[1];
             circuitos[indices[i]].menorTempoMinSegMilli[2] = tempoTemp[2];
-            circuitos[indices[i]].sexo = ;
+            circuitos[indices[i]].tamanho = tamanhoTemp;
             strcpy(circuitos[indices[i]].pais, paisTemp);
             printf("Dados alterados!\n");
-        } else {
-            strcpy(circuitos[indices[i]].siglaEquipe, );
         }
     }
 }
 
 
-int pesquisaDadosCircuito(struct Circuitos circuitos[], int qtdCircuitos, int *indice, int indices[]) {
+int pesquisaDadosCircuito(struct Circuito circuitos[], int qtdCircuitos, int *indice, int indices[]) {
     char pesquisa[80];
     int i;
 

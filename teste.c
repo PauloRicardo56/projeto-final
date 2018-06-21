@@ -63,7 +63,6 @@ int main() {
 	circuitos[0].menorTempoMinSegMilli[1] = 12;
 	circuitos[0].menorTempoMinSegMilli[2] = 12;
 
-
 	// while(1) {
 	// 	menuDadosPiloto(pilotos, equipes, &qtdPilotos, &qtdEquipes);
 	// 	for(i = 0; i<qtdPilotos; i++) {
@@ -72,13 +71,13 @@ int main() {
 	// 	}
 	// }
 	while(1) {
-		cadastrarCircuito(circuitos, pilotos, equipes, &qtdCircuitos, &qtdPilotos, &qtdEquipes);
+		alterarCircuito(circuitos, pilotos, equipes, qtdCircuitos, &qtdPilotos, &qtdEquipes);
 		// for(i = 0; i<qtdEquipes; i++) {
 		// 	printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
 		// 					   procurarSiglaPiloto(pilotos, qtdPilotos, equipes[i].sigla));
 		// }
 		for(i = 0; i<qtdCircuitos; i++) {
-			printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho,
+			printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho, 
 								 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
 		}
 	}
