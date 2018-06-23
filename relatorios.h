@@ -4,7 +4,8 @@
 #include "utilidades.h"
 
 
-void menuRelatorios(struct Piloto pilotos[], int qtdPilotos);
+void menuRelatorios(struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[], struct MelhorVolta voltas[], 
+  int qtdPilotos, int qtdEquipes, int qtdCircuitos, int qtdVoltas);
 void showMenuRelatorios();
 void pesquisarPiloto(struct Piloto pilotos[], int qtdPilotos);
 
@@ -18,10 +19,11 @@ void exibirDadosSemMelhorVolta(struct Piloto pilotos[], struct Equipe equipes[],
 /**************
  * RELATORIOS *
  **************/
-void menuRelatorios(struct Piloto pilotos[], int qtdPilotos) {
+void menuRelatorios(struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[], struct MelhorVolta voltas[], 
+  int qtdPilotos, int qtdEquipes, int qtdCircuitos, int qtdVoltas) {
     int resposta;
     
-    showMenuRelatorios();
+    showMenuRelatorios(); 
     resposta = leValidaInt(1, 7, "Digite uma das opcoes do menu");
     switch(resposta) {
         // case 1:
@@ -39,21 +41,22 @@ void menuRelatorios(struct Piloto pilotos[], int qtdPilotos) {
         // case 5:
         //     pesquisaPilotoData();
         //     break;
-        // case 6:
-        //     pesquisarDadosVoltasMenores();
-        //     break;
-        // case 7:
-        //     exibirDadosSemMelhorVolta();
+        case 6:
+            pesquisarDadosVoltasMenores(pilotos, equipes, circuitos, voltas, qtdPilotos, qtdEquipes, qtdCircuitos, qtdVoltas);
+            break;
+        case 7:
+            exibirDadosSemMelhorVolta(pilotos, equipes, circuitos, voltas, qtdPilotos, qtdEquipes, qtdCircuitos, qtdVoltas);
+            break;
     }
 }
 
 
 void showMenuRelatorios() {
-    printf("1-Consultar dados\n");
+    printf("1-Consultar dados (X)\n");
     printf("2-Pesquisar piloto\n");
-    printf("3-Relacionar pilotos de um circuito ou data\n");
-    printf("4-Pesquisar circuito\n");
-    printf("5-Pesquisar pilotos pela data\n");
+    printf("3-Relacionar pilotos de um circuito ou data (X)\n");
+    printf("4-Pesquisar circuito (X)\n");
+    printf("5-Pesquisar pilotos pela data (X)\n");
     printf("6-Pesquisar pilotos, equipes e circuitos que realizaram voltas menores que um dado tempo\n");
     printf("7-Exibir pilotos, equipes ou circuitos que nao fizeram uma melhor volta\n");
 }
