@@ -6,14 +6,7 @@
 #include "equipe.h"
 #include "circuito.h"
 #include "volta.h"
-#include "relatorios.h"
-
-
-struct MelhorVolta {
-    int pilotoId;
-    char equipePiloto[40], voltaData[11];
-    long int tempoVolta;
-};    
+#include "relatorios.h" 
 
 
 int main() {
@@ -58,7 +51,7 @@ void showMenu() {
     printf("1-Menu dos pilotos\n");
     printf("2-Menu das equipes\n");
     printf("3-Menu dos circuitos\n");
-    printf("4-Menu das voltas\n");
+    printf("4-Menu das voltas (Necessário cadastro de pilotos e equipes)\n");
     printf("5-Relatorios\n");
     printf("6-Pesquisas\n");
     printf("7-Sair\n");

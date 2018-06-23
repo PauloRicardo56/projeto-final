@@ -22,9 +22,9 @@ struct Circuito {
 
 
 struct MelhorVolta {
-    int pilotoId;
-    char equipePiloto[40], voltaData[11];
-    long int tempoVolta;
+    int pilotoId, circuitoId;
+    char equipePiloto[40];
+    int tempoVolta[3], voltaData[3];
 };
 
 
