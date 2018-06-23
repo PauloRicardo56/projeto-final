@@ -1,6 +1,3 @@
-//Todo "leValida" vai estar em validacoes.h
-
-
 #include <stdio.h>
 #include "piloto.h"
 #include "equipe.h"
@@ -15,33 +12,29 @@ int main() {
     struct Equipe equipes[100];
     struct Circuito circuitos[100];
     struct MelhorVolta melhoresVoltas[100];
-    int resposta, qtdPilotos = 0, qtdEquipes = 0, qtdCircuitos, qtdMelhoresVoltas;
+    int resposta, qtdPilotos = 0, qtdEquipes = 0, qtdCircuitos = 0, qtdMelhoresVoltas = 0;
     
     do {
         showMenu();
-        resposta = leValidaInt(1, 7, "Digite uma das opcoes do menu");
+        resposta = leValidaInt(1, 6, "Digite uma das opcoes do menu");
         switch(resposta) {
             case 1:
-                menuDadosPiloto(pilotos, equipes, &qtdPilotos);
+                menuDadosPiloto(pilotos, equipes, &qtdPilotos, &qtdEquipes);
                 break;
             case 2:
-                menuDadosEquipe(equipes, &qtdEquipes);
+                menuDadosEquipe(equipes, pilotos, &qtdEquipes, qtdPilotos);
                 break;
             case 3:
-                menuDadosCircuito();
+                menuDadosCircuito(circuitos, pilotos, equipes, &qtdCircuitos, &qtdPilotos, &qtdEquipes);
                 break;
             case 4:
-                menuDadosVolta();
+                menuDadosVolta(melhoresVoltas, pilotos, equipes, circuitos, &qtdMelhoresVoltas, qtdPilotos, qtdEquipes, qtdCircuitos);
                 break;
             case 5:
-                menuRelatorios();
+                menuRelatorios(pilotos, equipes, circuitos, melhoresVoltas, qtdPilotos, qtdEquipes, qtdCircuitos, qtdMelhoresVoltas);
                 break;
-            case 6:
-                menuPesquisas();
-                break;
-            case 7:
         }
-    } while(resposta != 5);
+    } while(resposta != 6);
     
     return 0;
 }
@@ -53,6 +46,5 @@ void showMenu() {
     printf("3-Menu dos circuitos\n");
     printf("4-Menu das voltas (Necessário cadastro de pilotos e equipes)\n");
     printf("5-Relatorios\n");
-    printf("6-Pesquisas\n");
-    printf("7-Sair\n");
+    printf("6-Sair\n");
 }

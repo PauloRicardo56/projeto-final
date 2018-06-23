@@ -7,6 +7,8 @@ void showMenuVolta();
 void menuDadosVolta(struct MelhorVolta voltas[], struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[],
   int *qtdVoltas, int qtdPilotos, int qtdEquipes, int qtdCircuitos);
 void printarDadosVolta(int idPiloto, int idCircuito, char equipePiloto[], int tempoVolta[], int dataVolta[]);
+void cadastrarVolta(struct MelhorVolta voltas[], struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[], 
+  int *qtdVoltas, int qtdPilotos, int qtdEquipes, int qtdCircuitos);
 
 
 /* * * * * * * * * * * * * * * * * * * *
@@ -20,7 +22,7 @@ void menuDadosVolta(struct MelhorVolta voltas[], struct Piloto pilotos[], struct
     leValidaInt(1, 3, "Digite uma das opcoes do menu");
     switch(resposta) {
         case 1:
-            // cadastrarVolta(voltas, pilotos, equipes, circuitos, qtdVoltas, qtdPilotos, qtdEquipes, qtdCircuitos);
+            cadastrarVolta(voltas, pilotos, equipes, circuitos, qtdVoltas, qtdPilotos, qtdEquipes, qtdCircuitos);
             break;
         // case 2:
         //     alterarVolta();
@@ -149,10 +151,10 @@ void cadastrarVolta(struct MelhorVolta voltas[], struct Piloto pilotos[], struct
 }
 
 
-void alterarVolta() {}
+// void alterarVolta() {}
 
 
-void excluirVolta() {}
+// void excluirVolta() {}
 
 
 void printarDadosVolta(int idPiloto, int idCircuito, char equipePiloto[], int tempoVolta[], int dataVolta[]) {
