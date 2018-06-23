@@ -24,10 +24,12 @@ char leValidaChar2(char opc1, char opc2, char msg[]);
 char leValidaChar3(char opc1, char opc2, char opc3, char msg[]);
 float leValidaFloat(float min, float max, char msg[]);
 int leValidaInt(int min, int max, char msg[]);
+int leValidaIntSemSequencia(char msg[]);
 void leValidaIntPont(int *valor, int min, int max, char msg[]);
 // void leValidaCodigo(int *codigo, int codigos[], int qtdCodigos);
 // int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos);
 void leValidaStringInt(char string[], int tamanho, char msg[]);
+void leValidaDataInt(char data[], int diaMesAno[], char msg[]);
 void leValidaDataChar(char data[], char msg[]);
 void leValidaMinSegMillInt(char tempo[], int minSegMilli[], char msg[]);
 void leValidaMinSegMillChar(char tempo[], char msg[]);
@@ -239,6 +241,20 @@ int leValidaInt(int min, int max, char msg[]) {
 	system("cls");
 	return entrada;
 }
+
+
+int leValidaIntSemSequencia(char msg[]) {
+	int entrada, valorScanf;
+	printf("%s (Número inteiro válido) >> ", msg);
+	valorScanf = scanf("%d", &entrada); clean_stdin();
+	while(valorScanf == 0) {
+		printf(" Digite um valor inteiro válido >> ");
+		valorScanf = scanf("%d", &entrada); clean_stdin();
+	}
+	// system("cls");
+	return entrada;
+}
+
 
 
 /* 

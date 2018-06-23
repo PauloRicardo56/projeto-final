@@ -4,15 +4,18 @@
 #include "piloto.h"
 #include "equipe.h"
 #include "circuito.h"
+#include "volta.h"
+#include <time.h>
 
 
 int main() {
-	int qtdPilotos = 3, qtdEquipes = 3, qtdCircuitos = 1, i;
+	int qtdPilotos = 3, qtdEquipes = 3, qtdCircuitos = 2, qtdVoltas = 1, i;
 	srand(time(NULL));
 
 	struct Piloto pilotos[MAX_PILOTOS];
 	struct Equipe equipes[MAX_PILOTOS];
 	struct Circuito circuitos[MAX_PILOTOS];
+	struct MelhorVolta voltas[MAX_PILOTOS];
 
 
 	strcpy(equipes[0].nome, "Ferrari");
@@ -63,6 +66,29 @@ int main() {
 	circuitos[0].menorTempoMinSegMilli[1] = 12;
 	circuitos[0].menorTempoMinSegMilli[2] = 12;
 
+	circuitos[1].codigo = 2;
+	circuitos[1].idPilotoMenorTempo = 3;
+	strcpy(circuitos[1].nome, "Ayrton");
+	strcpy(circuitos[1].pais, "Argentina");
+	circuitos[1].tamanho = 9.78;
+	circuitos[1].menorTempoMinSegMilli[0] = 9;
+	circuitos[1].menorTempoMinSegMilli[1] = 59;
+	circuitos[1].menorTempoMinSegMilli[2] = 735;
+
+
+	voltas[0].pilotoId = 1;
+	voltas[0].circuitoId = 1;
+	voltas[0].tempoVolta[0] = 10;
+	voltas[0].tempoVolta[1] = 56;
+	voltas[0].tempoVolta[2] = 890;
+	voltas[0].voltaData[0] = 12;
+	voltas[0].voltaData[1] = 10;
+	voltas[0].voltaData[2] = 2016;
+	strcpy(voltas[0].equipePiloto, "Ferrari");
+
+	// printarDadosVolta(voltas[0].pilotoId, voltas[0].circuitoId, voltas[0].equipePiloto, voltas[0].tempoVolta, 
+	// 		  voltas[0].voltaData);
+
 	// while(1) {
 	// 	menuDadosPiloto(pilotos, equipes, &qtdPilotos, &qtdEquipes);
 	// 	for(i = 0; i<qtdPilotos; i++) {
@@ -70,15 +96,69 @@ int main() {
  //                         pilotos[i].dataNascimento[2], pilotos[i].sexo, pilotos[i].paisOrigem);
 	// 	}
 	// }
+	// while(1) {
+	// 	alterarCircuito(circuitos, pilotos, equipes, qtdCircuitos, &qtdPilotos, &qtdEquipes);
+	// 	// for(i = 0; i<qtdEquipes; i++) {
+	// 	// 	printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
+	// 	// 					   procurarSiglaPiloto(pilotos, qtdPilotos, equipes[i].sigla));
+	// 	// }
+	// 	for(i = 0; i<qtdCircuitos; i++) {
+	// 		printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho, 
+	// 							 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
+	// 	}
+	// }
+
+
 	while(1) {
-		alterarCircuito(circuitos, pilotos, equipes, qtdCircuitos, &qtdPilotos, &qtdEquipes);
+		cadastrarVolta(voltas, pilotos, equipes, circuitos, &qtdVoltas, qtdPilotos, qtdEquipes, qtdCircuitos);
 		// for(i = 0; i<qtdEquipes; i++) {
 		// 	printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
 		// 					   procurarSiglaPiloto(pilotos, qtdPilotos, equipes[i].sigla));
 		// }
-		for(i = 0; i<qtdCircuitos; i++) {
-			printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho, 
-								 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
+		for(i = 0; i<qtdVoltas; i++) {
+			printarDadosVolta(voltas[i].pilotoId, voltas[i].circuitoId, voltas[i].equipePiloto, voltas[i].tempoVolta, 
+			  voltas[i].voltaData);
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+	// char *diaSemana[] = {"Domingo", "Segunda", "Terca", "Quarta", "Quinta", "Sexta", "Sabado"};
+ //    struct tm *data_struct;
+ //    time_t hoje_t, data_t;
+ //    int diaMesAno[3];
+ //    char tempData[15];
+
+ //    time(&hoje_t); //Pega o tempo atual
+ //    data_struct = localtime(&hoje_t); //transforma para a struct tm
+
+ //    // flag = 0;
+ //    leValidaDataInt(tempData, diaMesAno, "Tempo da melhor volta (Apenas domingos)");
+
+ //    data_struct->tm_year = diaMesAno[2] - 1900;
+ //    data_struct->tm_mon = diaMesAno[1] - 1;
+ //    data_struct->tm_mday = diaMesAno[0];
+ //    data_t = mktime(data_struct);
+ //    if(data_struct->tm_wday != 0) {
+ //        printf("Tem que ser um domingo.\n");
+ //    }
+ //    // time(&hoje_t); //Pega o tempo atual
+ //    data_struct = localtime(&hoje_t); //transforma para a struct tm
+
+ //    data_struct->tm_year;
+ //    data_struct->tm_mon;
+ //    hoje_t = mktime(data_struct);
+ //    printf("%d\n%d\n%d", hoje_t, data_t, hoje_t - data_t);
+ //    if(hoje_t - data_t < 0) {
+ //        printf("Data ainda não ocorreu.\n");
+ //    }
+
 }
