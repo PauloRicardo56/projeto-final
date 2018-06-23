@@ -5,6 +5,7 @@
 #include "equipe.h"
 #include "circuito.h"
 #include "volta.h"
+#include "relatorios.h"
 #include <time.h>
 
 
@@ -43,7 +44,7 @@ int main() {
 	pilotos[1].dataNascimento[0] = 1;
 	pilotos[1].dataNascimento[1] = 12;
 	pilotos[1].dataNascimento[2] = 1990;
-	strcpy(pilotos[1].nome, "João");
+	strcpy(pilotos[1].nome, "Paulo");
 	strcpy(pilotos[1].siglaEquipe, "FRR");
 	pilotos[1].sexo = 'm';
 	strcpy(pilotos[1].paisOrigem, "Italia");
@@ -77,7 +78,7 @@ int main() {
 
 
 	voltas[0].pilotoId = 1;
-	voltas[0].circuitoId = 1;
+	voltas[0].circuitoId = 2;
 	voltas[0].tempoVolta[0] = 10;
 	voltas[0].tempoVolta[1] = 56;
 	voltas[0].tempoVolta[2] = 890;
@@ -109,17 +110,25 @@ int main() {
 	// }
 
 
-	while(1) {
-		cadastrarVolta(voltas, pilotos, equipes, circuitos, &qtdVoltas, qtdPilotos, qtdEquipes, qtdCircuitos);
-		// for(i = 0; i<qtdEquipes; i++) {
-		// 	printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
-		// 					   procurarSiglaPiloto(pilotos, qtdPilotos, equipes[i].sigla));
-		// }
-		for(i = 0; i<qtdVoltas; i++) {
-			printarDadosVolta(voltas[i].pilotoId, voltas[i].circuitoId, voltas[i].equipePiloto, voltas[i].tempoVolta, 
-			  voltas[i].voltaData);
-		}
-	}
+	// while(1) {
+	// 	cadastrarVolta(voltas, pilotos, equipes, circuitos, &qtdVoltas, qtdPilotos, qtdEquipes, qtdCircuitos);
+	// 	// for(i = 0; i<qtdEquipes; i++) {
+	// 	// 	printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
+	// 	// 					   procurarSiglaPiloto(pilotos, qtdPilotos, equipes[i].sigla));
+	// 	// }
+	// 	for(i = 0; i<qtdVoltas; i++) {
+	// 		printarDadosVolta(voltas[i].pilotoId, voltas[i].circuitoId, voltas[i].equipePiloto, voltas[i].tempoVolta, 
+	// 		  voltas[i].voltaData);
+	// 	}
+	// }
+
+	// pesquisarPiloto(pilotos, qtdPilotos);
+	// exibirDadosSemMelhorVolta(pilotos, equipes, circuitos, voltas, qtdPilotos, qtdEquipes, qtdCircuitos, qtdVoltas);
+	pesquisarDadosVoltasMenores(pilotos, equipes, circuitos, voltas, qtdPilotos, qtdEquipes, qtdCircuitos, qtdVoltas);
+	// for(i = 0; i<qtdVoltas; i++) {
+	// 	printarDadosVolta(voltas[i].pilotoId, voltas[i].circuitoId, voltas[i].equipePiloto, voltas[i].tempoVolta, 
+	// 	  voltas[i].voltaData);
+	// }
 
 
 
