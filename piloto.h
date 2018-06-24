@@ -14,11 +14,11 @@
 
 void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes);
 void showMenuPiloto();
-void cadastrarPiloto(struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes);
-int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes);
+void cadastrarPiloto();
+int procuraSiglaExistente(int qtdPilotos, int *qtdEquipes, char sigla[]);
 int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos);
-void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes);
-void removerPiloto(struct Piloto pilotos[], int *qtdPilotos);
+void alterarPiloto();
+void removerPiloto();
 int pesquisaDadosPiloto(struct Piloto pilotos[], int qtdPilotos, int *indice, int indices[]);
 void printarDadosPiloto(int codigo, char nome[], char sigla[], int dia, int mes, int ano, char sexo, char pais[]);
 // void inserirPontos(char string[], int tamanho);
@@ -38,13 +38,13 @@ void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
     resposta = leValidaInt(1, 3, "Digite uma das op?es do menu"); system("cls");
     switch(resposta) {
         case 1:
-            cadastrarPiloto(equipes, qtdPilotos, qtdEquipes);
+            cadastrarPiloto(qtdPilotos, qtdEquipes);
             break;
         case 2:
-            alterarPiloto(pilotos, equipes, *qtdPilotos, qtdEquipes);
+            alterarPiloto();
             break;
         case 3:
-            removerPiloto(pilotos, qtdPilotos);
+            removerPiloto();
             break;
     }
 }
@@ -68,44 +68,63 @@ void showMenuPiloto() {
  *   cadastrados e quantidade de equipes cadastradas.
  * Retorna: Nada.
  */
-void cadastrarPiloto(struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) {
-    int *codigos, qtdCodigos, resposta, i;
+void cadastrarPiloto() {
+    int *codigos, qtdCodigos, resposta, i, qtdDados[4];
     char data[11];
     struct Piloto pilotos[100];
-    FILE *pilotosF;
+    FILE *pilotosF, *qtdDadosF;
 
-    pilotosF = fopen("pilotos", "rb");   
-    fread(&pilotos, sizeof(struct Piloto), *qtdPilotos, pilotosF);
-    fclose(pilotosF);
+    if((qtdDadosF = fopen("dados", "rb")) != NULL) {
+        fread(&qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
+    } else {
+        for(i=0; i<4; i++) {
+            qtdDados[i] = 0;
+        }
+    }
 
-    if(*qtdPilotos == MAX_PILOTOS) {
+    if(qtdDados[0] > 0) {
+        pilotosF = fopen("pilotos", "rb");   
+        fread(&pilotos, sizeof(struct Piloto), qtdDados[0], pilotosF); fclose(pilotosF);
+    }
+
+    if(qtdDados[0] == MAX_PILOTOS) {
         printf("Nao ?mais possivel adicionar pilotos(as).\n");
         return;
     }
-    if(MAX_PILOTOS - *qtdPilotos >= 3) {
+    if(MAX_PILOTOS - qtdDados[0] >= 3) {
         qtdCodigos = 3;
     } else {
-        qtdCodigos = MAX_PILOTOS - *qtdPilotos;
+        qtdCodigos = MAX_PILOTOS - qtdDados[0];
     }
 
-    codigos = gerarCodigosRandomicos(pilotos, *qtdPilotos, MAX_PILOTOS);
+    // printf("@@ %d\n", qtdDados[0]);
+    // printf("@@ %s\n", pilotos[0].nome);
+
+    codigos = gerarCodigosRandomicos(pilotos, qtdDados[0], MAX_PILOTOS);
     for(i=0; i<qtdCodigos; i++) {
         printf("%d) %d\t", i+1, codigos[i]);
     }
     resposta = leValidaInt(1, i, "\n\nSelecione um dos c?igos acima"); system("cls");
-    pilotos[*qtdPilotos].codigo = codigos[resposta-1];
+    pilotos[qtdDados[0]].codigo = codigos[resposta-1];
 
-    leValidaNome(pilotos[*qtdPilotos].nome, 1, "Nome do(a) piloto(a)"); system("cls");
+    leValidaNome(pilotos[qtdDados[0]].nome, 1, "Nome do(a) piloto(a)"); system("cls");
+    leValidaSigla(pilotos[qtdDados[0]].siglaEquipe, 3, "Sigla da equipe do piloto"); system("cls");
+    if(procuraSiglaExistente(qtdDados[0], qtdDados, pilotos[qtdDados[0]].siglaEquipe)) {
+        leValidaDataInt(data, pilotos[qtdDados[0]].dataNascimento, "Data de nascimento do(a) piloto(a)"); system("cls");
+        pilotos[qtdDados[0]].sexo = leValidaChar2('f', 'm', "Sexo do(a) piloto(a)"); system("cls");
+        leValidaNome(pilotos[qtdDados[0]].paisOrigem, 1, "Pa? do(a) piloto(a)"); system("cls");
+        qtdDados[0]++;
 
-    if(procuraSiglaExistente(pilotos, equipes, *qtdPilotos, qtdEquipes)) {
-        leValidaDataInt(data, pilotos[*qtdPilotos].dataNascimento, "Data de nascimento do(a) piloto(a)"); system("cls");
-        pilotos[*qtdPilotos].sexo = leValidaChar2('f', 'm', "Sexo do(a) piloto(a)"); system("cls");
-        leValidaNome(pilotos[*qtdPilotos].paisOrigem, 1, "Pa? do(a) piloto(a)"); system("cls");
-        (*qtdPilotos)++;
-
+        qtdDadosF = fopen("dados", "wb");
+        fwrite(qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
         pilotosF = fopen("pilotos", "wb");
-        fwrite(pilotos, sizeof(struct Piloto), *qtdPilotos, pilotosF);
-        fclose(pilotosF);
+        fwrite(pilotos, sizeof(struct Piloto), qtdDados[0], pilotosF); fclose(pilotosF);
+        printf("@@ %s\n", pilotos[0].nome);
+
+
+        // pilotosF = fopen("pilotos", "rb");
+        // fread(&pilotos, sizeof(struct Piloto), qtdDados[0], pilotosF); fclose(pilotosF);
+        // printf("@@ %s %s\n", pilotos[0].nome, pilotos[0].siglaEquipe);
     }
 }
 
@@ -116,13 +135,26 @@ void cadastrarPiloto(struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) 
  *   cadastrados e quantidade de equipes cadastradas.
  * Retorna: 1 se encontrar sigla ou 0 se nÃ£o.
  */
-int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes) {
+int procuraSiglaExistente(int qtdPilotos, int qtdDados[], char sigla[]) {
     int i, flag = 0;
     char resposta;
+    struct Piloto pilotos[100];
+    struct Equipe equipes[100];
+    FILE *pilotosF, *equipesF;
 
-    leValidaSigla(pilotos[qtdPilotos].siglaEquipe, 3, "Sigla da equipe do piloto"); system("cls");
-    for(i=0; i<*qtdEquipes; i++) {
-        if(strcmp(equipes[i].sigla, pilotos[qtdPilotos].siglaEquipe) == 0) {
+    if(qtdPilotos > 0) {
+        pilotosF = fopen("pilotos", "rb");
+        fread(&pilotos, sizeof(struct Piloto), qtdPilotos, pilotosF); fclose(pilotosF);
+        printf("@@ OI\n");
+    }
+    if(qtdDados[1] > 0) {
+        equipesF = fopen("equipes", "rb");
+        fread(&equipes, sizeof(struct Equipe), qtdDados[1], equipesF); fclose(equipesF);
+        printf("@@ OI2\n");
+    }
+
+    for(i=0; i<qtdDados[1]; i++) {
+        if(strcmp(equipes[i].sigla, sigla) == 0) {
             flag++;
         }
     }
@@ -130,7 +162,8 @@ int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int 
         resposta = leValidaChar2('s','n', "Sigla n? cadastrada em equipes. Deseja cadastr?la?"); system("cls");
         switch(resposta) {
             case 's':
-                cadastrarEquipe(qtdEquipes);
+                cadastrarEquipe();
+                qtdDados[1]++;
                 break;
             case 'n':
                 return 0;
@@ -189,12 +222,33 @@ int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodi
  *   cadastrados e quantidade de equipes cadastradas.
  * Retorna: Nada
  */
-void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes) {
-    int flag = 0, i, ii, respostaInt;
+void alterarPiloto() {
+    int flag = 0, i, ii, respostaInt, qtdDados[4];
     char nomeTemp[40], sexoTemp, paisOrigemTemp[30], siglaEquipeTemp[4], resposta, dataChar[11];
-    int dataTemp[3], codigoTemp, indice = 0, indices[qtdPilotos];
+    int dataTemp[3], codigoTemp, indice = 0;
+    FILE *pilotosF, *equipesF, *qtdDadosF;
+    struct Piloto pilotos[100];
+    struct Equipe equipes[100];
 
-    if(pesquisaDadosPiloto(pilotos, qtdPilotos, &indice, indices)) {
+    if((qtdDadosF = fopen("dados", "rb")) != NULL) {
+        fread(&qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
+    } else {
+        for(i=0; i<4; i++) {
+            qtdDados[i] = 0;
+        }
+    } int indices[qtdDados[0]];
+
+    if(qtdDados[0] > 0) {
+        pilotosF = fopen("pilotos", "rb");
+        fread(&pilotos, sizeof(struct Piloto), qtdDados[0], pilotosF); fclose(pilotosF);
+    }
+
+    if(qtdDados[1] > 0) {
+        equipesF = fopen("equipes", "rb");
+        fread(&equipes, sizeof(struct Equipe), qtdDados[1], equipesF); fclose(equipesF);
+    }
+
+    if(pesquisaDadosPiloto(pilotos, qtdDados[0], &indice, indices)) {
         for(i=0; i<indice; i++) {
             printarDadosPiloto(pilotos[indices[i]].codigo, pilotos[indices[i]].nome, pilotos[indices[i]].siglaEquipe, pilotos[indices[i]].dataNascimento[0], pilotos[indices[i]].dataNascimento[1],
                          pilotos[indices[i]].dataNascimento[2], pilotos[indices[i]].sexo, pilotos[indices[i]].paisOrigem);
@@ -234,7 +288,8 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
         printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
         resposta = leValidaChar2('s', 'n', "Deseja alterar a sigla da equipe?");
         if(resposta == 's') {
-            if(!procuraSiglaExistente(pilotos, equipes, indices[i], qtdEquipes)) {
+            leValidaSigla(pilotos[indices[i]].siglaEquipe, 3, "Nova sigla");
+            if(!procuraSiglaExistente(indices[i], qtdDados, pilotos[indices[i]].siglaEquipe)) {
                 strcpy(pilotos[indices[i]].siglaEquipe, siglaEquipeTemp);
             }
         }
@@ -257,7 +312,7 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
         printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
         resposta = leValidaChar2('s', 'n', "Deseja fazer as altera?es?");
         if(resposta == 's') {
-            for(ii=0; ii<qtdPilotos; ii++) {
+            for(ii=0; ii<qtdDados[0]; ii++) {
                 if(indices[i] != ii) {
                     if(strcmp(nomeTemp, pilotos[ii].nome) == 0 && strcmp(pilotos[indices[i]].siglaEquipe, pilotos[ii].siglaEquipe) == 0 
                     && (dataTemp[0] == pilotos[ii].dataNascimento[0] && dataTemp[1] == pilotos[ii].dataNascimento[1] && 
@@ -276,6 +331,9 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
             pilotos[indices[i]].dataNascimento[2] = dataTemp[2];
             pilotos[indices[i]].sexo = sexoTemp;
             strcpy(pilotos[indices[i]].paisOrigem, paisOrigemTemp);
+
+            pilotosF = fopen("pilotos", "wb");
+            fwrite(pilotos, sizeof(struct Piloto), qtdDados[0], pilotosF); fclose(pilotosF);
             printf("Dados alterados!\n");
         } else {
             strcpy(pilotos[indices[i]].siglaEquipe, siglaEquipeTemp);
@@ -289,11 +347,25 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
  * Parametros: Lista com pilotos ja cadastrados e quantidade de pilotos.
  * Retorna: Nada
  */
-void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {
-    int indice = 0, flag = 0, i, indices[*qtdPilotos], respostaInt;
+void removerPiloto() {
+    int indice = 0, flag = 0, i, respostaInt, qtdDados[4];
     char resposta, pesquisa[50];
+    struct Piloto pilotos[100];
+    FILE *pilotosF, *qtdDadosF;
 
-    if(pesquisaDadosPiloto(pilotos, *qtdPilotos, &indice, indices)) {
+    if((qtdDadosF = fopen("dados", "rb")) != NULL) {
+        fread(&qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
+    } else {
+        for(i=0; i<4; i++) {
+            qtdDados[i] = 0;
+        }
+    }
+    if(qtdDados[0] > 0) {
+        pilotosF = fopen("pilotos", "rb");   
+        fread(&pilotos, sizeof(struct Piloto), qtdDados[0], pilotosF); fclose(pilotosF);
+    } int indices[qtdDados[0]];
+
+    if(pesquisaDadosPiloto(pilotos, qtdDados[0], &indice, indices)) {
         for(i=0; i<indice; i++) {
             printarDadosPiloto(pilotos[indices[i]].codigo, pilotos[indices[i]].nome, pilotos[indices[i]].siglaEquipe, pilotos[indices[i]].dataNascimento[0], pilotos[indices[i]].dataNascimento[1],
                          pilotos[indices[i]].dataNascimento[2], pilotos[indices[i]].sexo, pilotos[indices[i]].paisOrigem);
@@ -318,20 +390,27 @@ void removerPiloto(struct Piloto pilotos[], int *qtdPilotos) {
             resposta = leValidaChar2('s', 'n', "Deseja realmente excluir esse piloto?");
         }
         if(resposta == 's') {
-            pilotos[indices[i]].codigo = pilotos[*qtdPilotos-1].codigo;
+            pilotos[indices[i]].codigo = pilotos[qtdDados[0]-1].codigo;
 
-            strcpy(pilotos[indices[i]].nome, pilotos[*qtdPilotos-1].nome);
-            strcpy(pilotos[indices[i]].siglaEquipe, pilotos[*qtdPilotos-1].siglaEquipe);
-            pilotos[indices[i]].dataNascimento[0] = pilotos[*qtdPilotos-1].dataNascimento[0];
-            pilotos[indices[i]].dataNascimento[1] = pilotos[*qtdPilotos-1].dataNascimento[1];
+            strcpy(pilotos[indices[i]].nome, pilotos[qtdDados[0]-1].nome);
+            strcpy(pilotos[indices[i]].siglaEquipe, pilotos[qtdDados[0]-1].siglaEquipe);
+            pilotos[indices[i]].dataNascimento[0] = pilotos[qtdDados[0]-1].dataNascimento[0];
+            pilotos[indices[i]].dataNascimento[1] = pilotos[qtdDados[0]-1].dataNascimento[1];
 
-            pilotos[indices[i]].dataNascimento[2] = pilotos[*qtdPilotos-1].dataNascimento[2];
+            pilotos[indices[i]].dataNascimento[2] = pilotos[qtdDados[0]-1].dataNascimento[2];
 
-            pilotos[indices[i]].sexo = pilotos[*qtdPilotos-1].sexo;
+            pilotos[indices[i]].sexo = pilotos[qtdDados[0]-1].sexo;
             // printf("@@ OI\n");
-            strcpy(pilotos[indices[i]].paisOrigem, pilotos[*qtdPilotos-1].paisOrigem);
+            strcpy(pilotos[indices[i]].paisOrigem, pilotos[qtdDados[0]-1].paisOrigem);
 
-            (*qtdPilotos)--;
+            qtdDados[0]--;
+
+            qtdDadosF = fopen("dados", "wb");
+            fwrite(qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
+            pilotosF = fopen("pilotos", "wb");
+            fwrite(pilotos, sizeof(struct Piloto), qtdDados[0], pilotosF); fclose(pilotosF);
+            // printf("@@ %s\n", pilotos[0].nome);
+            
             printf("Piloto excluido com sucesso.\n");
             return;
         }

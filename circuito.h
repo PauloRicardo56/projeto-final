@@ -78,7 +78,7 @@ int procuraIdPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPi
     }
     resposta = leValidaChar2('s', 'n', "Nenhum piloto cadastrado com esse id. Deseja cadastr?lo?");
     if(resposta == 's') {
-        cadastrarPiloto(equipes, qtdPilotos, qtdEquipes);
+        cadastrarPiloto();
         return 1;
     }
     return 0;

@@ -14,7 +14,7 @@
 
 void menuDadosEquipe(struct Equipe equipes[], struct Piloto pilotos[], int *qtdEquipes, int qtdPilotos);
 void showMenuEquipe();
-void cadastrarEquipe(int *qtdEquipes);
+void cadastrarEquipe();
 void leValidaSiglaNaoRepetida(struct Equipe equipes[], int qtdEquipes);
 void excluirEquipe(struct Equipe equipes[], struct Piloto pilotos[], int *qtdEquipes, int qtdPilotos);
 int pesquisaDadosEquipe(struct Equipe equipes[], int qtdEquipes, int *indice, int indices[]);
@@ -45,25 +45,34 @@ void showMenuEquipe() {
 }
 
 
-void cadastrarEquipe(int *qtdEquipes) {
+void cadastrarEquipe() {
+    int qtdDados[4], i;
     struct Equipe equipes[100];
-    FILE *equipesF;
+    FILE *equipesF, *qtdDadosF;
 
-    if(*qtdEquipes > 0) {
+    if((qtdDadosF = fopen("dados", "rb")) != NULL) {
+        fread(&qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
+    } else {
+        for(i=0; i<4; i++) {
+            qtdDados[i] = 0;
+        }
+    }
+
+    if(qtdDados[1] > 0) {
         equipesF = fopen("equipes", "rb");
-        fread(&equipes, sizeof(struct Equipe), *qtdEquipes, equipesF);
-        fclose(equipesF);
+        fread(&equipes, sizeof(struct Equipe), qtdDados[1], equipesF); fclose(equipesF);
         // printf("%s\n", equipes[0].nome);
     }
 
-    leValidaSiglaNaoRepetida(equipes, *qtdEquipes); system("cls");
-    leValidaNome(equipes[*qtdEquipes].nome, 0, "Nome da equipe"); system("cls");
-    leValidaNome(equipes[*qtdEquipes].paisOrigem, 1, "Pa? de origem"); system("cls");
-    (*qtdEquipes)++;
+    leValidaSiglaNaoRepetida(equipes, qtdDados[1]); system("cls");
+    leValidaNome(equipes[qtdDados[1]].nome, 0, "Nome da equipe"); system("cls");
+    leValidaNome(equipes[qtdDados[1]].paisOrigem, 1, "Pa? de origem"); system("cls");
+    qtdDados[1]++;
 
+    qtdDadosF = fopen("dados", "wb");
+    fwrite(qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
     equipesF = fopen("equipes", "wb");
-    fwrite(equipes, sizeof(struct Equipe), *qtdEquipes, equipesF);
-    fclose(equipesF);
+    fwrite(equipes, sizeof(struct Equipe), qtdDados[1], equipesF); fclose(equipesF);
 }
 
 
