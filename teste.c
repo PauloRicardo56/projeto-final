@@ -147,7 +147,7 @@ int main() {
 	// }
 
 	while(1) {
-		removerPiloto();
+		excluirEquipe();
 
 		qtdDadosF = fopen("dados", "rb");
 		fread(&qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
