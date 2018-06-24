@@ -2,14 +2,13 @@
 #define _relatorios_h
 #include "piloto.h"
 #include "utilidades.h"
+#include <locale.h>
 
 
 void menuRelatorios(struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[], struct MelhorVolta voltas[], 
   int qtdPilotos, int qtdEquipes, int qtdCircuitos, int qtdVoltas);
 void showMenuRelatorios();
 void pesquisarPiloto(struct Piloto pilotos[], int qtdPilotos);
-
-
 void pesquisarDadosVoltasMenores(struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[], struct MelhorVolta voltas[], 
   int qtdPilotos, int qtdEquipes, int qtdCircuitos, int qtdVoltas);
 void exibirDadosSemMelhorVolta(struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[], struct MelhorVolta voltas[], 
@@ -21,6 +20,7 @@ void exibirDadosSemMelhorVolta(struct Piloto pilotos[], struct Equipe equipes[],
  **************/
 void menuRelatorios(struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[], struct MelhorVolta voltas[], 
   int qtdPilotos, int qtdEquipes, int qtdCircuitos, int qtdVoltas) {
+	setlocale(LC_ALL, "Portuguese");
     int resposta;
     
     showMenuRelatorios(); 
@@ -57,7 +57,7 @@ void showMenuRelatorios() {
     printf("3-Relacionar pilotos de um circuito ou data (X)\n");
     printf("4-Pesquisar circuito (X)\n");
     printf("5-Pesquisar pilotos pela data (X)\n");
-    printf("6-Pesquisar pilotos, equipes e circuitos que realizaram voltas menores que um dado tempo\n");
+    printf("6-Pesquisar pilotos, equipes e circuitos que realizaram voltas menores que um dado tempo (X)\n");
     printf("7-Exibir pilotos, equipes ou circuitos que nao fizeram uma melhor volta\n");
 }
 

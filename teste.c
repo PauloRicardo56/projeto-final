@@ -20,44 +20,44 @@ int main() {
 	struct MelhorVolta voltas[MAX_PILOTOS];
 
 
-	strcpy(equipes[0].nome, "Ferrari");
-	strcpy(equipes[0].sigla, "FRR");
-	strcpy(equipes[0].paisOrigem, "Italia");
+	// strcpy(equipes[0].nome, "Ferrari");
+	// strcpy(equipes[0].sigla, "FRR");
+	// strcpy(equipes[0].paisOrigem, "Italia");
 
-	strcpy(equipes[1].nome, "Mitsubishi");
-	strcpy(equipes[1].sigla, "MTB");
-	strcpy(equipes[1].paisOrigem, "Franca");
+	// strcpy(equipes[1].nome, "Mitsubishi");
+	// strcpy(equipes[1].sigla, "MTB");
+	// strcpy(equipes[1].paisOrigem, "Franca");
 
-	strcpy(equipes[2].nome, "Merceds");
-	strcpy(equipes[2].sigla, "MCD");
-	strcpy(equipes[2].paisOrigem, "Inglaterra");
+	// strcpy(equipes[2].nome, "Merceds");
+	// strcpy(equipes[2].sigla, "MCD");
+	// strcpy(equipes[2].paisOrigem, "Inglaterra");
 
-	// pilotos[0].codigo = 1;
-	// pilotos[0].dataNascimento[0] = 17;
-	// pilotos[0].dataNascimento[1] = 6;
-	// pilotos[0].dataNascimento[2] = 1997;
-	// strcpy(pilotos[0].nome, "Paulo Ricardo");
-	// strcpy(pilotos[0].siglaEquipe, "MTB");
-	// pilotos[0].sexo = 'm';
-	// strcpy(pilotos[0].paisOrigem, "Inglaterra");
+	pilotos[0].codigo = 1;
+	pilotos[0].dataNascimento[0] = 17;
+	pilotos[0].dataNascimento[1] = 6;
+	pilotos[0].dataNascimento[2] = 1997;
+	strcpy(pilotos[0].nome, "Paulo Ricardo");
+	strcpy(pilotos[0].siglaEquipe, "MTB");
+	pilotos[0].sexo = 'm';
+	strcpy(pilotos[0].paisOrigem, "Inglaterra");
 
-	// pilotos[1].codigo = 2;
-	// pilotos[1].dataNascimento[0] = 1;
-	// pilotos[1].dataNascimento[1] = 12;
-	// pilotos[1].dataNascimento[2] = 1990;
-	// strcpy(pilotos[1].nome, "Paulo");
-	// strcpy(pilotos[1].siglaEquipe, "FRR");
-	// pilotos[1].sexo = 'm';
-	// strcpy(pilotos[1].paisOrigem, "Italia");
+	pilotos[1].codigo = 2;
+	pilotos[1].dataNascimento[0] = 1;
+	pilotos[1].dataNascimento[1] = 12;
+	pilotos[1].dataNascimento[2] = 1990;
+	strcpy(pilotos[1].nome, "Paulo");
+	strcpy(pilotos[1].siglaEquipe, "FRR");
+	pilotos[1].sexo = 'm';
+	strcpy(pilotos[1].paisOrigem, "Italia");
 
-	// pilotos[2].codigo = 3;
-	// pilotos[2].dataNascimento[0] = 17;
-	// pilotos[2].dataNascimento[1] = 7;
-	// pilotos[2].dataNascimento[2] = 1997;
-	// strcpy(pilotos[2].nome, "Ana");
-	// strcpy(pilotos[2].siglaEquipe, "MCD");
-	// pilotos[2].sexo = 'f';
-	// strcpy(pilotos[2].paisOrigem, "Inglaterra");
+	pilotos[2].codigo = 3;
+	pilotos[2].dataNascimento[0] = 17;
+	pilotos[2].dataNascimento[1] = 7;
+	pilotos[2].dataNascimento[2] = 1997;
+	strcpy(pilotos[2].nome, "Ana");
+	strcpy(pilotos[2].siglaEquipe, "MCD");
+	pilotos[2].sexo = 'f';
+	strcpy(pilotos[2].paisOrigem, "Inglaterra");
 
 	circuitos[0].codigo = 1;
 	circuitos[0].idPilotoMenorTempo = 1;
@@ -90,21 +90,41 @@ int main() {
 
 	// pilotosF = fopen("pilotos", "wb");
 	// fwrite(pilotos, sizeof(struct Piloto), qtdPilotos, pilotosF);
+	// fclose(pilotosF);
 
-	struct Piloto testeP[100];
+	// equipesF = fopen("equipes", "wb");
+	// fwrite(equipes, sizeof(struct Equipe), qtdEquipes, equipesF);
+	// fclose(equipesF);
 
-	pilotosF = fopen("pilotos", "rb");
-	fseek(pilotosF,0,SEEK_END);
-	long end = ftell(pilotosF);
-	fseek(pilotosF,0,SEEK_SET);
-	int count;
-	for ( count=0; count < 10; count++) { 
-		fread(testeP,sizeof(struct Piloto),1,pilotosF);   //printf("%d\n",myRecord.a);
-	}  
-	fclose(pilotosF);
+	// pilotosF = fopen("pilotos", "rb");	
+	// fread(&testeP, sizeof(struct Piloto), qtdPilotos, pilotosF);
 
-	// printf("%d\n\n", counter);
-	printf("%d\n\n", testeP[1].codigo);
+	// printf("%s\n", testeP[3].nome);
+
+	// while(1) {
+		// cadastrarPiloto(equipes, &qtdPilotos, &qtdEquipes);
+		pilotosF = fopen("pilotos", "rb");	
+		fread(&pilotos, sizeof(struct Piloto), qtdPilotos, pilotosF);
+		fclose(pilotosF);
+
+	// 	for(i = 0; i<qtdPilotos; i++) {
+	// 		printarDadosPiloto(testeP[i].codigo, testeP[i].nome, testeP[i].siglaEquipe, testeP[i].dataNascimento[0], testeP[i].dataNascimento[1],
+ //              testeP[i].dataNascimento[2], testeP[i].sexo, testeP[i].paisOrigem);
+	// 	}
+	// }
+
+	while(1) {
+		cadastrarEquipe(&qtdEquipes);
+		equipesF = fopen("equipes", "rb");	
+		fread(&equipes, sizeof(struct Equipe), qtdEquipes, equipesF);
+		fclose(equipesF);
+		printf("@@ %s\n", equipes[0].nome);
+
+		for(i = 0; i<qtdEquipes; i++) {
+			printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
+	  		  procurarSiglaPiloto(equipes, qtdPilotos, equipes[i].sigla));
+		}
+	}
 
 	// printarDadosVolta(voltas[0].pilotoId, voltas[0].circuitoId, voltas[0].equipePiloto, voltas[0].tempoVolta, 
 	// 		  voltas[0].voltaData);

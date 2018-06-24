@@ -4,6 +4,7 @@
 #include "validacoes.h"
 #include "utilidades.h"
 #define MAX_LETRAS_SIGLA 3
+#include <locale.h>
 
 
 /* * * * * * * * * * * * * * * *
@@ -13,7 +14,7 @@
 
 void menuDadosEquipe(struct Equipe equipes[], struct Piloto pilotos[], int *qtdEquipes, int qtdPilotos);
 void showMenuEquipe();
-void cadastrarEquipe(struct Equipe equipes[], int *qtdEquipes);
+void cadastrarEquipe(int *qtdEquipes);
 void leValidaSiglaNaoRepetida(struct Equipe equipes[], int qtdEquipes);
 void excluirEquipe(struct Equipe equipes[], struct Piloto pilotos[], int *qtdEquipes, int qtdPilotos);
 int pesquisaDadosEquipe(struct Equipe equipes[], int qtdEquipes, int *indice, int indices[]);
@@ -23,12 +24,13 @@ int procurarSiglaPiloto(struct Piloto pilotos[], int qtdPilotos, char sigla[]);
 
 void menuDadosEquipe(struct Equipe equipes[], struct Piloto pilotos[], int *qtdEquipes, int qtdPilotos) {
     int resposta;
+    setlocale(LC_ALL, "Portuguese");
     
     showMenuEquipe();
-    resposta = leValidaInt(1, 2, "Digite uma das opcoes do menu");
+    resposta = leValidaInt(1, 2, "Digite uma das op?es do menu");
     switch(resposta) {
         case 1:
-            cadastrarEquipe(equipes, qtdEquipes);
+            cadastrarEquipe(qtdEquipes);
             break;
         case 2:
             excluirEquipe(equipes, pilotos, qtdEquipes, qtdPilotos);
@@ -43,11 +45,25 @@ void showMenuEquipe() {
 }
 
 
-void cadastrarEquipe(struct Equipe equipes[], int *qtdEquipes) {
+void cadastrarEquipe(int *qtdEquipes) {
+    struct Equipe equipes[100];
+    FILE *equipesF;
+
+    if(*qtdEquipes > 0) {
+        equipesF = fopen("equipes", "rb");
+        fread(&equipes, sizeof(struct Equipe), *qtdEquipes, equipesF);
+        fclose(equipesF);
+        // printf("%s\n", equipes[0].nome);
+    }
+
     leValidaSiglaNaoRepetida(equipes, *qtdEquipes); system("cls");
     leValidaNome(equipes[*qtdEquipes].nome, 0, "Nome da equipe"); system("cls");
-    leValidaNome(equipes[*qtdEquipes].paisOrigem, 1, "Pais de origem"); system("cls");
+    leValidaNome(equipes[*qtdEquipes].paisOrigem, 1, "Pa? de origem"); system("cls");
     (*qtdEquipes)++;
+
+    equipesF = fopen("equipes", "wb");
+    fwrite(equipes, sizeof(struct Equipe), *qtdEquipes, equipesF);
+    fclose(equipesF);
 }
 
 
@@ -60,7 +76,7 @@ void leValidaSiglaNaoRepetida(struct Equipe equipes[], int qtdEquipes) {
             flag = 0;
             for(i=0; i<qtdEquipes; i++) {
                 if(strcmp(equipes[i].sigla, equipes[qtdEquipes].sigla) == 0) {
-                    printf("Sigla ja cadastrada em outra equipe (%s)\n", equipes[i].nome);
+                    printf("Sigla j?cadastrada em outra equipe (%s)\n", equipes[i].nome);
                     leValidaSigla(equipes[qtdEquipes].sigla, MAX_LETRAS_SIGLA, "Informe outra"); system("cls");
                     flag++;
                 }
@@ -108,7 +124,7 @@ void excluirEquipe(struct Equipe equipes[], struct Piloto pilotos[], int *qtdEqu
             printf("Equipe excluida com sucesso.\n");
             return;
         }
-        printf("NÃ£o foi possÃ­vel remover equipe.\n");
+        printf("N? foi poss?el remover equipe.\n");
     }
 }
 
@@ -141,10 +157,10 @@ void printarDadosEquipe(char nome[], char sigla[], char pais[], int flag) {
     inserirPontos(nome, -35); printf("\n");
 
     inserirPontos("Sigla", 17);
-    inserirPontos(sigla, -35); if(flag == 1) { printf(" (HÃ¡ pilotos cadastrados nesta equipe)"); }
+    inserirPontos(sigla, -35); if(flag == 1) { printf(" (H?pilotos cadastrados nesta equipe)"); }
     printf("\n");
 
-    inserirPontos("PaÃ­s origem", 17);
+    inserirPontos("Pa? origem", 17);
     inserirPontos(pais, -36); printf("\n\n");
 }
 

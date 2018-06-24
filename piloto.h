@@ -2,7 +2,9 @@
 #define _piloto_h
 #include "structs.h"
 #include "equipe.h"
-#define MAX_PILOTOS 10
+#include "circuito.h"
+#include <locale.h>
+#define MAX_PILOTOS 100
 
 
 /* * * * * * * * * * * * * * * * * * * * *
@@ -12,7 +14,7 @@
 
 void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes);
 void showMenuPiloto();
-void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes);
+void cadastrarPiloto(struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes);
 int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes);
 int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos);
 void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilotos, int *qtdEquipes);
@@ -30,12 +32,13 @@ void printarDadosPiloto(int codigo, char nome[], char sigla[], int dia, int mes,
  */
 void menuDadosPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) {
     int resposta;
+    setlocale(LC_ALL, "Portuguese");
     
     showMenuPiloto();
-    resposta = leValidaInt(1, 3, "Digite uma das opcoes do menu"); system("cls");
+    resposta = leValidaInt(1, 3, "Digite uma das op?es do menu"); system("cls");
     switch(resposta) {
         case 1:
-            cadastrarPiloto(pilotos, equipes, qtdPilotos, qtdEquipes);
+            cadastrarPiloto(equipes, qtdPilotos, qtdEquipes);
             break;
         case 2:
             alterarPiloto(pilotos, equipes, *qtdPilotos, qtdEquipes);
@@ -65,12 +68,18 @@ void showMenuPiloto() {
  *   cadastrados e quantidade de equipes cadastradas.
  * Retorna: Nada.
  */
-void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) {
+void cadastrarPiloto(struct Equipe equipes[], int *qtdPilotos, int *qtdEquipes) {
     int *codigos, qtdCodigos, resposta, i;
     char data[11];
+    struct Piloto pilotos[100];
+    FILE *pilotosF;
+
+    pilotosF = fopen("pilotos", "rb");   
+    fread(&pilotos, sizeof(struct Piloto), *qtdPilotos, pilotosF);
+    fclose(pilotosF);
 
     if(*qtdPilotos == MAX_PILOTOS) {
-        printf("Nao é mais possivel adicionar pilotos(as).\n");
+        printf("Nao ?mais possivel adicionar pilotos(as).\n");
         return;
     }
     if(MAX_PILOTOS - *qtdPilotos >= 3) {
@@ -78,11 +87,12 @@ void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
     } else {
         qtdCodigos = MAX_PILOTOS - *qtdPilotos;
     }
+
     codigos = gerarCodigosRandomicos(pilotos, *qtdPilotos, MAX_PILOTOS);
     for(i=0; i<qtdCodigos; i++) {
         printf("%d) %d\t", i+1, codigos[i]);
     }
-    resposta = leValidaInt(1, i, "\n\nSelecione um dos codigos acima"); system("cls");
+    resposta = leValidaInt(1, i, "\n\nSelecione um dos c?igos acima"); system("cls");
     pilotos[*qtdPilotos].codigo = codigos[resposta-1];
 
     leValidaNome(pilotos[*qtdPilotos].nome, 1, "Nome do(a) piloto(a)"); system("cls");
@@ -90,8 +100,12 @@ void cadastrarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdP
     if(procuraSiglaExistente(pilotos, equipes, *qtdPilotos, qtdEquipes)) {
         leValidaDataInt(data, pilotos[*qtdPilotos].dataNascimento, "Data de nascimento do(a) piloto(a)"); system("cls");
         pilotos[*qtdPilotos].sexo = leValidaChar2('f', 'm', "Sexo do(a) piloto(a)"); system("cls");
-        leValidaNome(pilotos[*qtdPilotos].paisOrigem, 1, "País do(a) piloto(a)"); system("cls");
+        leValidaNome(pilotos[*qtdPilotos].paisOrigem, 1, "Pa? do(a) piloto(a)"); system("cls");
         (*qtdPilotos)++;
+
+        pilotosF = fopen("pilotos", "wb");
+        fwrite(pilotos, sizeof(struct Piloto), *qtdPilotos, pilotosF);
+        fclose(pilotosF);
     }
 }
 
@@ -113,10 +127,10 @@ int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int 
         }
     }
     if(flag == 0) {
-        resposta = leValidaChar2('s','n', "Sigla nao cadastrada em equipes. Deseja cadastra-la?"); system("cls");
+        resposta = leValidaChar2('s','n', "Sigla n? cadastrada em equipes. Deseja cadastr?la?"); system("cls");
         switch(resposta) {
             case 's':
-                cadastrarEquipe(equipes, qtdEquipes);
+                cadastrarEquipe(qtdEquipes);
                 break;
             case 'n':
                 return 0;
@@ -127,9 +141,9 @@ int procuraSiglaExistente(struct Piloto pilotos[], struct Equipe equipes[], int 
 
 
 /* 
- * Objetivo: Gerar cÃ³digos randomicos para o usuÃ¡rio selecionar na hora do cadastramento de um novo piloto.
- * Parametros: Lista com pilotos jÃ¡ cadastrados, quantidade de cÃ³digos ja cadastrados e maximo de codigos permitidos.
- * Retorna: Lista com os cÃ³digos randomicos.
+ * Objetivo: Gerar c?igos randomicos para o usu?io selecionar na hora do cadastramento de um novo piloto.
+ * Parametros: Lista com pilotos j?cadastrados, quantidade de c?igos ja cadastrados e maximo de codigos permitidos.
+ * Retorna: Lista com os c?igos randomicos.
  */
 int* gerarCodigosRandomicos(struct Piloto pilotos[], int qtdCodigos, int maxCodigos) {
     int flag = 1, i, ii,  qtdNumeros;
@@ -188,7 +202,7 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
         if(indice > 1) {
             printf("Mais de um piloto encontrados.\n");
             while(flag == 0) {
-                respostaInt = leValidaInt(1, 99, "Informe o codigo do piloto que deseja alterar da lista");
+                respostaInt = leValidaInt(1, 99, "Informe o c?igo do piloto que deseja alterar da lista");
                 flag = 0;
                 for(i=0; i<indice; i++) {
                     if(pilotos[indices[i]].codigo == respostaInt) {
@@ -235,13 +249,13 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
             sexoTemp = leValidaChar2('m', 'f', "Novo sexo");
         }
         printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
-        resposta = leValidaChar2('s', 'n', "Deseja alterar o paÃ­s de origem?");
+        resposta = leValidaChar2('s', 'n', "Deseja alterar o pa? de origem?");
         if(resposta == 's') {
             leValidaNome(paisOrigemTemp, 1, "Novo paÃ­s de origem");
         }
 
         printarDadosPiloto(codigoTemp, nomeTemp, pilotos[indices[i]].siglaEquipe, dataTemp[0], dataTemp[1], dataTemp[2], sexoTemp, paisOrigemTemp);
-        resposta = leValidaChar2('s', 'n', "Deseja fazer as alteracoes?");
+        resposta = leValidaChar2('s', 'n', "Deseja fazer as altera?es?");
         if(resposta == 's') {
             for(ii=0; ii<qtdPilotos; ii++) {
                 if(indices[i] != ii) {
@@ -249,7 +263,7 @@ void alterarPiloto(struct Piloto pilotos[], struct Equipe equipes[], int qtdPilo
                     && (dataTemp[0] == pilotos[ii].dataNascimento[0] && dataTemp[1] == pilotos[ii].dataNascimento[1] && 
                     dataTemp[2] == pilotos[ii].dataNascimento[2]) && sexoTemp == pilotos[ii].sexo &&
                     strcmp(paisOrigemTemp, pilotos[ii].paisOrigem) == 0) {
-                        printf("Dados de pilotos ja encotrados em piloto %d (codigo).\nCancelando operacao.\n\n", pilotos[ii].codigo);
+                        printf("Dados de pilotos ja encotrados em piloto %d (codigo).\nCancelando opera?o.\n\n", pilotos[ii].codigo);
                         return;
                     }
                 }
@@ -375,7 +389,7 @@ int pesquisaDadosPiloto(struct Piloto pilotos[], int qtdPilotos, int *indice, in
 void printarDadosPiloto(int codigo, char nome[], char sigla[], int dia, int mes, int ano, char sexo, char pais[]) {
     char temp[50];
 
-    inserirPontos("Codigo", 17);
+    inserirPontos("C?igo", 17);
     inserirPontos(itoa(codigo, temp, 10), -35); printf("\n");
 
     inserirPontos("Nome", 17);
@@ -390,7 +404,7 @@ void printarDadosPiloto(int codigo, char nome[], char sigla[], int dia, int mes,
     inserirPontos("Sexo", 17);
     inserirPontos(sexo == 'm' ? "Masculino" : "Feminino", -35); printf("\n");
 
-    inserirPontos("País origem", 17);
+    inserirPontos("Pa? origem", 17);
     inserirPontos(pais, -36); printf("\n\n");
 }
 

@@ -1,6 +1,10 @@
 #ifndef _circuito_h
 #define _circuito_h
 #include "structs.h"
+#include <locale.h>
+#include "validacoes.h"
+#include "utilidades.h"
+#include "piloto.h"
 
 
 void menuDadosCircuito(struct Circuito circuitos[], struct Piloto pilotos[], struct Equipe equipes[], int *qtdCircuitos,
@@ -12,17 +16,19 @@ int procuraIdPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPi
 void printarDadosCircuito(int codigo, char nome[], char pais[], float tamanho, int minSegMilli[], int id);
 void alterarCircuito(struct Circuito circuitos[], struct Piloto pilotos[], struct Equipe equipes[], int qtdCircuitos, int *qtdPilotos,
                      int *qtdEquipes);
+int pesquisaDadosCircuito(struct Circuito circuitos[], int qtdCircuitos, int *indice, int indices[]);
 
 
 /* * * * * * * * * * * * * * * * *
  * Cadastrar e excluir circuitos *
  * * * * * * * * * * * * * * * * */
 void menuDadosCircuito(struct Circuito circuitos[], struct Piloto pilotos[], struct Equipe equipes[], int *qtdCircuitos, 
-                       int *qtdPilotos, int *qtdEquipes) {
+  int *qtdPilotos, int *qtdEquipes) {
     int resposta;
+    setlocale(LC_ALL, "Portuguese");
     
     showMenuCircuito();
-    resposta = leValidaInt(1, 2, "Digite uma das opcoes do menu");
+    resposta = leValidaInt(1, 2, "Digite uma das op?es do menu");
     switch(resposta) {
         case 1:
             cadastrarCircuito(circuitos, pilotos, equipes, qtdCircuitos, qtdPilotos, qtdEquipes);
@@ -46,7 +52,7 @@ void cadastrarCircuito(struct Circuito circuitos[], struct Piloto pilotos[], str
     char temp[15];
 
     leValidaNome(circuitos[*qtdCircuitos].nome, 0, "Nome do circuito");
-    leValidaNome(circuitos[*qtdCircuitos].pais, 0, "País do circuito");
+    leValidaNome(circuitos[*qtdCircuitos].pais, 0, "Pa? do circuito");
     circuitos[*qtdCircuitos].tamanho = leValidaFloat(3, 20, "Tamanho do circuito (Km)");
     leValidaMinSegMillInt(temp, circuitos[*qtdCircuitos].menorTempoMinSegMilli, "Menor tempo do circuito");
     circuitos[*qtdCircuitos].idPilotoMenorTempo = leValidaInt(1, 99, "Id do piloto com menor tempo no circuito");
@@ -70,9 +76,9 @@ int procuraIdPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPi
     if(flag > 0) {
         return 1;
     }
-    resposta = leValidaChar2('s', 'n', "Nenhum piloto cadastrado com esse id. Deseja cadastrá-lo?");
+    resposta = leValidaChar2('s', 'n', "Nenhum piloto cadastrado com esse id. Deseja cadastr?lo?");
     if(resposta == 's') {
-        cadastrarPiloto(pilotos, equipes, qtdPilotos, qtdEquipes);
+        cadastrarPiloto(equipes, qtdPilotos, qtdEquipes);
         return 1;
     }
     return 0;
@@ -82,13 +88,13 @@ int procuraIdPiloto(struct Piloto pilotos[], struct Equipe equipes[], int *qtdPi
 void printarDadosCircuito(int codigo, char nome[], char pais[], float tamanho, int minSegMilli[], int id) {
     char temp[10];
 
-    inserirPontos("Código", 17);
+    inserirPontos("C?igo", 17);
     inserirPontos(itoa(codigo, temp, 10), -35); printf("\n");
 
     inserirPontos("Nome", 17);
     inserirPontos(nome, -34); printf("\n");
 
-    inserirPontos("País", 17);
+    inserirPontos("Pa?", 17);
     inserirPontos(pais, -35); printf("\n");
 
     inserirPontos("Tamanho (Km)", 17);
@@ -118,7 +124,7 @@ void alterarCircuito(struct Circuito circuitos[], struct Piloto pilotos[], struc
         if(indice > 1) {
             printf("Mais de um circuito encontrados.\n");
             while(flag == 0) {
-                respostaInt = leValidaInt(1, 99, "Informe o codigo do circuito que deseja alterar da lista");
+                respostaInt = leValidaInt(1, 99, "Informe o c?igo do circuito que deseja alterar da lista");
                 flag = 0;
                 for(i=0; i<indice; i++) {
                     if(circuitos[indices[i]].codigo == respostaInt) {
@@ -148,9 +154,9 @@ void alterarCircuito(struct Circuito circuitos[], struct Piloto pilotos[], struc
             leValidaNome(nomeTemp, 1, "Novo nome");
         }
         printarDadosCircuito(circuitos[i].codigo, nomeTemp, paisTemp, tamanhoTemp, tempoTemp, idPilotoTemp);
-        resposta = leValidaChar2('s', 'n', "Deseja alterar o pais do circuito?");
+        resposta = leValidaChar2('s', 'n', "Deseja alterar o pa? do circuito?");
         if(resposta == 's') {
-            leValidaNome(paisTemp, 1, "Novo país");
+            leValidaNome(paisTemp, 1, "Novo pa?");
         }
         printarDadosCircuito(circuitos[i].codigo, nomeTemp, paisTemp, tamanhoTemp, tempoTemp, idPilotoTemp);
         resposta = leValidaChar2('s', 'n', "Deseja alterar o tamanho do circuito?");
@@ -167,13 +173,13 @@ void alterarCircuito(struct Circuito circuitos[], struct Piloto pilotos[], struc
         if(resposta == 's') {
             idPilotoTemp = leValidaInt(1, 99, "Novo id do piloto");
             if(!procuraIdPiloto(pilotos, equipes, qtdPilotos, qtdEquipes, idPilotoTemp)) {
-                printf("Alteração de dados cancelada.\n");
+                printf("Altera?es de dados cancelada.\n");
                 return;
             }
-            idPilotoTemp = pilotos[*qtdPilotos-1].codigo;
+//            idPilotoTemp = pilotos[*qtdPilotos-1].codigo;
         }
         printarDadosCircuito(circuitos[i].codigo, nomeTemp, paisTemp, tamanhoTemp, tempoTemp, idPilotoTemp);
-        resposta = leValidaChar2('s', 'n', "Deseja fazer as alteracoes?");
+        resposta = leValidaChar2('s', 'n', "Deseja fazer as altera?es?");
         if(resposta == 's') {
             for(ii=0; ii<qtdCircuitos; ii++) {
                 if(indices[i] != ii) {
@@ -181,7 +187,7 @@ void alterarCircuito(struct Circuito circuitos[], struct Piloto pilotos[], struc
                        tempoTemp[1] == circuitos[ii].menorTempoMinSegMilli[1] && tempoTemp[2] == circuitos[ii].menorTempoMinSegMilli[2]
                        && strcmp(paisTemp, circuitos[ii].pais) == 0 && idPilotoTemp == circuitos[ii].idPilotoMenorTempo &&
                        codigoTemp == circuitos[ii].codigo && tamanhoTemp == circuitos[ii].tamanho) {
-                        printf("Dados de circuitos ja encotrados em circuito %d (codigo).\nCancelando operacao.\n\n", circuitos[ii].codigo);
+                        printf("Dados de circuitos j?encotrados em circuito %d (c?igo).\nCancelando opera?o.\n\n", circuitos[ii].codigo);
                         return;
                     }
                 }

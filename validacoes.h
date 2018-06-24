@@ -445,8 +445,8 @@ void leValidaMinSegMillInt(char tempo[], int minSegMilli[], char msg[]) {
 		temp[j] = '\0';
 		minSegMilli[k] = atoi(temp);
 
-		if(minSegMilli[0] < 0 || minSegMilli[1] < 0 || minSegMilli[2] < 0) { printf("Valor negativo invÃ¡lido.\n"); flag++; }
-		if(minSegMilli[0] > 999 || minSegMilli[1] > 999 || minSegMilli[2] > 999) { printf("Limite mÃ¡ximo de 3 digitos.\n"); flag++; }
+		if(minSegMilli[0] < 0 || minSegMilli[1] < 0 || minSegMilli[2] < 0) { printf("Valor negativo invalido.\n"); flag++; }
+		if(minSegMilli[0] > 999 || minSegMilli[1] > 999 || minSegMilli[2] > 999) { printf("Limite maximo de 3 digitos.\n"); flag++; }
 	}
 	system("cls");
 }

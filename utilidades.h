@@ -7,6 +7,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <math.h>
+#include <locale.h>
 
 
 void inserirPontos(char string[], int tamanho);
@@ -22,6 +23,7 @@ void formataNomeMaiusculo(char string[], int toLower);
  * Retorna: Nada.
  */
 void inserirPontos(char string[], int tamanho) {
+	setlocale(LC_ALL, "Portuguese");
     int i, padding = abs(strlen(string) - abs(tamanho));
 
     if(tamanho < 0) {
