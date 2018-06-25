@@ -10,9 +10,10 @@
 
 
 int main() {
-	int qtdPilotos = 3, qtdEquipes = 3, qtdCircuitos = 2, qtdVoltas = 1, i;
+	// int qtdPilotos = 0, qtdEquipes = 0, qtdCircuitos = 0, qtdVoltas = 0;
+	int qtdDados[4], i;
 	srand(time(NULL));
-	FILE *pilotosF, *equipesF, *circuitosF, *voltasF;
+	FILE *pilotosF, *equipesF, *circuitosF, *voltasF, *qtdDadosF;
 
 	struct Piloto pilotos[MAX_PILOTOS];
 	struct Equipe equipes[MAX_PILOTOS];
@@ -20,17 +21,15 @@ int main() {
 	struct MelhorVolta voltas[MAX_PILOTOS];
 
 
-	strcpy(equipes[0].nome, "Ferrari");
-	strcpy(equipes[0].sigla, "FRR");
-	strcpy(equipes[0].paisOrigem, "Italia");
-
-	strcpy(equipes[1].nome, "Mitsubishi");
-	strcpy(equipes[1].sigla, "MTB");
-	strcpy(equipes[1].paisOrigem, "Franca");
-
-	strcpy(equipes[2].nome, "Merceds");
-	strcpy(equipes[2].sigla, "MCD");
-	strcpy(equipes[2].paisOrigem, "Inglaterra");
+	// strcpy(equipes[0].nome, "Ferrari");
+	// strcpy(equipes[0].sigla, "FRR");
+	// strcpy(equipes[0].paisOrigem, "Italia");
+	// strcpy(equipes[1].nome, "Mitsubishi");
+	// strcpy(equipes[1].sigla, "MTB");
+	// strcpy(equipes[1].paisOrigem, "Franca");
+	// strcpy(equipes[2].nome, "Merceds");
+	// strcpy(equipes[2].sigla, "MCD");
+	// strcpy(equipes[2].paisOrigem, "Inglaterra");
 
 	// pilotos[0].codigo = 1;
 	// pilotos[0].dataNascimento[0] = 17;
@@ -40,7 +39,6 @@ int main() {
 	// strcpy(pilotos[0].siglaEquipe, "MTB");
 	// pilotos[0].sexo = 'm';
 	// strcpy(pilotos[0].paisOrigem, "Inglaterra");
-
 	// pilotos[1].codigo = 2;
 	// pilotos[1].dataNascimento[0] = 1;
 	// pilotos[1].dataNascimento[1] = 12;
@@ -49,7 +47,6 @@ int main() {
 	// strcpy(pilotos[1].siglaEquipe, "FRR");
 	// pilotos[1].sexo = 'm';
 	// strcpy(pilotos[1].paisOrigem, "Italia");
-
 	// pilotos[2].codigo = 3;
 	// pilotos[2].dataNascimento[0] = 17;
 	// pilotos[2].dataNascimento[1] = 7;
@@ -59,52 +56,136 @@ int main() {
 	// pilotos[2].sexo = 'f';
 	// strcpy(pilotos[2].paisOrigem, "Inglaterra");
 
-	circuitos[0].codigo = 1;
-	circuitos[0].idPilotoMenorTempo = 1;
-	strcpy(circuitos[0].nome, "senna");
-	strcpy(circuitos[0].pais, "Brazil");
-	circuitos[0].tamanho = 12.78;
-	circuitos[0].menorTempoMinSegMilli[0] = 12;
-	circuitos[0].menorTempoMinSegMilli[1] = 12;
-	circuitos[0].menorTempoMinSegMilli[2] = 12;
+	// circuitos[0].codigo = 1;
+	// circuitos[0].idPilotoMenorTempo = 1;
+	// strcpy(circuitos[0].nome, "senna");
+	// strcpy(circuitos[0].pais, "Brazil");
+	// circuitos[0].tamanho = 12.78;
+	// circuitos[0].menorTempoMinSegMilli[0] = 12;
+	// circuitos[0].menorTempoMinSegMilli[1] = 12;
+	// circuitos[0].menorTempoMinSegMilli[2] = 12;
+	// circuitos[1].codigo = 2;
+	// circuitos[1].idPilotoMenorTempo = 3;
+	// strcpy(circuitos[1].nome, "Ayrton");
+	// strcpy(circuitos[1].pais, "Argentina");
+	// circuitos[1].tamanho = 9.78;
+	// circuitos[1].menorTempoMinSegMilli[0] = 9;
+	// circuitos[1].menorTempoMinSegMilli[1] = 59;
+	// circuitos[1].menorTempoMinSegMilli[2] = 735;
 
-	circuitos[1].codigo = 2;
-	circuitos[1].idPilotoMenorTempo = 3;
-	strcpy(circuitos[1].nome, "Ayrton");
-	strcpy(circuitos[1].pais, "Argentina");
-	circuitos[1].tamanho = 9.78;
-	circuitos[1].menorTempoMinSegMilli[0] = 9;
-	circuitos[1].menorTempoMinSegMilli[1] = 59;
-	circuitos[1].menorTempoMinSegMilli[2] = 735;
-
-
-	voltas[0].pilotoId = 1;
-	voltas[0].circuitoId = 2;
-	voltas[0].tempoVolta[0] = 10;
-	voltas[0].tempoVolta[1] = 56;
-	voltas[0].tempoVolta[2] = 890;
-	voltas[0].voltaData[0] = 12;
-	voltas[0].voltaData[1] = 10;
-	voltas[0].voltaData[2] = 2016;
-	strcpy(voltas[0].equipePiloto, "Ferrari");
+	// voltas[0].pilotoId = 1;
+	// voltas[0].circuitoId = 2;
+	// voltas[0].tempoVolta[0] = 10;
+	// voltas[0].tempoVolta[1] = 56;
+	// voltas[0].tempoVolta[2] = 890;
+	// voltas[0].voltaData[0] = 12;
+	// voltas[0].voltaData[1] = 10;
+	// voltas[0].voltaData[2] = 2016;
+	// strcpy(voltas[0].equipePiloto, "Ferrari");
 
 	// pilotosF = fopen("pilotos", "wb");
 	// fwrite(pilotos, sizeof(struct Piloto), qtdPilotos, pilotosF);
+	// fclose(pilotosF);
 
-	struct Piloto testeP[100];
+	// equipesF = fopen("equipes", "wb");
+	// fwrite(equipes, sizeof(struct Equipe), qtdEquipes, equipesF);
+	// fclose(equipesF);
 
-	pilotosF = fopen("pilotos", "rb");
-	fseek(pilotosF,0,SEEK_END);
-	long end = ftell(pilotosF);
-	fseek(pilotosF,0,SEEK_SET);
-	int count;
-	for ( count=0; count < 10; count++) { 
-		fread(testeP,sizeof(struct Piloto),1,pilotosF);   //printf("%d\n",myRecord.a);
-	}  
-	fclose(pilotosF);
+	// pilotosF = fopen("pilotos", "rb");	
+	// fread(&testeP, sizeof(struct Piloto), qtdPilotos, pilotosF);
 
-	// printf("%d\n\n", counter);
-	printf("%d\n\n", testeP[1].codigo);
+	// printf("%s\n", testeP[3].nome);
+
+	// while(1) {
+	// 	alterarPiloto(qtdPilotos, qtdEquipes);
+	// 	pilotosF = fopen("pilotos", "rb");
+	// 	fread(&pilotos, sizeof(struct Piloto), qtdPilotos, pilotosF); fclose(pilotosF);
+	// 	equipesF = fopen("equipes", "rb");
+	// 	fread(&equipes, sizeof(struct Equipe), qtdEquipes, equipesF); fclose(equipesF);
+
+ //        // printf("@@ OI\n");
+
+	// 	for(i = 0; i<qtdPilotos; i++) {
+	// 		printarDadosPiloto(pilotos[i].codigo, pilotos[i].nome, pilotos[i].siglaEquipe, pilotos[i].dataNascimento[0], pilotos[i].dataNascimento[1],
+ //              pilotos[i].dataNascimento[2], pilotos[i].sexo, pilotos[i].paisOrigem);
+	// 	}
+	// 	for(i = 0; i<qtdEquipes; i++) {
+	// 		printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
+	// 	      procurarSiglaPiloto(equipes, qtdPilotos, equipes[i].sigla));
+	// 	}
+	// }
+
+	// if((qtdDadosF = fopen("dados", "rb")) != NULL) {
+	// 	fread(&qtdDados, sizeof(int), 4, qtdDadosF);
+	// } else {
+	// 	for(i=0; i<4; i++) {
+	// 		qtdDados[i] = 0;
+	// 	}
+	// }
+
+	// for (i=0; i<4; i++) {
+	// 	printf("%d  ", qtdDados[i]);
+	// } printf("\n");
+
+	// while(1) {
+	// 	// cadastrarEquipe();
+
+	// 	qtdDadosF = fopen("dados", "rb");
+	// 	fread(&qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
+	// 	equipesF = fopen("equipes", "rb");	
+	// 	fread(&equipes, sizeof(struct Equipe), qtdDados[1], equipesF); fclose(equipesF);
+		
+	// 	printf("@@ %d\n", qtdDados[1]);
+
+
+
+	// 	for(i = 0; i<qtdDados[1]; i++) {
+	// 		printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
+	//   		  procurarSiglaPiloto(equipes, qtdDados[0], equipes[i].sigla));
+	// 	}
+	// 	break;
+	// }
+
+	while(1) {
+		cadastrarCircuito();
+
+		qtdDadosF = fopen("dados", "rb");
+		fread(&qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
+
+		pilotosF = fopen("pilotos", "rb");	
+		fread(&pilotos, sizeof(struct Piloto), qtdDados[0], pilotosF); fclose(pilotosF);
+
+		equipesF = fopen("equipes", "rb");	
+		fread(&equipes, sizeof(struct Equipe), qtdDados[1], equipesF); fclose(equipesF);
+
+		circuitosF = fopen("circuitos", "rb");	
+		fread(&circuitos, sizeof(struct Circuito), qtdDados[2], circuitosF); fclose(circuitosF);
+
+		voltasF = fopen("voltas", "rb");
+        fread(&voltas, sizeof(struct MelhorVolta), qtdDados[3], voltasF); fclose(voltasF);
+
+
+		for(i = 0; i<qtdDados[0]; i++) {
+			printarDadosPiloto(pilotos[i].codigo, pilotos[i].nome, pilotos[i].siglaEquipe, pilotos[i].dataNascimento[0], pilotos[i].dataNascimento[1],
+              pilotos[i].dataNascimento[2], pilotos[i].sexo, pilotos[i].paisOrigem);
+		}
+		printf("\nEQUIPES\n\n");
+		for(i = 0; i<qtdDados[1]; i++) {
+			printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
+	  		  procurarSiglaPiloto(equipes, qtdDados[0], equipes[i].sigla));
+		}
+		printf("\nCIRCUITOS\n\n");
+		for(i = 0; i<qtdDados[2]; i++) {
+			printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho, 
+								 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
+		}
+		printf("\nMELHORES VOLTAS\n\n");
+		for(i = 0; i<qtdDados[3]; i++) {
+			printarDadosVolta(voltas[i].pilotoId, voltas[i].circuitoId, voltas[i].equipePiloto, 
+			  voltas[i].tempoVolta, voltas[i].voltaData);
+		}
+		break;
+	}
 
 	// printarDadosVolta(voltas[0].pilotoId, voltas[0].circuitoId, voltas[0].equipePiloto, voltas[0].tempoVolta, 
 	// 		  voltas[0].voltaData);
