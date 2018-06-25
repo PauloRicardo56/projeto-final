@@ -91,19 +91,19 @@ int main() {
     
     do {
         showMenu();
-        resposta = leValidaInt(1, 6, "Digite uma das opções do menu");
+        resposta = leValidaInt(1, 6, "Digite uma das op?es do menu");
         switch(resposta) {
             case 1:
-                menuDadosPiloto(pilotos, equipes, &qtdPilotos, &qtdEquipes);
+                menuDadosPiloto();
                 break;
             case 2:
-                menuDadosEquipe(equipes, pilotos, &qtdEquipes, qtdPilotos);
+                menuDadosEquipe();
                 break;
             case 3:
-                menuDadosCircuito(circuitos, pilotos, equipes, &qtdCircuitos, &qtdPilotos, &qtdEquipes);
+                menuDadosCircuito();
                 break;
             case 4:
-                menuDadosVolta(melhoresVoltas, pilotos, equipes, circuitos, &qtdMelhoresVoltas, qtdPilotos, qtdEquipes, qtdCircuitos);
+                menuDadosVolta();
                 break;
             case 5:
                 menuRelatorios(pilotos, equipes, circuitos, melhoresVoltas, qtdPilotos, qtdEquipes, qtdCircuitos, qtdMelhoresVoltas);
@@ -119,7 +119,7 @@ void showMenu() {
     printf("1-Menu dos pilotos\n");
     printf("2-Menu das equipes\n");
     printf("3-Menu dos circuitos\n");
-    printf("4-Menu das voltas (Necessário cadastro de pilotos e equipes)\n");
-    printf("5-Relatórios\n");
+    printf("4-Menu das voltas (Necess?io cadastro de pilotos e equipes)\n");
+    printf("5-Relat?ios\n");
     printf("6-Sair\n");
 }

@@ -12,7 +12,7 @@
  * * * * * * * * * * * * * * * */
 
 
-void menuDadosEquipe(struct Equipe equipes[], struct Piloto pilotos[], int *qtdEquipes, int qtdPilotos);
+void menuDadosEquipe();
 void showMenuEquipe();
 void cadastrarEquipe();
 void leValidaSiglaNaoRepetida(struct Equipe equipes[], int qtdEquipes);
@@ -22,7 +22,7 @@ void printarDadosEquipe(char nome[], char sigla[], char pais[], int flag);
 int procurarSiglaPiloto(struct Piloto pilotos[], int qtdPilotos, char sigla[]);
 
 
-void menuDadosEquipe(struct Equipe equipes[], struct Piloto pilotos[], int *qtdEquipes, int qtdPilotos) {
+void menuDadosEquipe() {
     int resposta;
     setlocale(LC_ALL, "Portuguese");
     
@@ -114,7 +114,7 @@ void excluirEquipe() {
         equipesF = fopen("equipes", "rb");
         fread(&equipes, sizeof(struct Equipe), qtdDados[1], equipesF); fclose(equipesF);
     } int indices[qtdDados[1]];
-    if(qtdDados[1] > 0) {
+    if(qtdDados[0] > 0) {
         pilotosF = fopen("pilotos", "rb");
         fread(&pilotos, sizeof(struct Piloto), qtdDados[0], pilotosF); fclose(pilotosF);
     }

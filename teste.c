@@ -147,7 +147,7 @@ int main() {
 	// }
 
 	while(1) {
-		excluirEquipe();
+		cadastrarCircuito();
 
 		qtdDadosF = fopen("dados", "rb");
 		fread(&qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
@@ -158,10 +158,12 @@ int main() {
 		equipesF = fopen("equipes", "rb");	
 		fread(&equipes, sizeof(struct Equipe), qtdDados[1], equipesF); fclose(equipesF);
 
-		
+		circuitosF = fopen("circuitos", "rb");	
+		fread(&circuitos, sizeof(struct Circuito), qtdDados[2], circuitosF); fclose(circuitosF);
 
-		// printf("@@ %d\n", qtdDados[0]);
-		// printf("@@ %d\n", pilotos[0].codigo);
+		voltasF = fopen("voltas", "rb");
+        fread(&voltas, sizeof(struct MelhorVolta), qtdDados[3], voltasF); fclose(voltasF);
+
 
 		for(i = 0; i<qtdDados[0]; i++) {
 			printarDadosPiloto(pilotos[i].codigo, pilotos[i].nome, pilotos[i].siglaEquipe, pilotos[i].dataNascimento[0], pilotos[i].dataNascimento[1],
@@ -172,6 +174,17 @@ int main() {
 			printarDadosEquipe(equipes[i].nome, equipes[i].sigla, equipes[i].paisOrigem, 
 	  		  procurarSiglaPiloto(equipes, qtdDados[0], equipes[i].sigla));
 		}
+		printf("\nCIRCUITOS\n\n");
+		for(i = 0; i<qtdDados[2]; i++) {
+			printarDadosCircuito(circuitos[i].codigo, circuitos[i].nome, circuitos[i].pais, circuitos[i].tamanho, 
+								 circuitos[i].menorTempoMinSegMilli, circuitos[i].idPilotoMenorTempo);
+		}
+		printf("\nMELHORES VOLTAS\n\n");
+		for(i = 0; i<qtdDados[3]; i++) {
+			printarDadosVolta(voltas[i].pilotoId, voltas[i].circuitoId, voltas[i].equipePiloto, 
+			  voltas[i].tempoVolta, voltas[i].voltaData);
+		}
+		break;
 	}
 
 	// printarDadosVolta(voltas[0].pilotoId, voltas[0].circuitoId, voltas[0].equipePiloto, voltas[0].tempoVolta, 

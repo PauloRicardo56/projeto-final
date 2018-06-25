@@ -8,7 +8,7 @@
 void menuRelatorios(struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[], struct MelhorVolta voltas[], 
   int qtdPilotos, int qtdEquipes, int qtdCircuitos, int qtdVoltas);
 void showMenuRelatorios();
-void pesquisarPiloto(struct Piloto pilotos[], int qtdPilotos);
+void pesquisarPiloto();
 void pesquisarDadosVoltasMenores(struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[], struct MelhorVolta voltas[], 
   int qtdPilotos, int qtdEquipes, int qtdCircuitos, int qtdVoltas);
 void exibirDadosSemMelhorVolta(struct Piloto pilotos[], struct Equipe equipes[], struct Circuito circuitos[], struct MelhorVolta voltas[], 
@@ -30,7 +30,7 @@ void menuRelatorios(struct Piloto pilotos[], struct Equipe equipes[], struct Cir
         //     consultarDados();
         //     break;
         case 2:
-            pesquisarPiloto(pilotos, qtdPilotos);
+            pesquisarPiloto();
             break;
         // case 3:
         //     relacaoPilotoCircuito();
@@ -67,14 +67,28 @@ void showMenuRelatorios() {
 // }
 
 
-void pesquisarPiloto(struct Piloto pilotos[], int qtdPilotos) {
+void pesquisarPiloto() {
     char pesquisa[80];
-    int i, indice = 0, indices[qtdPilotos];
+    int i, indice = 0, qtdDados[4];
+    struct Piloto pilotos[100];
+    FILE *pilotosF, *qtdDadosF;
+
+    if((qtdDadosF = fopen("dados", "rb")) != NULL) {
+        fread(&qtdDados, sizeof(int), 4, qtdDadosF); fclose(qtdDadosF);
+    } else {
+        for(i=0; i<4; i++) {
+            qtdDados[i] = 0;
+        }
+    } int indices[qtdDados[0]];
+    if(qtdDados[0] > 0) {
+        pilotosF = fopen("pilotos", "rb");   
+        fread(&pilotos, sizeof(struct Piloto), qtdDados[0], pilotosF); fclose(pilotosF);
+    }
 
     printf("Pesquisa piloto(a) >> ");
     scanf("%[^\n]s", &pesquisa); clean_stdin(); system("cls");
     strcpy(pesquisa, toLowerString(pesquisa));
-    for(i=0; i<qtdPilotos; i++) {
+    for(i=0; i<qtdDados[0]; i++) {
         if(strstr(toLowerString(pilotos[i].nome), pesquisa) != NULL) {
             indices[indice] = i;
             indice++;
