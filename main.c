@@ -6,14 +6,16 @@
 #include "relatorios.h" 
 #include <locale.h>
 
+// Dados passados para arquivos.
+
 
 int main() {
     srand(time(NULL));
-    struct Piloto pilotos[100];
-    struct Equipe equipes[100];
-    struct Circuito circuitos[100];
-    struct MelhorVolta melhoresVoltas[100];
-    int resposta, qtdPilotos = 0, qtdEquipes = 0, qtdCircuitos = 0, qtdMelhoresVoltas = 0;
+    // struct Piloto pilotos[100];
+    // struct Equipe equipes[100];
+    // struct Circuito circuitos[100];
+    // struct MelhorVolta melhoresVoltas[100];
+    int resposta;
     setlocale(LC_ALL, "Portuguese");
     
 //  strcpy(equipes[0].nome, "Ferrari");
@@ -106,7 +108,7 @@ int main() {
                 menuDadosVolta();
                 break;
             case 5:
-                menuRelatorios(pilotos, equipes, circuitos, melhoresVoltas, qtdPilotos, qtdEquipes, qtdCircuitos, qtdMelhoresVoltas);
+                menuRelatorios();
                 break;
         }
     } while(resposta != 6);
